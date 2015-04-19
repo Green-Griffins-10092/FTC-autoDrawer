@@ -67,6 +67,10 @@ public class FTCauto extends JFrame {
             
         }
         
+        //Picture stuff
+        private static final Image stuffedGriffins = new ImageIcon("STUFFED_GRIFFINS_FINAL_GRN.png").getImage();
+        private static final Image field = new ImageIcon("Field.png").getImage();
+        private static final Image field_shadow = new ImageIcon("Field_Shadow.png").getImage();
         
         protected void paintComponent(Graphics g){
             super.paintComponent(g);
@@ -118,33 +122,26 @@ public class FTCauto extends JFrame {
             if(openingTrans>0&&frames>200){
                 openingTrans-=5;
             }
-            Color OpeningBackground = new Color(50,50,50,openingTrans);
-            BufferedImage stuffedGriffins;
-            try {
-                stuffedGriffins = ImageIO.read(new File("STUFFED_GRIFFINS_FINAL_GRN.jpg"));
-            } catch (IOException e) {
-                stuffedGriffins = new BufferedImage(600,200,
-                        BufferedImage.TYPE_INT_RGB);
-                // get a graphics context to use to draw on the buffered image
-                Graphics2D graphics2d = stuffedGriffins.createGraphics();
-
-                // set the color to white
-                graphics2d.setPaint(Color.white);
-
-                // set the font to Helvetica bold style and size 16
-                graphics2d.setFont(new Font("Helvetica",Font.BOLD,16));
-
-                // draw the message
-                graphics2d.drawString("Couldn't load \"STUFFED_GRIFFINS_FINAL_GRN.jpg\"",5,90);
-                graphics2d.drawString("Make sure the file is in the working directory", 5, 110);
+            
+            if(frames>50 && openingTextTrans>0){
+                openingTextTrans-=5;
+            }else if(openingTextTrans>0&&frames>100){
+                
             }
+            
+            Color OpeningBackground = new Color(50,50,50,openingTrans);
             g.setColor(OpeningBackground);
             g.fillRect(0, 0, getWidth(), getHeight());
             
-            if(frames<200)
-            {
-            g.drawImage(stuffedGriffins, 0, 0, 1246, 499, null);
+            if(frames<300){
+                g.drawImage(stuffedGriffins, (getWidth()/2)-374, (getHeight()/2)-149, 748, 299,null);
             }
+            
+            
+            OpeningBackground = new Color(50,50,50,openingTextTrans);
+            g.setColor(OpeningBackground);
+            g.fillRect(0, 0, getWidth(), getHeight());
+            
             
             frames++;
         }
