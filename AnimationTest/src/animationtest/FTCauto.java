@@ -1,16 +1,6 @@
-
-
-//Test Test Test
-
-
 package animationtest;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 import javax.swing.*;
 
 public class FTCauto extends JFrame {
@@ -24,7 +14,7 @@ public class FTCauto extends JFrame {
         System.out.println("hello world");
         FTCauto frame = new FTCauto();
         frame.setTitle("Animation test");
-        frame.setSize(1246, 499);
+        frame.setSize(1000, 700);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
@@ -34,22 +24,24 @@ public class FTCauto extends JFrame {
 
     static class MovingMessagePanel extends JPanel{
         
-        //stuff
-        private String message = "Welcome to Java";
-        private int xCoordinate = 0;
-        private int yCoordinate = 20;
-        private int speed = 2;
-        
+        //Variables
         private int mouseX = 0;
         private int mouseY = 0;
+        
+        private int  fieldSize = 0;
         
         private int openingTrans = 255;
         private int openingTextTrans = 255;
         
         private int frames =0;
         
+        //Picture stuff
+        private static final Image stuffedGriffins = new ImageIcon("STUFFED_GRIFFINS_FINAL_GRN.png").getImage();
+        private static final Image field = new ImageIcon("Field.png").getImage();
+        private static final Image field_shadow = new ImageIcon("Field_Shadow.png").getImage();
+        
         public MovingMessagePanel(String message){
-            this.message = message;
+            
             
             //Getting mouse location when moved
             addMouseMotionListener(new MouseMotionAdapter(){
@@ -67,22 +59,9 @@ public class FTCauto extends JFrame {
             
         }
         
-        //Picture stuff
-        private static final Image stuffedGriffins = new ImageIcon("STUFFED_GRIFFINS_FINAL_GRN.png").getImage();
-        private static final Image field = new ImageIcon("Field.png").getImage();
-        private static final Image field_shadow = new ImageIcon("Field_Shadow.png").getImage();
-        
+
         protected void paintComponent(Graphics g){
             super.paintComponent(g);
-            
-            if(xCoordinate>getWidth()+100){
-                xCoordinate=-100;
-            }
-            
-            xCoordinate+=speed;
-            
-            
-
             
             //Main program
             Color darkBlueD = new Color(45,62,78);
@@ -107,16 +86,30 @@ public class FTCauto extends JFrame {
             
             g.fillRect(0, 0, 100, 5);
             
-            //Extra animation stuff
-            g.setColor(lightGreenLT);
-            g.fillRect(xCoordinate,0,100,10);
-            
             //Mouse stuff
-            g.drawLine(mouseX, 0, mouseX, getHeight());
-            g.drawLine(0, mouseY, getWidth(), mouseY);
+            //g.drawLine(mouseX, 0, mouseX, getHeight());
+            //g.drawLine(0, mouseY, getWidth(), mouseY);
             
-            g.drawLine(mouseX+1, 0, mouseX+1, getHeight());
-            g.drawLine(0, mouseY+1, getWidth(), mouseY+1);
+            //g.drawLine(mouseX+1, 0, mouseX+1, getHeight());
+            //g.drawLine(0, mouseY+1, getWidth(), mouseY+1);
+            
+                        //Resizing the field
+            if(getWidth()-100<getHeight()){
+                fieldSize = getWidth()-100;
+            }else{
+                fieldSize = getHeight()-10;
+            }
+            
+            //Field
+            g.drawImage(field, 100, 10, fieldSize, fieldSize,null);
+            
+            //----Shadow Testing (having a semi-transparent image cast "shadows" onto the field)----
+            //g.setColor(lightGreenL);
+            //g.fillRect(mouseX, mouseY, 100, 100);
+            
+            //Field shadow
+            //g.drawImage(field_shadow, 100, 10, fieldSize, fieldSize,null);
+            //----------------------
             
             //Opening credits & stuff
             if(openingTrans>0&&frames>200){
