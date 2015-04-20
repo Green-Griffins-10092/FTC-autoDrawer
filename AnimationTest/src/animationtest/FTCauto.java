@@ -5,7 +5,8 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import static animationtest.PointArray.*;
-
+import java.awt.geom.Line2D;
+import java.awt.AWTEvent;
 
 public class FTCauto extends JFrame {
     
@@ -38,13 +39,12 @@ public class FTCauto extends JFrame {
         
     }
     
-    
     public static class MainGraphicsPanel extends JPanel{
         
-        //Variables
-        private int mouseX = 0;
-        private int mouseY = 0;
         
+        //Variables
+        public static int mouseX = 0;
+        public static int mouseY = 0;
         
         private int openingTrans = 255;
         private int openingTextTrans = 255;
@@ -56,11 +56,13 @@ public class FTCauto extends JFrame {
         private static final Image field = new ImageIcon("Field.png").getImage();
         private static final Image field_shadow = new ImageIcon("Field_Shadow.png").getImage();
         
+        
         public MainGraphicsPanel(){
             
             
             //Getting mouse location when moved
             addMouseMotionListener(new MouseMotionAdapter(){
+                
                 
                 public void mouseMoved(MouseEvent e){
                     mouseX = e.getX();
@@ -68,6 +70,7 @@ public class FTCauto extends JFrame {
                     
                 }
             });
+            
             
             //The animation timer
             Timer timer = new Timer(10, new TimerListener());
@@ -78,6 +81,10 @@ public class FTCauto extends JFrame {
         
         protected void paintComponent(Graphics g){
             super.paintComponent(g);
+            
+            
+            
+            Graphics2D g2 = (Graphics2D) g;
             
             //Main program
             Color darkBlueD = new Color(45,62,78);
@@ -102,6 +109,8 @@ public class FTCauto extends JFrame {
             
             g.fillRect(0, 0, 100, 5);
             
+            
+            
             //Mouse stuff
             //g.drawLine(mouseX, 0, mouseX, getHeight());
             //g.drawLine(0, mouseY, getWidth(), mouseY);
@@ -116,12 +125,22 @@ public class FTCauto extends JFrame {
                 fieldSize = getHeight()-10;
             }
             
-            //Field
             g.drawImage(field, 100, 10, (int)fieldSize, (int) fieldSize,null);
             
             //Draw the Points
             for(int i = 0; i < points.size(); i++){
-                g.fillOval((int) points.get(i).getX()+100, (int) points.get(i).getY()+10, 10, 10);
+                g.fillOval((int) points.get(i).getX()+100-5, (int) points.get(i).getY()+10-5, 10, 10);
+                
+                
+                
+                if(i>0){
+                    g2.setStroke(new BasicStroke(5));
+                    g2.draw(new Line2D.Float((float) points.get(i).getX()+100, (float) points.get(i).getY()+10, 
+                            (float) points.get(i-1).getX()+100, (float) points.get(i-1).getY()+10));
+                    
+                    //g.drawLine((int) points.get(i).getX()+100, (int) points.get(i).getY()+10, 
+                      //      (int) points.get(i-1).getX()+100, (int) points.get(i-1).getY()+10);
+                }
             }
             
             
@@ -139,22 +158,22 @@ public class FTCauto extends JFrame {
                 if(openingTrans>0&&frames>200){
                     openingTrans-=5;
                 }
-
+                
                 if(frames>50 && openingTextTrans>0){
                     openingTextTrans-=5;
                 }else if(openingTextTrans>0&&frames>100){
-
+                
                 }
-
+                
                 Color OpeningBackground = new Color(50,50,50,openingTrans);
                 g.setColor(OpeningBackground);
                 g.fillRect(0, 0, getWidth(), getHeight());
-
+                
                 if(frames<300){
                     g.drawImage(stuffedGriffins, (getWidth()/2)-374, (getHeight()/2)-149, 748, 299,null);
                 }
-
-
+                
+                
                 OpeningBackground = new Color(50,50,50,openingTextTrans);
                 g.setColor(OpeningBackground);
                 g.fillRect(0, 0, getWidth(), getHeight());
