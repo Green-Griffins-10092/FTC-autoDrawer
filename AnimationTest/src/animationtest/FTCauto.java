@@ -13,12 +13,11 @@ public class FTCauto extends JFrame {
     
     public static void main(String[] args) {
         
-        System.out.println("hello world");
         FTCauto frame = new FTCauto();
         frame.setTitle("Animation test");
         frame.setSize(1000, 700);
         frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setVisible(true);
         
         
@@ -33,14 +32,13 @@ public class FTCauto extends JFrame {
         private int  fieldSize = 0;
         
         private int openingTrans = 255;
-        private int openingTextTrans = 255;
-        
-        private int frames =0;
+
+        private int frames = 0;
         
         //Picture stuff
         private static final Image stuffedGriffins = Toolkit.getDefaultToolkit().getImage("AnimationTest\\STUFFED_GRIFFINS_FINAL_GRN.jpg");
         private static final Image field = Toolkit.getDefaultToolkit().getImage("AnimationTest\\Field.png");
-        private static final Image field_shadow = Toolkit.getDefaultToolkit().getImage("AnimationTest\\Field_Shadow.png");
+        //private static final Image field_shadow = Toolkit.getDefaultToolkit().getImage("AnimationTest\\Field_Shadow.png");
         
         public MovingMessagePanel(){
             
@@ -78,8 +76,6 @@ public class FTCauto extends JFrame {
                 Color darkBlueL = new Color(52, 74, 97);
                 Color lightGreenD = new Color(23, 160, 134);
                 Color lightGreenL = new Color(27, 188, 155);
-                Color lightGreenLT = new Color(27, 188, 155, 100);
-
 
                 //Main frame
                 g.setColor(darkBlueL);
@@ -95,15 +91,15 @@ public class FTCauto extends JFrame {
 
                 g.fillRect(0, 0, 100, 5);
 
+                //Field
+                g.drawImage(field, 100, 10, fieldSize, fieldSize, null);
+
                 //Mouse stuff
                 g.drawLine(mouseX, 0, mouseX, getHeight());
                 g.drawLine(0, mouseY, getWidth(), mouseY);
 
                 g.drawLine(mouseX + 1, 0, mouseX + 1, getHeight());
                 g.drawLine(0, mouseY + 1, getWidth(), mouseY + 1);
-
-                //Field
-                g.drawImage(field, 100, 10, fieldSize, fieldSize, null);
 
                 //----Shadow Testing (having a semi-transparent image cast "shadows" onto the field)----
                 //g.setColor(lightGreenL);
@@ -118,6 +114,7 @@ public class FTCauto extends JFrame {
                     openingTrans--;
                 }
 
+                //TODO: add credits!?
 
                 Color OpeningBackground = new Color(50, 50, 50, openingTrans);
                 g.setColor(OpeningBackground);
