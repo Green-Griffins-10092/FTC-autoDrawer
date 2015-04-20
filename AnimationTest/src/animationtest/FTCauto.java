@@ -15,6 +15,8 @@ public class FTCauto extends JFrame {
     
     public static double fieldSize = 0;
     
+    //!!Only for develepment version!!
+    public static boolean showCredits = false;
     
     public static void main(String[] args) {
         
@@ -132,28 +134,31 @@ public class FTCauto extends JFrame {
             //----------------------
             
             //Opening credits & stuff
-            if(openingTrans>0&&frames>200){
-                openingTrans-=5;
+            
+            if(showCredits){
+                if(openingTrans>0&&frames>200){
+                    openingTrans-=5;
+                }
+
+                if(frames>50 && openingTextTrans>0){
+                    openingTextTrans-=5;
+                }else if(openingTextTrans>0&&frames>100){
+
+                }
+
+                Color OpeningBackground = new Color(50,50,50,openingTrans);
+                g.setColor(OpeningBackground);
+                g.fillRect(0, 0, getWidth(), getHeight());
+
+                if(frames<300){
+                    g.drawImage(stuffedGriffins, (getWidth()/2)-374, (getHeight()/2)-149, 748, 299,null);
+                }
+
+
+                OpeningBackground = new Color(50,50,50,openingTextTrans);
+                g.setColor(OpeningBackground);
+                g.fillRect(0, 0, getWidth(), getHeight());
             }
-            
-            if(frames>50 && openingTextTrans>0){
-                openingTextTrans-=5;
-            }else if(openingTextTrans>0&&frames>100){
-                
-            }
-            
-            Color OpeningBackground = new Color(50,50,50,openingTrans);
-            g.setColor(OpeningBackground);
-            g.fillRect(0, 0, getWidth(), getHeight());
-            
-            if(frames<300){
-                g.drawImage(stuffedGriffins, (getWidth()/2)-374, (getHeight()/2)-149, 748, 299,null);
-            }
-            
-            
-            OpeningBackground = new Color(50,50,50,openingTextTrans);
-            g.setColor(OpeningBackground);
-            g.fillRect(0, 0, getWidth(), getHeight());
             
             frames++;
         }
