@@ -4,33 +4,40 @@ package animationtest;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import static animationtest.PointArray.*;
+
 
 public class FTCauto extends JFrame {
     
     public FTCauto() {
-        add(new MovingMessagePanel("message moving"));
+        add(new MainGraphicsPanel());
     }
+    
+    public static double fieldSize = 0;
     
     public static void main(String[] args) {
         
-        System.out.println("hello world");
+        PointArray.addPoint(500, 500);
+        
+        
         FTCauto frame = new FTCauto();
-        frame.setTitle("Animation test");
+        frame.setTitle("AutoDrawer");
         frame.setSize(1000, 700);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setCursor(Cursor.MOVE_CURSOR);
         frame.setVisible(true);
         
         
     }
-
-    static class MovingMessagePanel extends JPanel{
+    
+    
+    public static class MainGraphicsPanel extends JPanel{
         
         //Variables
         private int mouseX = 0;
         private int mouseY = 0;
         
-        private int  fieldSize = 0;
         
         private int openingTrans = 255;
         private int openingTextTrans = 255;
@@ -42,7 +49,7 @@ public class FTCauto extends JFrame {
         private static final Image field = new ImageIcon("Field.png").getImage();
         private static final Image field_shadow = new ImageIcon("Field_Shadow.png").getImage();
         
-        public MovingMessagePanel(String message){
+        public MainGraphicsPanel(){
             
             
             //Getting mouse location when moved
@@ -61,7 +68,7 @@ public class FTCauto extends JFrame {
             
         }
         
-
+        
         protected void paintComponent(Graphics g){
             super.paintComponent(g);
             
@@ -95,7 +102,7 @@ public class FTCauto extends JFrame {
             //g.drawLine(mouseX+1, 0, mouseX+1, getHeight());
             //g.drawLine(0, mouseY+1, getWidth(), mouseY+1);
             
-                        //Resizing the field
+            //Resizing the field
             if(getWidth()-100<getHeight()){
                 fieldSize = getWidth()-100;
             }else{
@@ -103,7 +110,13 @@ public class FTCauto extends JFrame {
             }
             
             //Field
-            g.drawImage(field, 100, 10, fieldSize, fieldSize,null);
+            g.drawImage(field, 100, 10, (int)fieldSize, (int) fieldSize,null);
+            
+            //Draw the Points
+            for(int i = 0; i < points.size(); i++){
+                g.fillOval((int) points.get(i).getX()+100, (int) points.get(i).getY()+10, 10, 10);
+            }
+            
             
             //----Shadow Testing (having a semi-transparent image cast "shadows" onto the field)----
             //g.setColor(lightGreenL);
@@ -136,7 +149,6 @@ public class FTCauto extends JFrame {
             OpeningBackground = new Color(50,50,50,openingTextTrans);
             g.setColor(OpeningBackground);
             g.fillRect(0, 0, getWidth(), getHeight());
-            
             
             frames++;
         }
