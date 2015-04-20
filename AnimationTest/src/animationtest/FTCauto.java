@@ -29,8 +29,8 @@ public class FTCauto extends JFrame {
     
     public static double fieldSize = 0;
     
-    //!!Only for development version!!
-    public static boolean showCredits = true;
+    //!!Only for develepment version!!
+    public static boolean showCredits = false;
     
     public static void main(String[] args) {
         
