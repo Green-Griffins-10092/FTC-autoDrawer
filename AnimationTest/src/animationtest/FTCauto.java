@@ -15,9 +15,14 @@ public class FTCauto extends JFrame {
     
     public static double fieldSize = 0;
     
+    
     public static void main(String[] args) {
         
-        PointArray.addPoint(500, 500);
+        
+        for(int i = 0; i<20; i++){
+            PointArray.addPoint((int) (Math.random() * 999), (int) (Math.random() * 999));
+        }
+        
         
         
         FTCauto frame = new FTCauto();
@@ -25,7 +30,7 @@ public class FTCauto extends JFrame {
         frame.setSize(1000, 700);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setCursor(Cursor.MOVE_CURSOR);
+        frame.setCursor(Cursor.CROSSHAIR_CURSOR);
         frame.setVisible(true);
         
         
