@@ -1,12 +1,25 @@
 //Test test2
 
 package animationtest;
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-import static animationtest.PointArray.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Line2D;
-import java.awt.AWTEvent;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.Timer;
+import javax.swing.WindowConstants;
+
+import static animationtest.PointArray.points;
 
 public class FTCauto extends JFrame {
     
@@ -16,8 +29,8 @@ public class FTCauto extends JFrame {
     
     public static double fieldSize = 0;
     
-    //!!Only for develepment version!!
-    public static boolean showCredits = false;
+    //!!Only for development version!!
+    public static boolean showCredits = true;
     
     public static void main(String[] args) {
         
@@ -32,7 +45,7 @@ public class FTCauto extends JFrame {
         frame.setTitle("AutoDrawer");
         frame.setSize(1000, 700);
         frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setCursor(Cursor.CROSSHAIR_CURSOR);
         frame.setVisible(true);
         
@@ -52,9 +65,9 @@ public class FTCauto extends JFrame {
         private int frames =0;
         
         //Picture stuff
-        private static final Image stuffedGriffins = new ImageIcon("STUFFED_GRIFFINS_FINAL_GRN.png").getImage();
-        private static final Image field = new ImageIcon("Field.png").getImage();
-        private static final Image field_shadow = new ImageIcon("Field_Shadow.png").getImage();
+        private static final Image stuffedGriffins = new ImageIcon("AnimationTest\\STUFFED_GRIFFINS_FINAL_GRN.jpg").getImage();
+        private static final Image field = new ImageIcon("AnimationTest\\Field.png").getImage();
+        //private static final Image field_shadow = new ImageIcon("AnimationTest\\Field_Shadow.png").getImage();
         
         
         public MainGraphicsPanel(){
@@ -91,10 +104,8 @@ public class FTCauto extends JFrame {
             Color darkBlueL = new Color(52,74,97);
             Color lightGreenD = new Color(23,160,134);
             Color lightGreenL = new Color(27,188,155);
-            
-            Color lightGreenLT = new Color(27,188,155,100);
-            
-            
+
+
             //Main frame
             g.setColor(darkBlueL);
             g.fillRect(0, 0, getWidth(), getHeight());
@@ -111,13 +122,7 @@ public class FTCauto extends JFrame {
             
             
             
-            //Mouse stuff
-            //g.drawLine(mouseX, 0, mouseX, getHeight());
-            //g.drawLine(0, mouseY, getWidth(), mouseY);
-            
-            //g.drawLine(mouseX+1, 0, mouseX+1, getHeight());
-            //g.drawLine(0, mouseY+1, getWidth(), mouseY+1);
-            
+
             //Resizing the field
             if(getWidth()-100<getHeight()){
                 fieldSize = getWidth()-100;
@@ -125,7 +130,7 @@ public class FTCauto extends JFrame {
                 fieldSize = getHeight()-10;
             }
             
-            g.drawImage(field, 100, 10, (int)fieldSize, (int) fieldSize,null);
+            g.drawImage(field, 100, 10, (int)fieldSize, (int) fieldSize, null);
             
             //Draw the Points
             for(int i = 0; i < points.size(); i++){
@@ -138,12 +143,19 @@ public class FTCauto extends JFrame {
                     g2.draw(new Line2D.Float((float) points.get(i).getX()+100, (float) points.get(i).getY()+10, 
                             (float) points.get(i-1).getX()+100, (float) points.get(i-1).getY()+10));
                     
-                    //g.drawLine((int) points.get(i).getX()+100, (int) points.get(i).getY()+10, 
+                    //g.drawLine((int) points.get(i).getX()+100, (int) points.get(i).getY()+10,
                       //      (int) points.get(i-1).getX()+100, (int) points.get(i-1).getY()+10);
                 }
             }
-            
-            
+
+            //Mouse stuff
+            g2.setStroke(new BasicStroke(2));
+            g.drawLine(mouseX, 0, mouseX, getHeight());
+            g.drawLine(0, mouseY, getWidth(), mouseY);
+
+            g.drawLine(mouseX+1, 0, mouseX+1, getHeight());
+            g.drawLine(0, mouseY+1, getWidth(), mouseY+1);
+
             //----Shadow Testing (having a semi-transparent image cast "shadows" onto the field)----
             //g.setColor(lightGreenL);
             //g.fillRect(mouseX, mouseY, 100, 100);
@@ -161,15 +173,13 @@ public class FTCauto extends JFrame {
                 
                 if(frames>50 && openingTextTrans>0){
                     openingTextTrans-=5;
-                }else if(openingTextTrans>0&&frames>100){
-                
                 }
                 
                 Color OpeningBackground = new Color(50,50,50,openingTrans);
                 g.setColor(OpeningBackground);
                 g.fillRect(0, 0, getWidth(), getHeight());
                 
-                if(frames<300){
+                if(frames<250){
                     g.drawImage(stuffedGriffins, (getWidth()/2)-374, (getHeight()/2)-149, 748, 299,null);
                 }
                 
