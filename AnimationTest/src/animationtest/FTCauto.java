@@ -31,15 +31,9 @@ public class FTCauto extends JFrame {
     public static double fieldSize = 0;
     
     //!!Only for develepment version!!
-    public static boolean showCredits = false;
+    public static boolean showCredits = true;
     
     public static void main(String[] args) {
-
-
-        for(int i = 0; i<20; i++){
-            PointArray.addPoint((int) (Math.random() * 999), (int) (Math.random() * 999));
-        }
-
         
         
         FTCauto frame = new FTCauto();
@@ -91,8 +85,8 @@ public class FTCauto extends JFrame {
         private int frames =0;
         
         //Picture stuff
-        private static final Image stuffedGriffins = new ImageIcon("AnimationTest\\STUFFED_GRIFFINS_FINAL_GRN.jpg").getImage();
-        private static final Image field = new ImageIcon("AnimationTest\\Field.png").getImage();
+        private static final Image stuffedGriffins = new ImageIcon("AnimationTest/STUFFED_GRIFFINS_FINAL_GRN.jpg").getImage();
+        private static final Image field = new ImageIcon("AnimationTest/Field.png").getImage();
         //private static final Image field_shadow = new ImageIcon("AnimationTest\\Field_Shadow.png").getImage();
         
         
@@ -114,7 +108,33 @@ public class FTCauto extends JFrame {
             //The animation timer
             Timer timer = new Timer(10, new TimerListener());
             timer.start();
-            
+
+            addMouseListener(new MouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mousePressed(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseReleased(MouseEvent e) {
+                    PointArray.addPoint(mouseX, mouseY);
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+
+                }
+            });
         }
         
         
@@ -166,7 +186,7 @@ public class FTCauto extends JFrame {
                 
                 if(i>0){
                     g2.setStroke(new BasicStroke(5));
-                    g2.draw(new Line2D.Float((float) points.get(i).getX()+100, (float) points.get(i).getY()+10, 
+                    g2.draw(new Line2D.Float((float) points.get(i).getX()+100, (float) points.get(i).getY()+10,
                             (float) points.get(i-1).getX()+100, (float) points.get(i-1).getY()+10));
                     
                     //g.drawLine((int) points.get(i).getX()+100, (int) points.get(i).getY()+10,

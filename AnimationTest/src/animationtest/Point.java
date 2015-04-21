@@ -4,8 +4,8 @@ package animationtest;
 import static animationtest.FTCauto.fieldSize;
 
 public class Point {
-    private int x = 10;
-    private int y = 10;
+    private double x = 10;
+    private double y = 10;
     private int speed = 50;
     
     
@@ -14,11 +14,11 @@ public class Point {
     
     
     public double getX() {
-        return x* (fieldSize/1000);
+        return x/fieldSize;
     }
     
     public double getY() {
-        return y*(fieldSize/1000);
+        return y/fieldSize;
     }
     
     public int getSpeed() {
@@ -26,11 +26,11 @@ public class Point {
     }
     
     public void setX(int x) {
-        this.x = x;
+        this.x = x*fieldSize;
     }
     
     public void setY(int y) {
-        this.y = y;
+        this.y = y* FTCauto.MainGraphicsPanel.getWidth();
     }
     
     public void setSpeed(int speed) {
