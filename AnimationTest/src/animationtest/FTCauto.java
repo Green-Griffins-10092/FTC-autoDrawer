@@ -10,6 +10,7 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Line2D;
 
@@ -33,12 +34,12 @@ public class FTCauto extends JFrame {
     public static boolean showCredits = false;
     
     public static void main(String[] args) {
-        
-        
+
+
         for(int i = 0; i<20; i++){
             PointArray.addPoint((int) (Math.random() * 999), (int) (Math.random() * 999));
         }
-        
+
         
         
         FTCauto frame = new FTCauto();
@@ -46,10 +47,35 @@ public class FTCauto extends JFrame {
         frame.setSize(1000, 700);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setCursor(Cursor.CROSSHAIR_CURSOR);
+        //frame.setCursor(Cursor.CROSSHAIR_CURSOR);
         frame.setVisible(true);
-        
-        
+
+        frame.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                PointArray.addPoint(e.getX(), e.getY());
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
     }
     
     public static class MainGraphicsPanel extends JPanel{
@@ -84,7 +110,7 @@ public class FTCauto extends JFrame {
                 }
             });
             
-            
+
             //The animation timer
             Timer timer = new Timer(10, new TimerListener());
             timer.start();
