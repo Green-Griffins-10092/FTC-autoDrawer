@@ -33,44 +33,60 @@ public class FTCauto extends JFrame {
     //!!Only for develepment version!!
     public static boolean showCredits = true;
     
-    public static void main(String[] args) {
-        
-        
-        FTCauto frame = new FTCauto();
-        frame.setTitle("AutoDrawer");
-        frame.setSize(1000, 700);
-        frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        //frame.setCursor(Cursor.CROSSHAIR_CURSOR);
-        frame.setVisible(true);
-
-        frame.addMouseListener(new MouseListener() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mousePressed(MouseEvent e) {
-
-            }
-            
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                PointArray.addPoint(e.getX(), e.getY());
-            }
-            
-            @Override
-            public void mouseEntered(MouseEvent e) {
-
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-
-            }
-        });
-    }
+    
+    //The type of tool to use
+    //1 - Add: This tool will add points to the field
+    //2 - Deleat: This tool will deleat points you click on 
+    //(And prehaps if you drag deleat multible points in the selection)
+    //3 - Edit: With this tool you can drag and select points 
+    //(Hopefully with a point selected you will be able to precicly change the x & y and the speed)
+    public static int toolType = 1;
+    
+    //The point that is selected 
+    //(will default to the last point placed, so we will not have 
+    //errors with it trying to look at a non existant point)
+    public static int selectedPoint = 0;
+  
+//    public static void main(String[] args) {
+//        
+//        
+//        FTCauto frame = new FTCauto();
+//        frame.setTitle("AutoDrawer");
+//        frame.setSize(1000, 700);
+//        frame.setLocationRelativeTo(null);
+//        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+//        frame.setCursor(Cursor.CROSSHAIR_CURSOR);
+//        frame.setVisible(true);
+//
+//        frame.addMouseListener(new MouseListener() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//
+//            }
+//
+//            @Override
+//            public void mousePressed(MouseEvent e) {
+//
+//            }
+//            
+//            @Override
+//            public void mouseReleased(MouseEvent e) {
+//                PointArray.addPoint(e.getX(), e.getY());
+//                
+//                
+//            }
+//            
+//            @Override
+//            public void mouseEntered(MouseEvent e) {
+//
+//            }
+//
+//            @Override
+//            public void mouseExited(MouseEvent e) {
+//
+//            }
+//        });
+//    }
     
     public static class MainGraphicsPanel extends JPanel{
         
@@ -86,7 +102,7 @@ public class FTCauto extends JFrame {
         
         //Picture stuff  !!You have to use png so you can have transparency
         private static final Image stuffedGriffins = new ImageIcon("STUFFED_GRIFFINS_FINAL_GRN.png").getImage();
-        private static final Image field = new ImageIcon("1Field.png").getImage();
+        private static final Image field = new ImageIcon("Field.png").getImage();
         //private static final Image field_shadow = new ImageIcon("AnimationTest\\Field_Shadow.png").getImage();
         
         
@@ -180,12 +196,15 @@ public class FTCauto extends JFrame {
             
             //Draw the Points
             for(int i = 0; i < points.size(); i++){
+                //Makng it into a more usable form
                 int size = points.get(i).size;
                 
-                Color point = new Color(27,188,155,points.get(i).transparency);
+                //Making a new color for each point
+                Color point = new Color(0,200,50,points.get(i).transparency);
                 g.setColor(point);
                 
-                g.fillOval((int) points.get(i).getX()+100-(size/2), (int) points.get(i).getY()+10-(size/2),
+               //Draw the point
+                g.fillOval((int) points.get(i).getX()+100-(size/2), (int) points.get(i).getY()+10-(size/2), 
                         size, size);
                 
                 //Changing the size
@@ -194,7 +213,7 @@ public class FTCauto extends JFrame {
                     
                     points.get(i).sizeSpeed+=0.1;
                 }
-                
+                //And the transparency
                 if(points.get(i).transparency<250){
                     points.get(i).transparency+=2;
                 }
