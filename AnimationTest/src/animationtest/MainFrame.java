@@ -11,6 +11,7 @@ import javax.swing.WindowConstants;
 public class MainFrame extends JFrame {
     public MainFrame(){
         add(new FTCauto.MainGraphicsPanel());
+        
     }
     
     public static void main(String[] args) {
@@ -20,10 +21,11 @@ public class MainFrame extends JFrame {
         frame.setTitle("AutoDrawer");
         frame.setSize(1000, 700);
         frame.setLocationRelativeTo(null);
+        frame.setJMenuBar(MenuBars.menuBars());
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setCursor(Cursor.CROSSHAIR_CURSOR);
         frame.setVisible(true);
-
+        
         frame.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {

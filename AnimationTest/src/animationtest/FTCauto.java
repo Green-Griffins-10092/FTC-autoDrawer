@@ -103,7 +103,7 @@ public class FTCauto extends JFrame {
         //Picture stuff  !!You have to use png so you can have transparency
         private static final Image stuffedGriffins = new ImageIcon("STUFFED_GRIFFINS_FINAL_GRN.png").getImage();
         private static final Image field = new ImageIcon("Field.png").getImage();
-        //private static final Image field_shadow = new ImageIcon("AnimationTest\\Field_Shadow.png").getImage();
+        private static final Image field_shadow = new ImageIcon("Field_Shadow.png").getImage();
         
         
         public MainGraphicsPanel(){
@@ -211,7 +211,7 @@ public class FTCauto extends JFrame {
                 if(size>10){
                     points.get(i).size -=points.get(i).sizeSpeed;
                     
-                    points.get(i).sizeSpeed+=0.1;
+                    points.get(i).sizeSpeed+=0.5;
                 }
                 //And the transparency
                 if(points.get(i).transparency<250){
@@ -241,7 +241,7 @@ public class FTCauto extends JFrame {
             //g.fillRect(mouseX, mouseY, 100, 100);
             
             //Field shadow
-            //g.drawImage(field_shadow, 100, 10, fieldSize, fieldSize,null);
+            g.drawImage(field_shadow, 100, 10, (int)fieldSize, (int)fieldSize,null);
             //----------------------
             
             //Opening credits & stuff
