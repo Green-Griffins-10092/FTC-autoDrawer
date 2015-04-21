@@ -14,11 +14,11 @@ public class Point {
     
     
     public double getX() {
-        return x/fieldSize;
+        return (x * (fieldSize/1000));
     }
     
     public double getY() {
-        return y/fieldSize;
+        return (y *( fieldSize/1000));
     }
     
     public int getSpeed() {
@@ -26,11 +26,11 @@ public class Point {
     }
     
     public void setX(int x) {
-        this.x = x*fieldSize;
+        this.x = x  *( fieldSize/1000);
     }
     
     public void setY(int y) {
-        this.y = y* FTCauto.MainGraphicsPanel.getWidth();
+        this.y = y *( fieldSize/1000);
     }
     
     public void setSpeed(int speed) {
