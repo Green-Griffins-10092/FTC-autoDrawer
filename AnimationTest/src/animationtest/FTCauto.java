@@ -54,12 +54,12 @@ public class FTCauto extends JFrame {
             public void mousePressed(MouseEvent e) {
 
             }
-
+            
             @Override
             public void mouseReleased(MouseEvent e) {
                 PointArray.addPoint(e.getX(), e.getY());
             }
-
+            
             @Override
             public void mouseEntered(MouseEvent e) {
 
@@ -84,9 +84,9 @@ public class FTCauto extends JFrame {
         
         private int frames =0;
         
-        //Picture stuff
-        private static final Image stuffedGriffins = new ImageIcon("AnimationTest/STUFFED_GRIFFINS_FINAL_GRN.jpg").getImage();
-        private static final Image field = new ImageIcon("AnimationTest/Field.png").getImage();
+        //Picture stuff  !!You have to use png so you can have transparency
+        private static final Image stuffedGriffins = new ImageIcon("STUFFED_GRIFFINS_FINAL_GRN.png").getImage();
+        private static final Image field = new ImageIcon("1Field.png").getImage();
         //private static final Image field_shadow = new ImageIcon("AnimationTest\\Field_Shadow.png").getImage();
         
         
@@ -150,8 +150,8 @@ public class FTCauto extends JFrame {
             Color darkBlueL = new Color(52,74,97);
             Color lightGreenD = new Color(23,160,134);
             Color lightGreenL = new Color(27,188,155);
-
-
+            
+            
             //Main frame
             g.setColor(darkBlueL);
             g.fillRect(0, 0, getWidth(), getHeight());
@@ -180,9 +180,24 @@ public class FTCauto extends JFrame {
             
             //Draw the Points
             for(int i = 0; i < points.size(); i++){
-                g.fillOval((int) points.get(i).getX()+100-5, (int) points.get(i).getY()+10-5, 10, 10);
+                int size = points.get(i).size;
                 
+                Color point = new Color(27,188,155,points.get(i).transparency);
+                g.setColor(point);
                 
+                g.fillOval((int) points.get(i).getX()+100-(size/2), (int) points.get(i).getY()+10-(size/2),
+                        size, size);
+                
+                //Changing the size
+                if(size>10){
+                    points.get(i).size -=points.get(i).sizeSpeed;
+                    
+                    points.get(i).sizeSpeed+=0.1;
+                }
+                
+                if(points.get(i).transparency<250){
+                    points.get(i).transparency+=2;
+                }
                 
                 if(i>0){
                     g2.setStroke(new BasicStroke(5));
