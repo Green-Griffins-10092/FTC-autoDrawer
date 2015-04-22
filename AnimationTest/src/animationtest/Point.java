@@ -32,10 +32,6 @@ public class Point {
         this.y = newY;
     }
     
-    public void setSpeed(int newSpeed){
-        this.speed = newSpeed;
-    }
-    
     public void setX(int x) {
         this.x = (x-100)  /( fieldSize/1000);
     }
