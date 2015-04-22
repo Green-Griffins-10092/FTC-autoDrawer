@@ -12,6 +12,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Line2D;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -40,10 +42,10 @@ public class FTCauto extends JFrame {
     //(Hopefully with a point selected you will be able to precisely change the x & y and the speed)
     public static int toolType = 1;
     
-    //The point that is selected 
+    //The points that are selected
     //(will default to the last point placed, so we will not have 
     //errors with it trying to look at a non existent point)
-    public static int selectedPoint = 0;
+    public static List<Integer> selectedPoints = new LinkedList<Integer>();
   
 //    public static void main(String[] args) {
 //        
@@ -126,15 +128,22 @@ public class FTCauto extends JFrame {
             addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-
+                    //check if the mouse was clicked inside the field
+                    if (e.getX() > 100 && e.getX() < fieldSize + 100 && e.getY() > 10 && e.getY() < fieldSize + 10) {
+                        // check if the button pressed is the left button
+                        if (e.getButton() == MouseEvent.BUTTON1) {
+                            // add point to list
+                            PointArray.addPoint(mouseX, mouseY);
+                            // clear the selected points list, and add the new point
+                            selectedPoints.clear();
+                            selectedPoints.add(points.size() - 1);
+                        }
+                    }
                 }
 
                 @Override
                 public void mousePressed(MouseEvent e) {
-                    // check if the button pressed is the left button
-                    if (e.getButton() == MouseEvent.BUTTON1) {
-                        PointArray.addPoint(mouseX, mouseY);
-                    }
+
                 }
 
                 @Override
@@ -197,7 +206,7 @@ public class FTCauto extends JFrame {
             
             //Draw the Points
             for(int i = 0; i < points.size(); i++){
-                //Makng it into a more usable form
+                //Making it into a more usable form
                 int size = points.get(i).size;
                 
                 //Making a new color for each point
