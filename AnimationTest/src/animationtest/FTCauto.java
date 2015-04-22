@@ -3,7 +3,6 @@
 package animationtest;
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -18,7 +17,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-import javax.swing.WindowConstants;
 
 import static animationtest.PointArray.points;
 
@@ -30,21 +28,21 @@ public class FTCauto extends JFrame {
     
     public static double fieldSize = 0;
     
-    //!!Only for develepment version!!
+    //!!Only for development version!!
     public static boolean showCredits = true;
     
     
     //The type of tool to use
     //1 - Add: This tool will add points to the field
-    //2 - Deleat: This tool will deleat points you click on 
-    //(And prehaps if you drag deleat multible points in the selection)
+    //2 - Delete: This tool will delete points you click on
+    //(And perhaps if you drag delete multiple points in the selection)
     //3 - Edit: With this tool you can drag and select points 
-    //(Hopefully with a point selected you will be able to precicly change the x & y and the speed)
+    //(Hopefully with a point selected you will be able to precisely change the x & y and the speed)
     public static int toolType = 1;
     
     //The point that is selected 
     //(will default to the last point placed, so we will not have 
-    //errors with it trying to look at a non existant point)
+    //errors with it trying to look at a non existent point)
     public static int selectedPoint = 0;
   
 //    public static void main(String[] args) {
@@ -101,8 +99,8 @@ public class FTCauto extends JFrame {
         private int frames =0;
         
         //Picture stuff  !!You have to use png so you can have transparency
-        private static final Image stuffedGriffins = new ImageIcon("STUFFED_GRIFFINS_FINAL_GRN.png").getImage();
-        private static final Image field = new ImageIcon("Field.png").getImage();
+        private static final Image stuffedGriffins = new ImageIcon("AnimationTest/STUFFED_GRIFFINS_FINAL_GRN.png").getImage();
+        private static final Image field = new ImageIcon("AnimationTest/Field.png").getImage();
         //private static final Image field_shadow = new ImageIcon("AnimationTest\\Field_Shadow.png").getImage();
         
         
@@ -133,12 +131,15 @@ public class FTCauto extends JFrame {
 
                 @Override
                 public void mousePressed(MouseEvent e) {
-
+                    // check if the button pressed is the left button
+                    if (e.getButton() == MouseEvent.BUTTON1) {
+                        PointArray.addPoint(mouseX, mouseY);
+                    }
                 }
 
                 @Override
                 public void mouseReleased(MouseEvent e) {
-                    PointArray.addPoint(mouseX, mouseY);
+
                 }
 
                 @Override
