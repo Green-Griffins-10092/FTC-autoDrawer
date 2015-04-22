@@ -134,8 +134,11 @@ public class FTCauto extends JFrame {
                         if (e.getButton() == MouseEvent.BUTTON1) {
                             // add point to list
                             PointArray.addPoint(mouseX, mouseY);
-                            // clear the selected points list, and add the new point
-                            selectedPoints.clear();
+                            // if shift key is not held, clear the selectedPoints list
+                            if (!e.isShiftDown()) {
+                                selectedPoints.clear();
+                            }
+                            // add point to list
                             selectedPoints.add(points.size() - 1);
                         }
                     }
@@ -203,31 +206,22 @@ public class FTCauto extends JFrame {
             }
             
             g.drawImage(field, 100, 10, (int)fieldSize, (int) fieldSize, null);
-            
+
             //Draw the Points
             for(int i = 0; i < points.size(); i++){
                 //Making it into a more usable form
                 int size = points.get(i).size;
-                
-                //Making a new color for each point
-                Color point = new Color(0,200,50,points.get(i).transparency);
+                boolean selected = selectedPoints.contains(i);
+
+                Color point = new Color(0, 200, 50, points.get(i).transparency);
+
+                if(selected && selectedPoints.contains(i-1)) {
+                    point = new Color(0, 10, 150, points.get(i).transparency);
+                }
+
+                //set color
                 g.setColor(point);
-                
-               //Draw the point
-                g.fillOval((int) points.get(i).getX()+100-(size/2), (int) points.get(i).getY()+10-(size/2), 
-                        size, size);
-                
-                //Changing the size
-                if(size>10){
-                    points.get(i).size -=points.get(i).sizeSpeed;
-                    
-                    points.get(i).sizeSpeed+=0.1;
-                }
-                //And the transparency
-                if(points.get(i).transparency<250){
-                    points.get(i).transparency+=2;
-                }
-                
+
                 if(i>0){
                     g2.setStroke(new BasicStroke(5));
                     g2.draw(new Line2D.Float((float) points.get(i).getX()+100, (float) points.get(i).getY()+10,
@@ -236,9 +230,34 @@ public class FTCauto extends JFrame {
                     //g.drawLine((int) points.get(i).getX()+100, (int) points.get(i).getY()+10,
                       //      (int) points.get(i-1).getX()+100, (int) points.get(i-1).getY()+10);
                 }
+
+                int transMax = 250;
+                //if the point is selected, then set color to be blue, if not green.
+                if(selected) {
+                    point = new Color(0, 10, 150, points.get(i).transparency);
+                    g.setColor(point);
+                    transMax = 150;
+                }
+
+                //Draw the point
+                g.fillOval((int) points.get(i).getX()+100-(size/2), (int) points.get(i).getY()+10-(size/2),
+                        size, size);
+
+                //Changing the size
+                if(size>10){
+                    points.get(i).size -=points.get(i).sizeSpeed;
+
+                    points.get(i).sizeSpeed+=0.1;
+                }
+
+                //And the transparency
+                if(points.get(i).transparency < transMax){
+                    points.get(i).transparency += 2;
+                }
             }
 
             //Mouse stuff
+            g.setColor(lightGreenL);
             g2.setStroke(new BasicStroke(2));
             g.drawLine(mouseX, 0, mouseX, getHeight());
             g.drawLine(0, mouseY, getWidth(), mouseY);
