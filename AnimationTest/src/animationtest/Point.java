@@ -11,9 +11,11 @@ public class Point {
     public int sizeSpeed = 1;
     public int transparency = 1;
     
-    //public int getScale
     
-    
+    public void movePoint(int newX, int newY){
+        this.x = newX;
+        this.y = newY;
+    }
     
     public double getX() {
         return (x * (fieldSize/1000));
@@ -25,11 +27,6 @@ public class Point {
     
     public int getSpeed() {
         return speed;
-    }
-    
-    public void movePoint(int newX, int newY){
-        this.x = newX;
-        this.y = newY;
     }
     
     public void setX(int x) {

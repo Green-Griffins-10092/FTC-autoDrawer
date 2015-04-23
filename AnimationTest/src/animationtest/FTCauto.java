@@ -3,7 +3,6 @@
 package animationtest;
 import java.awt.BasicStroke;
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -18,7 +17,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
-import javax.swing.WindowConstants;
 
 import static animationtest.PointArray.points;
 
@@ -104,6 +102,7 @@ public class FTCauto extends JFrame {
         private static final Image stuffedGriffins = new ImageIcon("STUFFED_GRIFFINS_FINAL_GRN.png").getImage();
         private static final Image field = new ImageIcon("Field.png").getImage();
         private static final Image field_shadow = new ImageIcon("Field_Shadow.png").getImage();
+        private static final Image autoDrawer = new ImageIcon("autoDrawer.png").getImage();
         
         
         public MainGraphicsPanel(){
@@ -120,11 +119,10 @@ public class FTCauto extends JFrame {
                 }
             });
             
-
+            
             //The animation timer
             Timer timer = new Timer(10, new TimerListener());
             timer.start();
-
             addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
@@ -138,7 +136,26 @@ public class FTCauto extends JFrame {
 
                 @Override
                 public void mouseReleased(MouseEvent e) {
-                    PointArray.addPoint(mouseX, mouseY);
+                    
+
+                    if(FTCauto.toolType == 1){
+                        PointArray.addPoint(e.getX(), e.getY());
+                    }
+                    
+                    
+                    if(FTCauto.toolType == 2){
+                        for(int i = 0; i < points.size(); i++){
+                            if(Math.abs((points.get(i).getX()+100) - e.getX())< 20){
+                                System.out.println("Test1");
+                                if(Math.abs((points.get(i).getY()+10) - e.getY())< 20) {
+                                    System.out.println("Test2");
+                                    points.remove(i);
+                                }
+                            }
+                        }
+                    }
+                    
+                    
                 }
 
                 @Override
@@ -153,6 +170,12 @@ public class FTCauto extends JFrame {
             });
         }
         
+        Color backgroundDark = new Color(0,0,0,50);
+        Color background = new Color(200,200,200);
+        Color sidePanelDark = new Color(0,0,0,50);
+        Color sidePanel = new Color(0,90,33);
+        Color sidePanelLight = new Color(200,200,200);
+        
         
         protected void paintComponent(Graphics g){
             super.paintComponent(g);
@@ -162,29 +185,20 @@ public class FTCauto extends JFrame {
             Graphics2D g2 = (Graphics2D) g;
             
             //Main program
-            Color darkBlueD = new Color(45,62,78);
-            Color darkBlueL = new Color(52,74,97);
-            Color lightGreenD = new Color(23,160,134);
-            Color lightGreenL = new Color(27,188,155);
-            
+
             
             //Main frame
-            g.setColor(darkBlueL);
+            g.setColor(background);
             g.fillRect(0, 0, getWidth(), getHeight());
-            g.setColor(darkBlueD);
-            g.fillRect(0, 0, 110, getHeight());
-
-            g.setColor(lightGreenD);
+            
+            g.setColor(sidePanel);
             g.fillRect(0, 0, 100, getHeight());
             
-            g.setColor(lightGreenL);
-            g.fillRect(0, 0, 5, getHeight());
             
-            g.fillRect(0, 0, 100, 5);
-            
+            g.setColor(sidePanelLight);
+            g.fillRect(0, 0, 100, 10);
             
             
-
             //Resizing the field
             if(getWidth()-100<getHeight()){
                 fieldSize = getWidth()-100;
@@ -193,6 +207,16 @@ public class FTCauto extends JFrame {
             }
             
             g.drawImage(field, 100, 10, (int)fieldSize, (int) fieldSize, null);
+            
+            //Menu Shadow
+             g.setColor(sidePanelDark);
+            //g.fillRect(90, 0, 10, getHeight());
+            
+            int[] shadowXPoints = {100,130,130,100};
+            int[] shadowYPoints = {10,30,getHeight(),getHeight()};
+        
+            g.fillPolygon(shadowXPoints,shadowYPoints, 4);
+            
             
             //Draw the Points
             for(int i = 0; i < points.size(); i++){
@@ -222,12 +246,17 @@ public class FTCauto extends JFrame {
                     g2.setStroke(new BasicStroke(5));
                     g2.draw(new Line2D.Float((float) points.get(i).getX()+100, (float) points.get(i).getY()+10,
                             (float) points.get(i-1).getX()+100, (float) points.get(i-1).getY()+10));
-                    
-                    //g.drawLine((int) points.get(i).getX()+100, (int) points.get(i).getY()+10,
-                      //      (int) points.get(i-1).getX()+100, (int) points.get(i-1).getY()+10);
                 }
             }
-
+            
+            if(toolType == 1){
+                Color point = new Color(0,200,50,(int) ((Math.sin((double)frames/20)*50)+130));
+                g.setColor(point);
+            }else if(toolType == 2){
+                Color point = new Color(200,50,0,(int) ((Math.sin((double)frames/20)*50)+130));
+                g.setColor(point);
+            }
+            
             //Mouse stuff
             g2.setStroke(new BasicStroke(2));
             g.drawLine(mouseX, 0, mouseX, getHeight());
@@ -241,13 +270,13 @@ public class FTCauto extends JFrame {
             //g.fillRect(mouseX, mouseY, 100, 100);
             
             //Field shadow
-            g.drawImage(field_shadow, 100, 10, (int)fieldSize, (int)fieldSize,null);
+            //g.drawImage(field_shadow, 100, 10, (int)fieldSize, (int)fieldSize,null);
             //----------------------
             
             //Opening credits & stuff
             
             if(showCredits){
-                if(openingTrans>0&&frames>200){
+                if(openingTrans>0&&frames>300){
                     openingTrans-=5;
                 }
                 
@@ -255,16 +284,18 @@ public class FTCauto extends JFrame {
                     openingTextTrans-=5;
                 }
                 
-                Color OpeningBackground = new Color(50,50,50,openingTrans);
+                Color OpeningBackground = new Color(255,255,255,openingTrans);
                 g.setColor(OpeningBackground);
                 g.fillRect(0, 0, getWidth(), getHeight());
                 
-                if(frames<250){
-                    g.drawImage(stuffedGriffins, (getWidth()/2)-374, (getHeight()/2)-149, 748, 299,null);
+                if(frames<300){
+                    g.drawImage(stuffedGriffins, 50, getHeight()-150, 748/3, 299/3,null);
+                    g.drawImage(autoDrawer, (getWidth()/2)-300, (getHeight()/2)-100, 629, 236,null);
                 }
                 
                 
-                OpeningBackground = new Color(50,50,50,openingTextTrans);
+                
+                OpeningBackground = new Color(10,10,10,openingTextTrans);
                 g.setColor(OpeningBackground);
                 g.fillRect(0, 0, getWidth(), getHeight());
             }
