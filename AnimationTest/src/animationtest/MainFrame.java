@@ -1,7 +1,6 @@
 
 
 package animationtest;
-
 import java.awt.Cursor;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
@@ -23,9 +22,5 @@ public class MainFrame extends JFrame {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setCursor(Cursor.CROSSHAIR_CURSOR);
         frame.setVisible(true);
-        
-        
-        
-        
     }
 }

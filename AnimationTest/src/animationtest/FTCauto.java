@@ -12,6 +12,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Line2D;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -28,22 +30,22 @@ public class FTCauto extends JFrame {
     
     public static double fieldSize = 0;
     
-    //!!Only for develepment version!!
+    //!!Only for development version!!
     public static boolean showCredits = true;
     
     
     //The type of tool to use
     //1 - Add: This tool will add points to the field
-    //2 - Deleat: This tool will deleat points you click on 
-    //(And prehaps if you drag deleat multible points in the selection)
+    //2 - Delete: This tool will delete points you click on
+    //(And perhaps if you drag delete multiple points in the selection)
     //3 - Edit: With this tool you can drag and select points 
-    //(Hopefully with a point selected you will be able to precicly change the x & y and the speed)
+    //(Hopefully with a point selected you will be able to precisely change the x & y and the speed)
     public static int toolType = 1;
     
-    //The point that is selected 
+    //The points that are selected
     //(will default to the last point placed, so we will not have 
-    //errors with it trying to look at a non existant point)
-    public static int selectedPoint = 0;
+    //errors with it trying to look at a non existent point)
+    public static List<Integer> selectedPoints = new LinkedList<Integer>();
   
 //    public static void main(String[] args) {
 //        
@@ -103,7 +105,7 @@ public class FTCauto extends JFrame {
         private static final Image field = new ImageIcon("Field.png").getImage();
         private static final Image field_shadow = new ImageIcon("Field_Shadow.png").getImage();
         private static final Image autoDrawer = new ImageIcon("autoDrawer.png").getImage();
-        
+
         
         public MainGraphicsPanel(){
             
@@ -126,7 +128,32 @@ public class FTCauto extends JFrame {
             addMouseListener(new MouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-
+                    //check if the mouse was clicked inside the field
+                    if (e.getX() > 100 && e.getX() < fieldSize + 100 && e.getY() > 10 && e.getY() < fieldSize + 10) {
+                        if(toolType == 1){
+                            // check if the button pressed is the left button
+                            if (e.getButton() == MouseEvent.BUTTON1) {
+                                // add point to list
+                                PointArray.addPoint(mouseX, mouseY);
+                                // if shift key is not held, clear the selectedPoints list
+                                if (!e.isShiftDown()) {
+                                    selectedPoints.clear();
+                                }
+                                // add point to list
+                                selectedPoints.add(points.size() - 1);
+                            }
+                        }else if(toolType == 2){
+                            for(int i = 0; i < points.size(); i++){
+                                if(Math.abs((points.get(i).getX()+100) - e.getX())< 20){
+                                    System.out.println("Test1");
+                                    if(Math.abs((points.get(i).getY()+10) - e.getY())< 20) {
+                                        System.out.println("Test2");
+                                        points.remove(i);
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
 
                 @Override
@@ -136,25 +163,7 @@ public class FTCauto extends JFrame {
 
                 @Override
                 public void mouseReleased(MouseEvent e) {
-                    
 
-                    if(FTCauto.toolType == 1){
-                        PointArray.addPoint(e.getX(), e.getY());
-                    }
-                    
-                    
-                    if(FTCauto.toolType == 2){
-                        for(int i = 0; i < points.size(); i++){
-                            if(Math.abs((points.get(i).getX()+100) - e.getX())< 20){
-                                System.out.println("Test1");
-                                if(Math.abs((points.get(i).getY()+10) - e.getY())< 20) {
-                                    System.out.println("Test2");
-                                    points.remove(i);
-                                }
-                            }
-                        }
-                    }
-                    
                     
                 }
 
@@ -207,6 +216,7 @@ public class FTCauto extends JFrame {
             }
             
             g.drawImage(field, 100, 10, (int)fieldSize, (int) fieldSize, null);
+
             
             //Menu Shadow
              g.setColor(sidePanelDark);
@@ -220,13 +230,19 @@ public class FTCauto extends JFrame {
             
             //Draw the Points
             for(int i = 0; i < points.size(); i++){
-                //Makng it into a more usable form
+                //Making it into a more usable form
                 int size = points.get(i).size;
-                
-                //Making a new color for each point
-                Color point = new Color(0,200,50,points.get(i).transparency);
+                boolean selected = selectedPoints.contains(i);
+
+                Color point = new Color(0, 200, 50, points.get(i).transparency);
+
+                if(selected && selectedPoints.contains(i-1)) {
+                    point = new Color(0, 10, 150, points.get(i).transparency);
+                }
+
+                //set color
                 g.setColor(point);
-                
+
                //Draw the point
                 g.fillOval((int) points.get(i).getX()+100-(size/2), (int) points.get(i).getY()+10-(size/2), 
                         size, size);
@@ -241,11 +257,34 @@ public class FTCauto extends JFrame {
                 if(points.get(i).transparency<250){
                     points.get(i).transparency+=2;
                 }
-                
                 if(i>0){
                     g2.setStroke(new BasicStroke(5));
                     g2.draw(new Line2D.Float((float) points.get(i).getX()+100, (float) points.get(i).getY()+10,
                             (float) points.get(i-1).getX()+100, (float) points.get(i-1).getY()+10));
+                }
+
+                int transMax = 250;
+                //if the point is selected, then set color to be blue, if not green.
+                if(selected) {
+                    point = new Color(0, 10, 150, points.get(i).transparency);
+                    g.setColor(point);
+                    transMax = 150;
+                }
+
+                //Draw the point
+                g.fillOval((int) points.get(i).getX()+100-(size/2), (int) points.get(i).getY()+10-(size/2),
+                        size, size);
+
+                //Changing the size
+                if(size>10){
+                    points.get(i).size -=points.get(i).sizeSpeed;
+
+                    points.get(i).sizeSpeed+=0.1;
+                }
+
+                //And the transparency
+                if(points.get(i).transparency < transMax){
+                    points.get(i).transparency += 2;
                 }
             }
             
