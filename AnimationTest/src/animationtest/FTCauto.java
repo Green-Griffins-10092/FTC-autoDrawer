@@ -12,8 +12,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Line2D;
-import java.util.LinkedList;
-import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -45,7 +43,7 @@ public class FTCauto extends JFrame {
     //The points that are selected
     //(will default to the last point placed, so we will not have 
     //errors with it trying to look at a non existent point)
-    public static List<Integer> selectedPoints = new LinkedList<Integer>();
+    public static int selectedPoint = -1;
   
 //    public static void main(String[] args) {
 //        
@@ -135,12 +133,8 @@ public class FTCauto extends JFrame {
                             if (e.getButton() == MouseEvent.BUTTON1) {
                                 // add point to list
                                 PointArray.addPoint(mouseX, mouseY);
-                                // if shift key is not held, clear the selectedPoints list
-                                if (!e.isShiftDown()) {
-                                    selectedPoints.clear();
-                                }
-                                // add point to list
-                                selectedPoints.add(points.size() - 1);
+                                //make new point the selected point
+                                selectedPoint = points.size() - 1;
                             }
                         }else if(toolType == 2){
                             for(int i = 0; i < points.size(); i++){
@@ -149,21 +143,27 @@ public class FTCauto extends JFrame {
                                     if(Math.abs((points.get(i).getY()+10) - e.getY())< 20) {
                                         System.out.println("Test2");
                                         points.remove(i);
-                                        selectedPoints.clear();
+                                        selectedPoint = -1;
+                                        break;
                                     }
                                 }
                             }
                         }else if(toolType == 3)
                         {
-                            for(int i = 0; i < points.size(); i++){
-                                if(Math.abs((points.get(i).getX()+100) - e.getX())< 20){
-                                    System.out.println("Test1");
-                                    if(Math.abs((points.get(i).getY()+10) - e.getY())< 20) {
-                                        System.out.println("Test2");
-                                        points.remove(i);
-                                        selectedPoints.clear();
+                            int clickedOn = -1;
+                            for (int i = 0; i < points.size(); i++) {
+                                if (Math.abs((points.get(i).getX() + 100) - e.getX()) < 20) {
+                                    if (Math.abs((points.get(i).getY() + 10) - e.getY()) < 20) {
+                                        clickedOn = i;
+                                        break;
                                     }
                                 }
+                            }
+                            if(clickedOn == -1 && selectedPoint != -1) {
+                                points.set(selectedPoint, new Point(e.getX(), e.getY()));
+                            }else if (clickedOn != -1)
+                            {
+                                selectedPoint = clickedOn;
                             }
                         }
                     }
@@ -245,13 +245,8 @@ public class FTCauto extends JFrame {
             for(int i = 0; i < points.size(); i++){
                 //Making it into a more usable form
                 int size = points.get(i).size;
-                boolean selected = selectedPoints.contains(i);
 
                 Color point = new Color(0, 200, 50, points.get(i).transparency);
-
-                if(selected && selectedPoints.contains(i-1)) {
-                    point = new Color(0, 10, 150, points.get(i).transparency);
-                }
 
                 //set color
                 g.setColor(point);
@@ -278,7 +273,7 @@ public class FTCauto extends JFrame {
 
                 int transMax = 250;
                 //if the point is selected, then set color to be blue, if not green.
-                if(selected) {
+                if(selectedPoint == i) {
                     point = new Color(0, 10, 150, points.get(i).transparency);
                     g.setColor(point);
                     transMax = 150;
@@ -306,6 +301,9 @@ public class FTCauto extends JFrame {
                 g.setColor(point);
             }else if(toolType == 2){
                 Color point = new Color(200,50,0,(int) ((Math.sin((double)frames/20)*50)+130));
+                g.setColor(point);
+            }else if(toolType == 3){
+                Color point = new Color(50, 225, 200);
                 g.setColor(point);
             }
             

@@ -13,6 +13,7 @@ public class MenuBars{
     public static JMenu tool = new JMenu("Tool Type");
     public static JMenuItem toolAdd = new JMenuItem("Add",KeyEvent.VK_T);
     public static JMenuItem toolDelete = new JMenuItem("Delete",KeyEvent.VK_T);
+    public static JMenuItem toolEdit = new JMenuItem("Edit", KeyEvent.VK_T);
     
     public static JMenuBar menuBars(){
         
@@ -60,6 +61,10 @@ public class MenuBars{
         toolDelete.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, ActionEvent.CTRL_MASK));
         toolDelete.getAccessibleContext().setAccessibleDescription("Change the tool to delete");
         tool.add(toolDelete);
+
+        toolEdit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.CTRL_MASK));
+        toolEdit.getAccessibleContext().setAccessibleDescription("Change the tool to edit");
+        tool.add(toolEdit);
         
         toolAdd.addActionListener(new ActionListener(){
         @Override
@@ -73,6 +78,14 @@ public class MenuBars{
             @Override
             public void actionPerformed(ActionEvent e) {
                 FTCauto.toolType = 2;
+                System.out.println(FTCauto.toolType);
+            }
+        });
+
+        toolEdit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                FTCauto.toolType = 3;
                 System.out.println(FTCauto.toolType);
             }
         });
