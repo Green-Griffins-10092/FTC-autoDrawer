@@ -149,6 +149,19 @@ public class FTCauto extends JFrame {
                                     if(Math.abs((points.get(i).getY()+10) - e.getY())< 20) {
                                         System.out.println("Test2");
                                         points.remove(i);
+                                        selectedPoints.clear();
+                                    }
+                                }
+                            }
+                        }else if(toolType == 3)
+                        {
+                            for(int i = 0; i < points.size(); i++){
+                                if(Math.abs((points.get(i).getX()+100) - e.getX())< 20){
+                                    System.out.println("Test1");
+                                    if(Math.abs((points.get(i).getY()+10) - e.getY())< 20) {
+                                        System.out.println("Test2");
+                                        points.remove(i);
+                                        selectedPoints.clear();
                                     }
                                 }
                             }

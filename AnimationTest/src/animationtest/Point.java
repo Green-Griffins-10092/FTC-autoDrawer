@@ -4,14 +4,19 @@ package animationtest;
 import static animationtest.FTCauto.fieldSize;
 
 public class Point {
-    private double x = 10;
-    private double y = 10;
+    private double x;
+    private double y;
     private int speed = 50;
     public int size = 100;
     public int sizeSpeed = 1;
     public int transparency = 1;
     
-    
+    public Point(double x, double y)
+    {
+        this.x = (x-100)  /( fieldSize/1000);
+        this.y = (y-10) /( fieldSize/1000);
+    }
+
     public void movePoint(int newX, int newY){
         this.x = newX;
         this.y = newY;

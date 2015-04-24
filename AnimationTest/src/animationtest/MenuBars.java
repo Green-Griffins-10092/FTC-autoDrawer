@@ -1,6 +1,5 @@
 package animationtest;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -13,7 +12,7 @@ public class MenuBars{
     public static JMenu file = new JMenu("File");
     public static JMenu tool = new JMenu("Tool Type");
     public static JMenuItem toolAdd = new JMenuItem("Add",KeyEvent.VK_T);
-    public static JMenuItem toolDeleat = new JMenuItem("Deleat",KeyEvent.VK_T);
+    public static JMenuItem toolDelete = new JMenuItem("Delete",KeyEvent.VK_T);
     
     public static JMenuBar menuBars(){
         
@@ -58,9 +57,9 @@ public class MenuBars{
         tool.add(toolAdd);
         
         
-        toolDeleat.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D,ActionEvent.CTRL_MASK));
-        toolDeleat.getAccessibleContext().setAccessibleDescription("Change the tool to deleat");
-        tool.add(toolDeleat);
+        toolDelete.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_D, ActionEvent.CTRL_MASK));
+        toolDelete.getAccessibleContext().setAccessibleDescription("Change the tool to delete");
+        tool.add(toolDelete);
         
         toolAdd.addActionListener(new ActionListener(){
         @Override
@@ -70,9 +69,9 @@ public class MenuBars{
             }
         });
         
-        toolDeleat.addActionListener(new ActionListener(){
-        @Override
-        public void actionPerformed(ActionEvent e){
+        toolDelete.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
                 FTCauto.toolType = 2;
                 System.out.println(FTCauto.toolType);
             }

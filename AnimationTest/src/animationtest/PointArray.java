@@ -6,15 +6,10 @@ import java.util.List;
 
 
 public class PointArray {
-    public static List<Point> points = new ArrayList<>();
+    public static List<Point> points = new ArrayList<Point>();
     
     
     public static void addPoint(int x, int y){
-        Point aPoint = new Point();
-        aPoint.setX(x);
-        aPoint.setY(y);
-        
-        
-        points.add(aPoint);
+        points.add(new Point(x, y));
     }
 }
