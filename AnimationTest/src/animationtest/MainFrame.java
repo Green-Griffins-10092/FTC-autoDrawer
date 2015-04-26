@@ -1,6 +1,5 @@
-
-
 package animationtest;
+
 import java.awt.Cursor;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;

@@ -1,6 +1,5 @@
-//Test test2
-
 package animationtest;
+
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -101,9 +100,14 @@ public class FTCauto extends JFrame {
         //Picture stuff  !!You have to use png so you can have transparency
         private static final Image stuffedGriffins = new ImageIcon("STUFFED_GRIFFINS_FINAL_GRN.png").getImage();
         private static final Image field = new ImageIcon("Field.png").getImage();
-        private static final Image field_shadow = new ImageIcon("Field_Shadow.png").getImage();
         private static final Image autoDrawer = new ImageIcon("autoDrawer.png").getImage();
+        private static final double FIELD_HEIGHT_IN_INCHES = 18;
+        private static double inchesToPixels = FIELD_HEIGHT_IN_INCHES/fieldSize;
 
+        public static double getInchesToPixels()
+        {
+            return inchesToPixels;
+        }
         
         public MainGraphicsPanel(){
             
@@ -192,7 +196,6 @@ public class FTCauto extends JFrame {
             });
         }
         
-        Color backgroundDark = new Color(0,0,0,50);
         Color background = new Color(200,200,200);
         Color sidePanelDark = new Color(0,0,0,50);
         Color sidePanel = new Color(0,90,33);
@@ -314,14 +317,6 @@ public class FTCauto extends JFrame {
 
             g.drawLine(mouseX+1, 0, mouseX+1, getHeight());
             g.drawLine(0, mouseY+1, getWidth(), mouseY+1);
-
-            //----Shadow Testing (having a semi-transparent image cast "shadows" onto the field)----
-            //g.setColor(lightGreenL);
-            //g.fillRect(mouseX, mouseY, 100, 100);
-            
-            //Field shadow
-            //g.drawImage(field_shadow, 100, 10, (int)fieldSize, (int)fieldSize,null);
-            //----------------------
             
             //Opening credits & stuff
             
@@ -349,7 +344,10 @@ public class FTCauto extends JFrame {
                 g.setColor(OpeningBackground);
                 g.fillRect(0, 0, getWidth(), getHeight());
             }
-            
+
+            //the ratio of inches to pixels in the field
+            inchesToPixels = FIELD_HEIGHT_IN_INCHES/fieldSize;
+
             frames++;
         }
         class TimerListener implements ActionListener{
