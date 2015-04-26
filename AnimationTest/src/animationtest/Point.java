@@ -10,6 +10,7 @@ public class Point {
     public int size = 100;
     public int sizeSpeed = 1;
     public int transparency = 1;
+    public String extraCode = "";
     
     public Point(double x, double y)
     {

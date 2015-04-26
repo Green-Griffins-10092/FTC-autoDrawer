@@ -354,6 +354,8 @@ public class FTCauto extends JFrame {
             
             frames++;
         }
+        
+        
         class TimerListener implements ActionListener{
             public void actionPerformed(ActionEvent e){
                 repaint();

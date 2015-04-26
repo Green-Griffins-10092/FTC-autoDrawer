@@ -3,6 +3,7 @@ package animationtest;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.FileNotFoundException;
 import javax.swing.JMenu;
 import javax.swing.*;
 
@@ -14,7 +15,7 @@ public class MenuBars{
     public static JMenuItem toolAdd = new JMenuItem("Add",KeyEvent.VK_T);
     public static JMenuItem toolDelete = new JMenuItem("Delete",KeyEvent.VK_T);
     
-    public static JMenuBar menuBars(){
+    public static JMenuBar menuBars() throws FileNotFoundException{
         
         
         
@@ -32,6 +33,11 @@ public class MenuBars{
         menuItem2.getAccessibleContext().setAccessibleDescription("Save the file");
         file.add(menuItem2);
         
+        JMenuItem menuItem5 = new JMenuItem("Export");
+        menuItem5.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,ActionEvent.CTRL_MASK));
+        menuItem5.getAccessibleContext().setAccessibleDescription("Export the file");
+        file.add(menuItem5);
+        
         file.addSeparator();
         
         JMenuItem menuItem3 = new JMenuItem("Open",KeyEvent.VK_S);
@@ -44,6 +50,7 @@ public class MenuBars{
         JMenuItem menuItem4 = new JMenuItem("Close");
         menuItem4.getAccessibleContext().setAccessibleDescription("Close the program");
         file.add(menuItem4);
+        
         
         //------------Tool Menu----------------
         
@@ -74,13 +81,6 @@ public class MenuBars{
             public void actionPerformed(ActionEvent e) {
                 FTCauto.toolType = 2;
                 System.out.println(FTCauto.toolType);
-            }
-        });
-        
-        menuItem4.addActionListener(new ActionListener(){
-        @Override
-        public void actionPerformed(ActionEvent e){
-                System.exit(0);
             }
         });
         
