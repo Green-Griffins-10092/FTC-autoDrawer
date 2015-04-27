@@ -16,10 +16,10 @@ public class Export {
     //AutoDrive
     public static void prepareCode() throws FileNotFoundException{
         
-        getAutoDrive();
-        out = autoDrive;
+        //getAutoDrive();
+        //out = autoDrive;
         
-        System.out.println(out);
+        //System.out.println(out);
     }
     
     public static void getAutoDrive() throws FileNotFoundException{

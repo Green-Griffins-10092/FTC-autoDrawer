@@ -1,6 +1,6 @@
 
-
 package animationtest;
+
 import java.awt.Cursor;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
@@ -12,7 +12,6 @@ public class MainFrame extends JFrame {
     }
     
     public static void main(String[] args) {
-        
         
         MainFrame frame = new MainFrame();
         frame.setTitle("AutoDrawer");

@@ -12,6 +12,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Line2D;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -103,10 +105,10 @@ public class FTCauto extends JFrame {
         private static final Image field = new ImageIcon("Field.png").getImage();
         private static final Image field_shadow = new ImageIcon("Field_Shadow.png").getImage();
         private static final Image autoDrawer = new ImageIcon("autoDrawer.png").getImage();
-
+        
         
         public MainGraphicsPanel(){
-            
+            System.out.println("MGP1");
             
             //Getting mouse location when moved
             addMouseMotionListener(new MouseMotionAdapter(){
@@ -190,6 +192,9 @@ public class FTCauto extends JFrame {
 
                 }
             });
+            
+            System.out.println("MGP2");
+            
         }
         
         Color backgroundDark = new Color(0,0,0,50);
@@ -202,7 +207,8 @@ public class FTCauto extends JFrame {
         protected void paintComponent(Graphics g){
             super.paintComponent(g);
             
-            
+            System.out.println("PC");
+
             
             Graphics2D g2 = (Graphics2D) g;
             
@@ -245,9 +251,9 @@ public class FTCauto extends JFrame {
             for(int i = 0; i < points.size(); i++){
                 //Making it into a more usable form
                 int size = points.get(i).size;
-
+                
                 Color point = new Color(0, 200, 50, points.get(i).transparency);
-
+                
                 //set color
                 g.setColor(point);
 
@@ -351,6 +357,7 @@ public class FTCauto extends JFrame {
             }
             
             frames++;
+            System.out.println("G");
         }
         
         

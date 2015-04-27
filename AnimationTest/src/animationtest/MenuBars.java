@@ -3,7 +3,6 @@ package animationtest;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.io.FileNotFoundException;
 import javax.swing.JMenu;
 import javax.swing.*;
 
@@ -16,7 +15,7 @@ public class MenuBars{
     public static JMenuItem toolDelete = new JMenuItem("Delete",KeyEvent.VK_T);
     public static JMenuItem toolEdit = new JMenuItem("Edit", KeyEvent.VK_T);
     
-    public static JMenuBar menuBars() throws FileNotFoundException{
+    public static JMenuBar menuBars(){
         
         
         
