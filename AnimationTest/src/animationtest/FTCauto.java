@@ -91,6 +91,25 @@ public class FTCauto extends JFrame {
             Timer timer = new Timer(10, new TimerListener());
             timer.start();
             addMouseListener(new MouseListener() {
+
+                //This method checks if the coordinates represented by the parameters
+                //is one of the points stored in List points.
+                //returns the index of the point that was clicked, or -1 if no point was clicked.
+                private int clickedPoint(int x, int y)
+                {
+                    int clickedOn = -1;
+                    for (int i = 0; i < points.size(); i++) {
+                        if (Math.abs((points.get(i).getX() + 100) - x) < 20) {
+                            if (Math.abs((points.get(i).getY() + 10) - y) < 20) {
+                                clickedOn = i;
+                                break;
+                            }
+                        }
+                    }
+                    return clickedOn;
+                }
+
+
                 @Override
                 public void mouseClicked(MouseEvent e) {
                     //check if the mouse was clicked inside the field
@@ -104,44 +123,31 @@ public class FTCauto extends JFrame {
                                 selectedPoint = points.size() - 1;
                             }
                         }else if(toolType == 2){
-                            for(int i = 0; i < points.size(); i++){
-                                if(Math.abs((points.get(i).getX()+100) - e.getX())< 20){
-                                    System.out.println("Test1");
-                                    if(Math.abs((points.get(i).getY()+10) - e.getY())< 20) {
-                                        System.out.println("Test2");
-                                        points.remove(i);
-                                        selectedPoint = -1;
-                                        break;
-                                    }
-                                }
+                            int point = clickedPoint(e.getX(), e.getY());
+                            if(point != -1)
+                            {
+                                points.remove(point);
+                                selectedPoint = -1;
                             }
                         }else if(toolType == 3)
                         {
-                            int clickedOn = -1;
-                            for (int i = 0; i < points.size(); i++) {
-                                if (Math.abs((points.get(i).getX() + 100) - e.getX()) < 20) {
-                                    if (Math.abs((points.get(i).getY() + 10) - e.getY()) < 20) {
-                                        clickedOn = i;
-                                        break;
-                                    }
-                                }
-                            }
-                            if(clickedOn == -1 && selectedPoint != -1) {
+                            int point = clickedPoint(e.getX(), e.getY());
+                            if(point == -1 && selectedPoint != -1) {
                                 points.set(selectedPoint, new Point(e.getX(), e.getY()));
-                            }else if (clickedOn != -1)
+                            }else if (point != -1)
                             {
-                                selectedPoint = clickedOn;
+                                selectedPoint = point;
                             }
-                        }else if (toolType == -1)
+                        }else if (developing && toolType == -1)
                         {
-                            int clickedOn = -1;
-                            for (int i = 0; i < points.size(); i++) {
-                                if (Math.abs((points.get(i).getX() + 100) - e.getX()) < 20) {
-                                    if (Math.abs((points.get(i).getY() + 10) - e.getY()) < 20) {
-                                        clickedOn = i;
-                                        break;
-                                    }
-                                }
+                            int point = clickedPoint(e.getX(), e.getY());
+                            if (selectedPoint == -1)
+                            {
+                                selectedPoint = point;
+                            }
+                            else if (point != -1)
+                            {
+                                System.out.println("Distance between point " + selectedPoint + " and point " + point + " is \n" + points.get(selectedPoint).getDistance(points.get(point)) + " inches");
                             }
                         }
                     }
