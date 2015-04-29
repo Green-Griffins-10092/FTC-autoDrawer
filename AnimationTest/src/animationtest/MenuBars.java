@@ -14,7 +14,12 @@ public class MenuBars{
     public static JMenuItem toolAdd = new JMenuItem("Add",KeyEvent.VK_T);
     public static JMenuItem toolDelete = new JMenuItem("Delete",KeyEvent.VK_T);
     public static JMenuItem toolEdit = new JMenuItem("Edit", KeyEvent.VK_T);
-    
+
+    //testing methods, will be added to menu if
+    //developing in FTCauto is true
+    public static JMenu testing = new JMenu("Testing Methods");
+    public static JMenuItem testingGetDistance = new JMenuItem("Get Distance");
+
     public static JMenuBar menuBars(){
         
         
@@ -102,7 +107,24 @@ public class MenuBars{
                 System.exit(0);
             }
         });
-        
+
+        if(FTCauto.developing)
+        {
+            menuBar.add(testing);
+            testingGetDistance.getAccessibleContext().setAccessibleDescription("Test the getDistance method\n" +
+                    " prints the distance between the selected point and\n " +
+                    "the clicked on point to the terminal");
+            testing.add(testingGetDistance);
+
+            testingGetDistance.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    FTCauto.toolType = -1;
+                    System.out.println(FTCauto.toolType);
+                }
+            });
+        }
+
         return(menuBar);
     }
 }

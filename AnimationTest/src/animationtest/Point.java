@@ -1,4 +1,3 @@
-
 package animationtest;
 
 import static animationtest.FTCauto.fieldSize;
@@ -45,6 +44,23 @@ public class Point {
     
     public void setSpeed(int speed) {
         this.speed = speed;
+    }
+
+    public double getDistance(Point p)
+    {
+        double x1 = this.getX();
+        double x2 = p.getX();
+        double y1 = this.getY();
+        double y2 = p.getY();
+
+        double x = x1-x2;
+        double y = y1-y2;
+
+        x = x*x;
+        y = y*y;
+
+        double rtn = Math.sqrt(x+y);
+        return rtn* FTCauto.MainGraphicsPanel.getInchesToPixels();
     }
     
 }
