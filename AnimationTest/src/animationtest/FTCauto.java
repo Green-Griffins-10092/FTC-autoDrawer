@@ -2,6 +2,7 @@ package animationtest;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -28,62 +29,24 @@ public class FTCauto extends JFrame {
     public static double fieldSize = 0;
     
     //!!Only for development version!!
-    public static boolean showCredits = true;
+    public static boolean developing = true;
     
     
-    //The type of tool to use
+    //The type of tool to use, 0 represents no tool
+    // Positive numbers represent tested tools, negative numbers represent tools being tested
     //1 - Add: This tool will add points to the field
     //2 - Delete: This tool will delete points you click on
     //(And perhaps if you drag delete multiple points in the selection)
     //3 - Edit: With this tool you can drag and select points 
     //(Hopefully with a point selected you will be able to precisely change the x & y and the speed)
-    public static int toolType = 1;
+    //4 - Get Distance: This tool prints the distance between the selected point and the clicked point
+    public static int toolType = 0;
     
     //The points that are selected
     //(will default to the last point placed, so we will not have 
     //errors with it trying to look at a non existent point)
+    //-1 represents no selected point
     public static int selectedPoint = -1;
-  
-//    public static void main(String[] args) {
-//        
-//        
-//        FTCauto frame = new FTCauto();
-//        frame.setTitle("AutoDrawer");
-//        frame.setSize(1000, 700);
-//        frame.setLocationRelativeTo(null);
-//        frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-//        frame.setCursor(Cursor.CROSSHAIR_CURSOR);
-//        frame.setVisible(true);
-//
-//        frame.addMouseListener(new MouseListener() {
-//            @Override
-//            public void mouseClicked(MouseEvent e) {
-//
-//            }
-//
-//            @Override
-//            public void mousePressed(MouseEvent e) {
-//
-//            }
-//            
-//            @Override
-//            public void mouseReleased(MouseEvent e) {
-//                PointArray.addPoint(e.getX(), e.getY());
-//                
-//                
-//            }
-//            
-//            @Override
-//            public void mouseEntered(MouseEvent e) {
-//
-//            }
-//
-//            @Override
-//            public void mouseExited(MouseEvent e) {
-//
-//            }
-//        });
-//    }
     
     public static class MainGraphicsPanel extends JPanel{
         
@@ -95,7 +58,7 @@ public class FTCauto extends JFrame {
         private int openingTrans = 255;
         private int openingTextTrans = 255;
         
-        private int frames =0;
+        private int frames = 0;
         
         //Picture stuff  !!You have to use png so you can have transparency
         private static final Image stuffedGriffins = new ImageIcon("STUFFED_GRIFFINS_FINAL_GRN.png").getImage();
@@ -169,6 +132,17 @@ public class FTCauto extends JFrame {
                             {
                                 selectedPoint = clickedOn;
                             }
+                        }else if (toolType == -1)
+                        {
+                            int clickedOn = -1;
+                            for (int i = 0; i < points.size(); i++) {
+                                if (Math.abs((points.get(i).getX() + 100) - e.getX()) < 20) {
+                                    if (Math.abs((points.get(i).getY() + 10) - e.getY()) < 20) {
+                                        clickedOn = i;
+                                        break;
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -200,6 +174,7 @@ public class FTCauto extends JFrame {
         Color sidePanelDark = new Color(0,0,0,50);
         Color sidePanel = new Color(0,90,33);
         Color sidePanelLight = new Color(200,200,200);
+        Color warningRed = new Color(250, 0, 0);
         
         
         protected void paintComponent(Graphics g){
@@ -225,7 +200,7 @@ public class FTCauto extends JFrame {
             
             
             //Resizing the field
-            if(getWidth()-100<getHeight()){
+            if(getWidth()-100<getHeight()-10){
                 fieldSize = getWidth()-100;
             }else{
                 fieldSize = getHeight()-10;
@@ -308,6 +283,8 @@ public class FTCauto extends JFrame {
             }else if(toolType == 3){
                 Color point = new Color(50, 225, 200);
                 g.setColor(point);
+            }else if(developing && toolType == -1){
+                g.setColor(warningRed);
             }
             
             //Mouse stuff
@@ -320,7 +297,7 @@ public class FTCauto extends JFrame {
             
             //Opening credits & stuff
             
-            if(showCredits){
+            if(!developing){
                 if(openingTrans>0&&frames>300){
                     openingTrans-=5;
                 }
@@ -343,6 +320,10 @@ public class FTCauto extends JFrame {
                 OpeningBackground = new Color(10,10,10,openingTextTrans);
                 g.setColor(OpeningBackground);
                 g.fillRect(0, 0, getWidth(), getHeight());
+            } else {
+                g.setColor(warningRed);
+                g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 35));
+                g.drawString("Developing!", 5, 20);
             }
 
             //the ratio of inches to pixels in the field
