@@ -80,7 +80,7 @@ public class MenuBars{
         toolAdd.addActionListener(new ActionListener(){
         @Override
         public void actionPerformed(ActionEvent e){
-                FTCauto.toolType = 1;
+                ToolMouseListener.toolType = 1;
                 System.out.println("Add");
             }
         });
@@ -88,16 +88,16 @@ public class MenuBars{
         toolDelete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                FTCauto.toolType = 2;
-                System.out.println(FTCauto.toolType);
+                ToolMouseListener.toolType  = 2;
+                System.out.println(ToolMouseListener.toolType );
             }
         });
 
         toolEdit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                FTCauto.toolType = 3;
-                System.out.println(FTCauto.toolType);
+                ToolMouseListener.toolType  = 3;
+                System.out.println(ToolMouseListener.toolType );
             }
         });
         
@@ -119,8 +119,8 @@ public class MenuBars{
             testingGetDistance.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    FTCauto.toolType = -1;
-                    System.out.println(FTCauto.toolType);
+                    ToolMouseListener.toolType  = -1;
+                    System.out.println(ToolMouseListener.toolType );
                 }
             });
         }

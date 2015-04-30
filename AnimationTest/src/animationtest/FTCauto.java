@@ -161,7 +161,7 @@ public class FTCauto extends JFrame {
                     g.setColor(point);
                     transMax = 150;
                 }
-
+                
                 //Draw the point
                 g.fillOval((int) points.get(i).getX()+100-(size/2), (int) points.get(i).getY()+10-(size/2),
                         size, size);

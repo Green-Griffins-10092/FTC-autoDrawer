@@ -16,13 +16,13 @@ public class PointArray {
         return path;
     }
     
-    public static double getAngle(int i){
-        double x1 = points.get(i).getX();
-        double y1 = points.get(i).getY();
-        double x2 = points.get(i+1).getX();
-        double y2 = points.get(i+1).getY();
-        double x3 = points.get(i-1).getX();
-        double y3 = points.get(i-1).getY();
+    public double getAngle(int i){
+        double x1 = path.get(i).getX();
+        double y1 = path.get(i).getY();
+        double x2 = path.get(i+1).getX();
+        double y2 = path.get(i+1).getY();
+        double x3 = path.get(i-1).getX();
+        double y3 = path.get(i-1).getY();
         
         double a1 = Math.toDegrees(Math.atan2(x2-y1, x2-y1));
         //double a2 = Math.toDegrees(Math.atan2(x3-x1, y3-y1));

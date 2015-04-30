@@ -15,7 +15,7 @@ public class ToolMouseListener implements MouseListener{
     //errors with it trying to look at a non existent point)
     //-1 represents no selected point
     public static int selectedPoint = -1;
-
+    
     //The type of tool to use, 0 represents no tool
     // Positive numbers represent tested tools, negative numbers represent tools being tested
     //1 - Add: This tool will add points to the field
@@ -25,10 +25,10 @@ public class ToolMouseListener implements MouseListener{
     //(Hopefully with a point selected you will be able to precisely change the x & y and the speed)
     //-1 - Get Distance: This tool prints the distance between the selected point and the clicked point
     public static int toolType = 0;
-
+    
     //copy of the reference of points
     public static List<Point> points = FTCauto.points;
-
+    
     //This method checks if the coordinates represented by the parameters
     //is one of the points stored in List points.
     //returns the index of the point that was clicked, or -1 if no point was clicked.
@@ -46,7 +46,7 @@ public class ToolMouseListener implements MouseListener{
         return clickedOn;
     }
 
-
+    
     @Override
     public void mouseClicked(MouseEvent e) {
         //check if the mouse was clicked inside the field
@@ -55,7 +55,7 @@ public class ToolMouseListener implements MouseListener{
                 // check if the button pressed is the left button
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     // add point to list
-                    points.addPoint(mouseX, mouseY);
+                    points.addPoint(FTCauto.MainGraphicsPanel.mouseX, FTCauto.MainGraphicsPanel.mouseY);
                     //make new point the selected point
                     selectedPoint = points.size() - 1;
                 }
