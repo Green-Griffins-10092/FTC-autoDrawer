@@ -5,11 +5,15 @@ import java.util.List;
 
 
 public class PointArray {
-    public static List<Point> points = new ArrayList<Point>();
+    public List<Point> path = new ArrayList<Point>();
     
     
-    public static void addPoint(int x, int y){
-        points.add(new Point(x, y));
+    public void addPoint(int x, int y){
+        path.add(new Point(x, y));
+    }
+
+    public List<Point> getPath() {
+        return path;
     }
     
     public static double getAngle(int i){
