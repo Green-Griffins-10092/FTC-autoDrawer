@@ -266,7 +266,14 @@ public class FTCauto extends JFrame {
                 //Draw the point
                 g.fillOval((int) points.get(i).getX()+100-(size/2), (int) points.get(i).getY()+10-(size/2),
                         size, size);
-
+                
+                if(i!=0&&i!=points.size()-1){
+                    g.setColor(new Color(0,0,0,points.get(i).transparency));
+                    g.drawString(String.valueOf((int)(PointArray.getAngle(i))),
+                        (int) (points.get(i).getX()+100), (int) points.get(i).getY()+10);
+                        
+                }
+                
                 //Changing the size
                 if(size>10){
                     points.get(i).size -=points.get(i).sizeSpeed;
@@ -334,7 +341,7 @@ public class FTCauto extends JFrame {
             
             //the ratio of inches to pixels in the field
             inchesToPixels = FIELD_HEIGHT_IN_INCHES/fieldSize;
-
+            
             frames++;
         }
         
