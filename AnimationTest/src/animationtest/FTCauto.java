@@ -29,8 +29,7 @@ public class FTCauto extends JFrame {
     //!!Only for development version!!
     public static boolean developing = true;
 
-    private static PointArray currentPath = new PointArray();
-    public static List<Point> points = currentPath.getPath();
+    public static PointArray points = new PointArray();
     
     public static class MainGraphicsPanel extends JPanel{
         
@@ -168,7 +167,7 @@ public class FTCauto extends JFrame {
                 
                 if(i!=0&&i!=points.size()-1){
                     g.setColor(new Color(0,0,0,points.get(i).transparency));
-                    g.drawString(String.valueOf((int)(PointArray.getAngle(i))),
+                    g.drawString(String.valueOf((int)(points.getAngle(i))),
                         (int) (points.get(i).getX()+100), (int) points.get(i).getY()+10);
                         
                 }

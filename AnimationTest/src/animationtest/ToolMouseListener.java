@@ -2,8 +2,6 @@ package animationtest;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.List;
-import animationtest.PointArray.*;
 
 /**
  * Created by david on 4/29/2015.
@@ -27,7 +25,7 @@ public class ToolMouseListener implements MouseListener{
     public static int toolType = 0;
     
     //copy of the reference of points
-    public static List<Point> points = FTCauto.points;
+    public static PointArray points = FTCauto.points;
     
     //This method checks if the coordinates represented by the parameters
     //is one of the points stored in List points.
