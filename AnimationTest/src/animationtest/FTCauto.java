@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Line2D;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -30,6 +31,12 @@ public class FTCauto extends JFrame {
     public static boolean developing = true;
 
     public static PointArray points = new PointArray();
+
+    public static List<PointArray> history = new LinkedList<PointArray>();
+
+    static{
+        history.add(points);
+    }
     
     public static class MainGraphicsPanel extends JPanel{
         

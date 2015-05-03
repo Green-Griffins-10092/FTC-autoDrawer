@@ -5,6 +5,7 @@ import java.awt.event.MouseListener;
 
 /**
  * Created by david on 4/29/2015.
+ * replaces the anonymous inner class in FTCauto.
  */
 public class ToolMouseListener implements MouseListener{
 
@@ -24,18 +25,15 @@ public class ToolMouseListener implements MouseListener{
     //-1 - Get Distance: This tool prints the distance between the selected point and the clicked point
     public static int toolType = 0;
     
-    //copy of the reference of points
-    public static PointArray points = FTCauto.points;
-    
     //This method checks if the coordinates represented by the parameters
     //is one of the points stored in List points.
     //returns the index of the point that was clicked, or -1 if no point was clicked.
     private int clickedPoint(int x, int y)
     {
         int clickedOn = -1;
-        for (int i = 0; i < points.size(); i++) {
-            if (Math.abs((points.get(i).getX() + 100) - x) < 20) {
-                if (Math.abs((points.get(i).getY() + 10) - y) < 20) {
+        for (int i = 0; i < FTCauto.points.size(); i++) {
+            if (Math.abs((FTCauto.points.get(i).getX() + 100) - x) < 20) {
+                if (Math.abs((FTCauto.points.get(i).getY() + 10) - y) < 20) {
                     clickedOn = i;
                     break;
                 }
@@ -53,22 +51,23 @@ public class ToolMouseListener implements MouseListener{
                 // check if the button pressed is the left button
                 if (e.getButton() == MouseEvent.BUTTON1) {
                     // add point to list
-                    points.addPoint(FTCauto.MainGraphicsPanel.mouseX, FTCauto.MainGraphicsPanel.mouseY);
+                    FTCauto.points.addPoint(FTCauto.MainGraphicsPanel.mouseX, FTCauto.MainGraphicsPanel.mouseY);
                     //make new point the selected point
-                    selectedPoint = points.size() - 1;
+                    selectedPoint = FTCauto.points.size() - 1;
+
                 }
             }else if(toolType == 2){
                 int point = clickedPoint(e.getX(), e.getY());
                 if(point != -1)
                 {
-                    points.remove(point);
+                    FTCauto.points.remove(point);
                     selectedPoint = -1;
                 }
             }else if(toolType == 3)
             {
                 int point = clickedPoint(e.getX(), e.getY());
                 if(point == -1 && selectedPoint != -1) {
-                    points.set(selectedPoint, new Point(e.getX(), e.getY()));
+                    FTCauto.points.set(selectedPoint, new Point(e.getX(), e.getY()));
                 }else if (point != -1)
                 {
                     selectedPoint = point;
@@ -82,7 +81,7 @@ public class ToolMouseListener implements MouseListener{
                 }
                 else if (point != -1)
                 {
-                    System.out.println("Distance between point " + selectedPoint + " and point " + point + " is \n" + points.get(selectedPoint).getDistance(points.get(point)) + " inches");
+                    System.out.println("Distance between point " + selectedPoint + " and point " + point + " is \n" + FTCauto.points.get(selectedPoint).getDistance(FTCauto.points.get(point)) + " inches");
                 }
             }
         }

@@ -3,7 +3,7 @@ package animationtest;
 import java.util.ArrayList;
 
 
-public class PointArray extends ArrayList<Point>{
+public class PointArray extends ArrayList<Point> implements Cloneable{
 
 
     public void addPoint(int x, int y){
@@ -22,5 +22,17 @@ public class PointArray extends ArrayList<Point>{
         //double a2 = Math.toDegrees(Math.atan2(x3-x1, y3-y1));
 
         return(a1);
+    }
+
+    @Override
+    public Object clone()
+    {
+        PointArray v = new PointArray();
+        for (Point p:this)
+        {
+            v.add((Point) p.clone());
+        }
+
+        return v;
     }
 }
