@@ -62,7 +62,7 @@ public class Point implements Cloneable {
     }
 
     @Override
-    public Object clone() {
+    public Object clone() throws CloneNotSupportedException {
         try {
             @SuppressWarnings("unchecked")
             Point v = (Point) super.clone();

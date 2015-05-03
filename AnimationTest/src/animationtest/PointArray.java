@@ -30,7 +30,13 @@ public class PointArray extends ArrayList<Point> implements Cloneable{
         PointArray v = new PointArray();
         for (Point p:this)
         {
-            v.add((Point) p.clone());
+            try {
+                v.add((Point) p.clone());
+            }
+            catch (CloneNotSupportedException e) {
+
+            }
+
         }
 
         return v;
