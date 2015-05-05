@@ -29,10 +29,6 @@ public class FTCauto extends JFrame {
     public static boolean developing = false;
 
     public static PointArray points = new PointArray();
-
-    static{
-        History.addVersion(points);
-    }
     
     public static class MainGraphicsPanel extends JPanel{
         
@@ -59,7 +55,7 @@ public class FTCauto extends JFrame {
         {
             return inchesToPixels;
         }
-        
+        static ToolMouseListener tool;
         
         public MainGraphicsPanel(){
             
@@ -79,8 +75,9 @@ public class FTCauto extends JFrame {
             //The animation timer
             Timer timer = new Timer(10, new TimerListener());
             timer.start();
-            addMouseListener(new ToolMouseListener());
-            
+
+            tool = new ToolMouseListener();
+            addMouseListener(tool);
         }
         
         Color background = new Color(200,200,200);
@@ -159,7 +156,7 @@ public class FTCauto extends JFrame {
 
                 int transMax = 250;
                 //if the point is selected, then set color to be blue, if not green.
-                if(ToolMouseListener.selectedPoint == i) {
+                if(tool.selectedPoint == i) {
                     point = new Color(0, 10, 150, points.get(i).transparency);
                     g.setColor(point);
                     transMax = 150;
@@ -190,17 +187,16 @@ public class FTCauto extends JFrame {
             }
             
             //Changing the tool color
-            int tool = ToolMouseListener.toolType;
-            if(tool == 1){
+            if(tool.toolType == 1){
                 Color point = new Color(0,200,50,(int) ((Math.sin((double)frames/20)*50)+130));
                 g.setColor(point);
-            }else if(tool == 2){
+            }else if(tool.toolType == 2){
                 Color point = new Color(200,50,0,(int) ((Math.sin((double)frames/20)*50)+130));
                 g.setColor(point);
-            }else if(tool == 3){
+            }else if(tool.toolType == 3){
                 Color point = new Color(50, 225, 200, (int) ((Math.sin((double)frames/20)*50)+130));
                 g.setColor(point);
-            }else if(developing && tool == -1){
+            }else if(developing && tool.toolType == -1){
                 g.setColor(warningRed);
             }
             

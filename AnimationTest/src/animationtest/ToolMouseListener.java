@@ -13,7 +13,7 @@ public class ToolMouseListener implements MouseListener{
     //(will default to the last point placed, so we will not have
     //errors with it trying to look at a non existent point)
     //-1 represents no selected point
-    public static int selectedPoint = -1;
+    public int selectedPoint = -1;
     
     //The type of tool to use, 0 represents no tool
     // Positive numbers represent tested tools, negative numbers represent tools being tested
@@ -23,8 +23,10 @@ public class ToolMouseListener implements MouseListener{
     //3 - Edit: With this tool you can drag and select points
     //(Hopefully with a point selected you will be able to precisely change the x & y and the speed)
     //-1 - Get Distance: This tool prints the distance between the selected point and the clicked point
-    public static int toolType = 0;
-    
+    public int toolType = 0;
+
+    public History history = new History(FTCauto.points);
+
     //This method checks if the coordinates represented by the parameters
     //is one of the points stored in List points.
     //returns the index of the point that was clicked, or -1 if no point was clicked.
@@ -49,9 +51,18 @@ public class ToolMouseListener implements MouseListener{
         selectedPoint = FTCauto.points.size() - 1;
 
         //add to history
-        History.addVersion(FTCauto.points);
+        history.addVersion(FTCauto.points);
     }
 
+    void removePoint(int x, int y){
+        int point = clickedPoint(x, y);
+        if(point != -1)
+        {
+            FTCauto.points.remove(point);
+            selectedPoint = -1;
+            history.addVersion(FTCauto.points);
+        }
+    }
     
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -64,17 +75,13 @@ public class ToolMouseListener implements MouseListener{
                     addPoint(e.getX(), e.getY());
                 }
             }else if(toolType == 2){
-                int point = clickedPoint(e.getX(), e.getY());
-                if(point != -1)
-                {
-                    FTCauto.points.remove(point);
-                    selectedPoint = -1;
-                }
+                removePoint(e.getX(), e.getY());
             }else if(toolType == 3)
             {
                 int point = clickedPoint(e.getX(), e.getY());
                 if(point == -1 && selectedPoint != -1) {
                     FTCauto.points.set(selectedPoint, new Point(e.getX(), e.getY()));
+                    history.addVersion(FTCauto.points);
                 }else if (point != -1)
                 {
                     selectedPoint = point;
@@ -88,7 +95,8 @@ public class ToolMouseListener implements MouseListener{
                 }
                 else if (point != -1)
                 {
-                    System.out.println("Distance between point " + selectedPoint + " and point " + point + " is \n" + FTCauto.points.get(selectedPoint).getDistance(FTCauto.points.get(point)) + " inches");
+                    System.out.println("Distance between point " + selectedPoint + " and point " + point + " is \n"
+                            + FTCauto.points.get(selectedPoint).getDistance(FTCauto.points.get(point)) + " inches");
                 }
             }
         }

@@ -3,8 +3,13 @@ package animationtest;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+
 import javax.swing.JMenu;
-import javax.swing.*;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
+
+import animationtest.FTCauto.MainGraphicsPanel;
 
 public class MenuBars{
     
@@ -45,7 +50,7 @@ public class MenuBars{
         file.addSeparator();
         
         JMenuItem menuItem3 = new JMenuItem("Open",KeyEvent.VK_S);
-        menuItem3.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O,ActionEvent.CTRL_MASK));
+        menuItem3.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
         menuItem3.getAccessibleContext().setAccessibleDescription("Open a file");
         file.add(menuItem3);
         
@@ -55,7 +60,19 @@ public class MenuBars{
         menuItem4.getAccessibleContext().setAccessibleDescription("Close the program");
         file.add(menuItem4);
         
-        
+        file.addSeparator();
+
+        JMenuItem undo = new JMenuItem("Undo", KeyEvent.VK_S);
+        undo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, ActionEvent.CTRL_MASK));
+        file.add(undo);
+
+        undo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                FTCauto.points = MainGraphicsPanel.tool.history.getPreviousVersion();
+            }
+        });
+
         //------------Tool Menu----------------
         
         tool.setMnemonic(KeyEvent.VK_B);
@@ -79,7 +96,7 @@ public class MenuBars{
         toolAdd.addActionListener(new ActionListener(){
         @Override
         public void actionPerformed(ActionEvent e){
-                ToolMouseListener.toolType = 1;
+                MainGraphicsPanel.tool.toolType = 1;
                 System.out.println("Add");
             }
         });
@@ -87,16 +104,16 @@ public class MenuBars{
         toolDelete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ToolMouseListener.toolType  = 2;
-                System.out.println(ToolMouseListener.toolType );
+                MainGraphicsPanel.tool.toolType  = 2;
+                System.out.println(MainGraphicsPanel.tool.toolType );
             }
         });
 
         toolEdit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ToolMouseListener.toolType  = 3;
-                System.out.println(ToolMouseListener.toolType );
+                MainGraphicsPanel.tool.toolType  = 3;
+                System.out.println(MainGraphicsPanel.tool.toolType );
             }
         });
         
@@ -118,8 +135,8 @@ public class MenuBars{
             testingGetDistance.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    ToolMouseListener.toolType  = -1;
-                    System.out.println(ToolMouseListener.toolType );
+                    MainGraphicsPanel.tool.toolType  = -1;
+                    System.out.println(MainGraphicsPanel.tool.toolType );
                 }
             });
         }
