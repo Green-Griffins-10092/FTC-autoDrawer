@@ -73,6 +73,17 @@ public class MenuBars{
             }
         });
 
+        JMenuItem redo = new JMenuItem("Redo", KeyEvent.VK_S);
+        redo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, ActionEvent.CTRL_MASK));
+        file.add(redo);
+
+        redo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                FTCauto.points = MainGraphicsPanel.tool.history.getNextVersion();
+            }
+        });
+
         //------------Tool Menu----------------
         
         tool.setMnemonic(KeyEvent.VK_B);

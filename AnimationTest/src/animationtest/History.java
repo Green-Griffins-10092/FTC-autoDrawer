@@ -48,7 +48,7 @@ public class History {
 
     //basically is a undo method
     public PointArray getPreviousVersion(){
-        if (currentVersion >= 0) {
+        if (currentVersion > 0) {
             currentVersion--;
         }
         return getVersion();
@@ -56,7 +56,7 @@ public class History {
 
     //basically a redo method
     public PointArray getNextVersion(){
-        if (currentVersion < historyList.size()) {
+        if (currentVersion < historyList.size()-1) {
             currentVersion++;
         }
         return getVersion();
