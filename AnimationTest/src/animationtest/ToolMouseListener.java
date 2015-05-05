@@ -42,6 +42,16 @@ public class ToolMouseListener implements MouseListener{
         return clickedOn;
     }
 
+    void addPoint(int x, int y){
+        // add point to list
+        FTCauto.points.addPoint(x, y);
+        //make new point the selected point
+        selectedPoint = FTCauto.points.size() - 1;
+
+        //add to history
+        History.addVersion(FTCauto.points);
+    }
+
     
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -50,11 +60,8 @@ public class ToolMouseListener implements MouseListener{
             if(toolType == 1){
                 // check if the button pressed is the left button
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    // add point to list
-                    FTCauto.points.addPoint(FTCauto.MainGraphicsPanel.mouseX, FTCauto.MainGraphicsPanel.mouseY);
-                    //make new point the selected point
-                    selectedPoint = FTCauto.points.size() - 1;
-
+                    //add the point where clicked
+                    addPoint(e.getX(), e.getY());
                 }
             }else if(toolType == 2){
                 int point = clickedPoint(e.getX(), e.getY());

@@ -39,7 +39,6 @@ public class MenuBars{
         file.add(menuItem2);
         
         JMenuItem menuItem5 = new JMenuItem("Export");
-        menuItem5.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E,ActionEvent.CTRL_MASK));
         menuItem5.getAccessibleContext().setAccessibleDescription("Export the file");
         file.add(menuItem5);
         

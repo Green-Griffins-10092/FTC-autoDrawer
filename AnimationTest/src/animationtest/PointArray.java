@@ -18,7 +18,7 @@ public class PointArray extends ArrayList<Point> implements Cloneable{
         double x3 = super.get(i-1).getX();
         double y3 = super.get(i-1).getY();
 
-        double a1 = Math.toDegrees(Math.atan2(x2-y1, x2-y1));
+        double a1 = Math.toDegrees(Math.atan2(x1, y1));
         //double a2 = Math.toDegrees(Math.atan2(x3-x1, y3-y1));
 
         return(a1);

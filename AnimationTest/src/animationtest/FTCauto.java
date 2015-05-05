@@ -11,8 +11,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Line2D;
-import java.util.LinkedList;
-import java.util.List;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -28,14 +26,12 @@ public class FTCauto extends JFrame {
     public static double fieldSize = 0;
     
     //!!Only for development version!!
-    public static boolean developing = true;
+    public static boolean developing = false;
 
     public static PointArray points = new PointArray();
 
-    public static List<PointArray> history = new LinkedList<PointArray>();
-
     static{
-        history.add(points);
+        History.addVersion(points);
     }
     
     public static class MainGraphicsPanel extends JPanel{
@@ -54,6 +50,7 @@ public class FTCauto extends JFrame {
         private static final Image stuffedGriffins = new ImageIcon("STUFFED_GRIFFINS_FINAL_GRN.png").getImage();
         private static final Image field = new ImageIcon("Field.png").getImage();
         private static final Image autoDrawer = new ImageIcon("autoDrawer.png").getImage();
+        private static final Image field_shadow = new ImageIcon("field_shadow.png").getImage();
         
         private static final double FIELD_HEIGHT_IN_INCHES = 18;
         private static double inchesToPixels = FIELD_HEIGHT_IN_INCHES/fieldSize;
