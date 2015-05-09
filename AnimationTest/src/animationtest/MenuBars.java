@@ -10,6 +10,7 @@ import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
 import animationtest.FTCauto.MainGraphicsPanel;
+import javax.swing.JOptionPane;
 
 public class MenuBars{
     
@@ -136,13 +137,21 @@ public class MenuBars{
         });
         
         //--------Selected point menu-------
-        JMenu selectedPoint = new JMenu("Selected point");
-        menuBar.add(selectedPoint);
+        JMenu selectedPoints = new JMenu("Selected point");
+        menuBar.add(selectedPoints);
         
         JMenuItem changeExtraCode = new JMenuItem("Change Extra code",KeyEvent.VK_S);
         menuItem3.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.ALT_MASK));
         menuItem3.getAccessibleContext().setAccessibleDescription("Change the extra code");
-        selectedPoint.add(changeExtraCode);
+        selectedPoints.add(changeExtraCode);
+        
+        changeExtraCode.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                FTCauto.points.get(MainGraphicsPanel.tool.selectedPoint).extraCode = JOptionPane.showInputDialog(null, 
+                        "Enter you code here:", "Extra code", JOptionPane.PLAIN_MESSAGE);
+            }
+        });
         
         if(FTCauto.developing)
         {

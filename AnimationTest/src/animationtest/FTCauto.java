@@ -41,7 +41,7 @@ public class FTCauto extends JFrame {
         
         private int openingTrans = 255;
         private int openingTextTrans = 255;
-        
+         
         private int frames = 0;
         
         //Picture stuff  !!You have to use png so you can have transparency
@@ -155,7 +155,7 @@ public class FTCauto extends JFrame {
                     g2.draw(new Line2D.Float((float) points.get(i).getX()+100, (float) points.get(i).getY()+10,
                             (float) points.get(i-1).getX()+100, (float) points.get(i-1).getY()+10));
                 }
-
+                
                 int transMax = 250;
                 //if the point is selected, then set color to be blue, if not green.
                 if(tool.selectedPoint == i) {
@@ -177,8 +177,23 @@ public class FTCauto extends JFrame {
                 
                 if(!points.get(i).extraCode.equals("")){
                     g.setColor(new Color(0,0,0));
+                    g2.setStroke(new BasicStroke(2));
                     g2.draw(new Line2D.Float((float) points.get(i).getX()+100, (float) points.get(i).getY()+10,
-                            (float) points.get(i).getX()+120, (float) points.get(i).getY()+30));
+                            (float) points.get(i).getX()+70, (float) points.get(i).getY()-10));
+                    
+                    String outCode = "";
+                    
+                    if(points.get(i).extraCode.length()>20){
+                        for(int j =0; j<20; j++){
+                            outCode+=points.get(i).extraCode.charAt(j);
+                            
+                        }
+                        outCode+="...";
+                    }else{
+                        outCode=points.get(i).extraCode;
+                    }
+                    
+                    g.drawString(outCode,  (int) points.get(i).getX()+65, (int) points.get(i).getY()-15);
                 }
                 
                 
