@@ -37,6 +37,8 @@ public class FTCauto extends JFrame {
         public static int mouseX = 0;
         public static int mouseY = 0;
         
+        private int movePoint = 1;
+        
         private int openingTrans = 255;
         private int openingTextTrans = 255;
         
@@ -46,7 +48,7 @@ public class FTCauto extends JFrame {
         private static final Image stuffedGriffins = new ImageIcon("STUFFED_GRIFFINS_FINAL_GRN.png").getImage();
         private static final Image field = new ImageIcon("Field.png").getImage();
         private static final Image autoDrawer = new ImageIcon("autoDrawer.png").getImage();
-        private static final Image field_shadow = new ImageIcon("field_shadow.png").getImage();
+        
         
         private static final double FIELD_HEIGHT_IN_INCHES = 18;
         private static double inchesToPixels = FIELD_HEIGHT_IN_INCHES/fieldSize;
@@ -172,6 +174,13 @@ public class FTCauto extends JFrame {
                         (int) (points.get(i).getX()+100), (int) points.get(i).getY()+10);
                         
                 }
+                
+                if(!points.get(i).extraCode.equals("")){
+                    g.setColor(new Color(0,0,0));
+                    g2.draw(new Line2D.Float((float) points.get(i).getX()+100, (float) points.get(i).getY()+10,
+                            (float) points.get(i).getX()+120, (float) points.get(i).getY()+30));
+                }
+                
                 
                 //Changing the size
                 if(size>10){

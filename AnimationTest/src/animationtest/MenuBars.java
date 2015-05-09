@@ -83,7 +83,7 @@ public class MenuBars{
                 FTCauto.points = MainGraphicsPanel.tool.history.getNextVersion();
             }
         });
-
+        
         //------------Tool Menu----------------
         
         tool.setMnemonic(KeyEvent.VK_B);
@@ -134,7 +134,16 @@ public class MenuBars{
                 System.exit(0);
             }
         });
-
+        
+        //--------Selected point menu-------
+        JMenu selectedPoint = new JMenu("Selected point");
+        menuBar.add(selectedPoint);
+        
+        JMenuItem changeExtraCode = new JMenuItem("Change Extra code",KeyEvent.VK_S);
+        menuItem3.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.ALT_MASK));
+        menuItem3.getAccessibleContext().setAccessibleDescription("Change the extra code");
+        selectedPoint.add(changeExtraCode);
+        
         if(FTCauto.developing)
         {
             menuBar.add(testing);
