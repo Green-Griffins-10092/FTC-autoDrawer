@@ -27,6 +27,7 @@ public class ToolMouseListener implements MouseListener{
 
     public History history = new History(FTCauto.points);
 
+    private int pointDragging = -1;
     //This method checks if the coordinates represented by the parameters
     //is one of the points stored in List points.
     //returns the index of the point that was clicked, or -1 if no point was clicked.
@@ -44,7 +45,7 @@ public class ToolMouseListener implements MouseListener{
         return clickedOn;
     }
 
-    void addPoint(int x, int y){
+    private void addPoint(int x, int y){
         // add point to list
         FTCauto.points.addPoint(x, y);
         //make new point the selected point
@@ -54,7 +55,7 @@ public class ToolMouseListener implements MouseListener{
         history.addVersion(FTCauto.points);
     }
 
-    void removePoint(int x, int y){
+    private void removePoint(int x, int y){
         int point = clickedPoint(x, y);
         if(point != -1)
         {
@@ -63,7 +64,14 @@ public class ToolMouseListener implements MouseListener{
             history.addVersion(FTCauto.points);
         }
     }
-    
+
+    private void movePoint(int index, int x, int y)
+    {
+        FTCauto.points.set(index, new Point(x, y));
+        selectedPoint = index;
+        history.addVersion(FTCauto.points);
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
         //check if the mouse was clicked inside the field
@@ -80,8 +88,7 @@ public class ToolMouseListener implements MouseListener{
             {
                 int point = clickedPoint(e.getX(), e.getY());
                 if(point == -1 && selectedPoint != -1) {
-                    FTCauto.points.set(selectedPoint, new Point(e.getX(), e.getY()));
-                    history.addVersion(FTCauto.points);
+                    movePoint(selectedPoint, e.getX(), e.getY());
                 }else if (point != -1)
                 {
                     selectedPoint = point;
@@ -104,13 +111,19 @@ public class ToolMouseListener implements MouseListener{
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        if (e.isShiftDown() && pointDragging == -1 && toolType == 3)
+        {
+            pointDragging = clickedPoint(e.getX(), e.getY());
+        }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
-
+        if (pointDragging != -1)
+        {
+            movePoint(pointDragging, e.getX(), e.getY());
+            pointDragging = -1;
+        }
     }
 
     @Override
