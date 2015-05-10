@@ -123,6 +123,7 @@ public class ToolMouseListener implements MouseListener{
         if (pointDragging != -1)
         {
             pointDragging = -1;
+            history.addVersion(FTCauto.points);
         }
     }
 
