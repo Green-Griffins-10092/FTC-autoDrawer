@@ -183,9 +183,11 @@ public class FTCauto extends JFrame {
                 g.fillOval((int) points.get(i).getX()+100-(size/2), (int) points.get(i).getY()+10-(size/2),
                         size, size);
                 
+                //Draw the angle
                 if(i!=0&&i!=points.size()-1){
                     g.setColor(new Color(0,0,0,points.get(i).transparency));
-                    g.drawString(String.valueOf((int)(points.getAngle(i))),
+                    String angle = String.valueOf((int)points.getAngle(i));
+                    g.drawString(angle,
                         (int) (points.get(i).getX()+100), (int) points.get(i).getY()+10);
                         
                 }

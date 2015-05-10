@@ -25,7 +25,9 @@ public class MenuBars{
     //developing in FTCauto is true
     public static JMenu testing = new JMenu("Testing Methods");
     public static JMenuItem testingGetDistance = new JMenuItem("Get Distance");
-
+    public static JMenuItem testingJFileChooser = new JMenuItem("Show File Chooser");
+    
+    
     public static JMenuBar menuBars(){
         
         
@@ -160,12 +162,23 @@ public class MenuBars{
                     " prints the distance between the selected point and\n " +
                     "the clicked on point to the terminal");
             testing.add(testingGetDistance);
+            
+            
+            testing.add(testingJFileChooser);
 
             testingGetDistance.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     MainGraphicsPanel.tool.toolType  = -1;
                     System.out.println(MainGraphicsPanel.tool.toolType );
+                }
+            });
+            
+            testingJFileChooser.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    System.out.print(FileChooser.fileChooser(null));
+                    
                 }
             });
         }

@@ -11,6 +11,7 @@ public class PointArray extends ArrayList<Point> implements Cloneable{
     }
 
     public double getAngle(int i){
+        ///Lots of trig stuff :P
         double x1 = super.get(i).getX();
         double y1 = super.get(i).getY();
         double x2 = super.get(i+1).getX();
