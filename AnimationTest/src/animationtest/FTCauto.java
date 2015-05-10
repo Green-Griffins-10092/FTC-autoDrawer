@@ -72,7 +72,15 @@ public class FTCauto extends JFrame {
                     
                 }
             });
-            
+            addMouseMotionListener(new MouseMotionAdapter(){
+                
+                
+                public void mouseDragged(MouseEvent e){
+                    mouseX = e.getX();
+                    mouseY = e.getY();
+                    
+                }
+            });
             
             //The animation timer
             Timer timer = new Timer(10, new TimerListener());
@@ -93,6 +101,13 @@ public class FTCauto extends JFrame {
             super.paintComponent(g);
 
             Graphics2D g2 = (Graphics2D) g;
+            
+            //Update the dragged point
+            if(tool.pointDragging!=-1){
+                points.get(tool.pointDragging).setX(mouseX);
+                points.get(tool.pointDragging).setY(mouseY);
+            }
+            
             
             //Main frame
             g.setColor(background);
