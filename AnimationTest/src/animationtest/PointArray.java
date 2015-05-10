@@ -17,11 +17,19 @@ public class PointArray extends ArrayList<Point> implements Cloneable{
         double y2 = super.get(i+1).getY();
         double x3 = super.get(i-1).getX();
         double y3 = super.get(i-1).getY();
-
-        double a1 = Math.toDegrees(Math.atan2(x1, y1));
-        //double a2 = Math.toDegrees(Math.atan2(x3-x1, y3-y1));
-
-        return(a1);
+        
+        double u1 = x3-x1;
+        double u2 = y3-y1;
+        double v1 = x1-x2;
+        double v2 = y1-y2;
+        
+        double dotProduct = u1*v1+u2*v2;
+        double uLength = Math.sqrt(Math.pow(u1, 2)+Math.pow(u2, 2));
+        double vLength = Math.sqrt(Math.pow(v1, 2)+Math.pow(v2, 2));
+        
+        double angle = Math.toDegrees(Math.acos(dotProduct/(uLength*vLength)));
+        
+        return(angle);
     }
 
     @Override

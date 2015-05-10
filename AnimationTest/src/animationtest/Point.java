@@ -44,7 +44,9 @@ public class Point implements Cloneable {
     public void setSpeed(int speed) {
         this.speed = speed;
     }
-
+    
+    
+    
     public double getDistance(Point p) {
         double x1 = this.getX();
         double x2 = p.getX();
