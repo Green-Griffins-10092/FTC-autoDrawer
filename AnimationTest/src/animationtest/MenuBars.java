@@ -177,7 +177,7 @@ public class MenuBars{
             testingJFileChooser.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    System.out.print(FileChooser.fileChooser(null));
+                    System.out.print(FileChooser.fileChooser("Save as","Save","Save the file"));
                     
                 }
             });
