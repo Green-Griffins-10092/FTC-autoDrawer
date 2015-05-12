@@ -16,6 +16,14 @@ public class Point implements Cloneable {
         this.y = (y - 10) / (fieldSize / 1000);
     }
 
+    Point(double x, double y, String code, int speed)
+    {
+        this.x = x;
+        this.y = y;
+        extraCode = code;
+        this.speed = speed;
+    }
+
     public void movePoint(int newX, int newY) {
         this.x = newX;
         this.y = newY;
@@ -77,5 +85,11 @@ public class Point implements Cloneable {
             // this shouldn't happen, since we are Cloneable
             throw new InternalError();
         }
+    }
+
+    @Override
+    public String toString() {
+        return "x:"+x+" y:"+y
+                +" \""+extraCode+ "\"," + " ["+ speed + "]";
     }
 }

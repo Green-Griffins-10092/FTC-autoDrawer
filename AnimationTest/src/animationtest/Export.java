@@ -19,25 +19,49 @@ public class Export {
         String out = "";
         
         for(int i = 0; i<FTCauto.points.size();  i++){
-            out+=FTCauto.points.get(i).x+" "+FTCauto.points.get(i).y
-                    +" \""+FTCauto.points.get(i).extraCode+ "\"\n";
+            out+= FTCauto.points.get(i).toString()+ "\"\n";
         }
         
         return(out);
     }
 
-    public static PointArray fileToPoints(File f)
-    {
+    public static PointArray fileToPoints(File f) {
         PointArray rtn = new PointArray();
 
         try {
             Scanner scan = new Scanner(f);
-            String file = scan.toString();
 
-        }catch (FileNotFoundException e)
-        {
+            String aPoint;
+
+            double x, y;
+            String code;
+            int speed;
+
+            //as long as there are more points
+            while (scan.hasNextLine()) {
+                //put the line with the next point in a string for processing.
+                aPoint = scan.nextLine();
+
+                //extract the information about the point from the string
+                x = Double.parseDouble(aPoint.substring(2, aPoint.indexOf(' ')));
+                aPoint = aPoint.substring(aPoint.indexOf(' ') + 1);
+                y = Double.parseDouble(aPoint.substring(2, aPoint.indexOf(' ')));
+                aPoint = aPoint.substring(aPoint.indexOf('\"') + 1);
+                code = aPoint.substring(0, aPoint.indexOf('\"'));
+                aPoint = aPoint.substring(aPoint.indexOf('[') + 1);
+                speed = Integer.parseInt(aPoint.substring(0, aPoint.indexOf(']')));
+
+                //make a new point with the information extracted
+                rtn.add(new Point(x, y, code, speed));
+            }
+
+        } catch (FileNotFoundException e) {
             System.out.print("file not found!");
             e.printStackTrace();
+        } catch (NumberFormatException e) {
+            System.out.print("Illegal file format!");
+            e.printStackTrace();
+            rtn.clear();
         }
         finally {
             return rtn;
