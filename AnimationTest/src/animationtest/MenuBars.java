@@ -10,6 +10,9 @@ import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
 import animationtest.FTCauto.MainGraphicsPanel;
+import java.io.FileNotFoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class MenuBars{
@@ -27,19 +30,16 @@ public class MenuBars{
     public static JMenuItem testingGetDistance = new JMenuItem("Get Distance");
     public static JMenuItem testingJFileChooser = new JMenuItem("Show File Chooser");
     
-    
     public static JMenuBar menuBars(){
-        
-        
         
         file.setMnemonic(KeyEvent.VK_A);
         file.getAccessibleContext().setAccessibleDescription("Test Main menu");
         menuBar.add(file);
         
-        JMenuItem menuItem1 = new JMenuItem("Save",KeyEvent.VK_S);
-        menuItem1.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,ActionEvent.CTRL_MASK));
-        menuItem1.getAccessibleContext().setAccessibleDescription("Save the file");
-        file.add(menuItem1);
+        JMenuItem save = new JMenuItem("Save",KeyEvent.VK_S);
+        save.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,ActionEvent.CTRL_MASK));
+        save.getAccessibleContext().setAccessibleDescription("Save the file");
+        file.add(save);
         
         JMenuItem menuItem2 = new JMenuItem("Save As",KeyEvent.VK_S);
         //menuItem2.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,ActionEvent.CTRL_MASK));
@@ -84,6 +84,17 @@ public class MenuBars{
             @Override
             public void actionPerformed(ActionEvent e) {
                 FTCauto.points = MainGraphicsPanel.tool.history.getNextVersion();
+            }
+        });
+        
+        save.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    Export.writeFile("12345", "Test");
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(MenuBars.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
         
