@@ -9,18 +9,18 @@ import java.util.LinkedList;
 public class History {
 
     private LinkedList<PointArray> historyList = new LinkedList<PointArray>();
-
+    
     private int currentVersion = 0;
-
+    
     //default constructor
     public History() {
     }
-
+    
     //constructor that adds the passed PointArray to the historyList
     public History(PointArray p) {
         addVersion(p);
     }
-
+    
     //add a clone of the point to the list
     //if the current version is not the last item in the list,
     //then it uses recursion to remove every point after the point
@@ -36,11 +36,11 @@ public class History {
             addVersion(version);
         }
     }
-
+    
     private PointArray getVersion(int i){
         return (PointArray) historyList.get(i).clone();
     }
-
+    
     //for getting the current version
     public PointArray getVersion(){
         return getVersion(currentVersion);
@@ -66,7 +66,7 @@ public class History {
     public int size(){
         return historyList.size();
     }
-
+    
     //returns the index of the current version
     public int getCurrentVersion() {
         return currentVersion;

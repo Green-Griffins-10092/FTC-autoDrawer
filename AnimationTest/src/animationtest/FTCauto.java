@@ -99,7 +99,7 @@ public class FTCauto extends JFrame {
         
         protected void paintComponent(Graphics g){
             super.paintComponent(g);
-
+            
             Graphics2D g2 = (Graphics2D) g;
             
             //Update the dragged point
@@ -150,7 +150,7 @@ public class FTCauto extends JFrame {
                 
                 //set color
                 g.setColor(point);
-
+                
                //Draw the point
                 g.fillOval((int) points.get(i).getX()+100-(size/2), (int) points.get(i).getY()+10-(size/2), 
                         size, size);
@@ -200,7 +200,7 @@ public class FTCauto extends JFrame {
                     
                     String outCode = "";
                     
-                    if(points.get(i).extraCode.length()>20){
+                    if(points.get(i).extraCode.length()>15){
                         for(int j =0; j<20; j++){
                             outCode+=points.get(i).extraCode.charAt(j);
                             
@@ -210,6 +210,11 @@ public class FTCauto extends JFrame {
                         outCode=points.get(i).extraCode;
                     }
                     
+                    g.setColor(new Color(0,0,0,50));
+                    g.fillRect((int) points.get(i).getX()+63, (int) points.get(i).getY()-26,(8*outCode.length())+4, 14);
+                    g.drawRect((int) points.get(i).getX()+63, (int) points.get(i).getY()-26,(8*outCode.length())+4, 14);
+                    
+                    g.setColor(new Color(0,0,0));
                     g.drawString(outCode,  (int) points.get(i).getX()+65, (int) points.get(i).getY()-15);
                 }
                 
