@@ -23,10 +23,10 @@ public class FTCauto extends JFrame {
         add(new MainGraphicsPanel());
     }
     
-    public static double fieldSize = 0;
+    public static double fieldSize = 1;
     
     //!!Only for development version!!
-    public static boolean developing = true;
+    public static boolean developing = false;
 
     public static PointArray points = new PointArray();
     
@@ -91,7 +91,7 @@ public class FTCauto extends JFrame {
         }
         
         Color background = new Color(200,200,200);
-        Color sidePanelDark = new Color(0,0,0,50);
+        Color sidePanelDark = new Color(0, 0, 0, 50);
         Color sidePanel = new Color(0,90,33);
         Color sidePanelLight = new Color(200,200,200);
         Color warningRed = new Color(250, 0, 0);

@@ -1,8 +1,10 @@
 
 package animationtest;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.Scanner;
 
 public class Export {
     
@@ -22,6 +24,24 @@ public class Export {
         }
         
         return(out);
+    }
+
+    public static PointArray fileToPoints(File f)
+    {
+        PointArray rtn = new PointArray();
+
+        try {
+            Scanner scan = new Scanner(f);
+            String file = scan.toString();
+
+        }catch (FileNotFoundException e)
+        {
+            System.out.print("file not found!");
+            e.printStackTrace();
+        }
+        finally {
+            return rtn;
+        }
     }
     
 }

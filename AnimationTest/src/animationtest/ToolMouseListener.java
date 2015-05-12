@@ -111,7 +111,7 @@ public class ToolMouseListener implements MouseListener{
 
     @Override
     public void mousePressed(MouseEvent e) {
-        if (e.isShiftDown() && pointDragging == -1 && (toolType == 1||toolType == 3))
+        if (e.isShiftDown() && pointDragging == -1 && toolType == 3)
         {
             pointDragging = clickedPoint(e.getX(), e.getY());
             
