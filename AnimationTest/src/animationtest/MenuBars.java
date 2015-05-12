@@ -91,7 +91,7 @@ public class MenuBars{
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Export.writeFile("12345", "Test");
+                    Export.writeFile(Export.pointsToString(), "save.autodraw");
                 } catch (FileNotFoundException ex) {
                     Logger.getLogger(MenuBars.class.getName()).log(Level.SEVERE, null, ex);
                 }

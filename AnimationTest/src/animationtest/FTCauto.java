@@ -201,7 +201,7 @@ public class FTCauto extends JFrame {
                     String outCode = "";
                     
                     if(points.get(i).extraCode.length()>15){
-                        for(int j =0; j<20; j++){
+                        for(int j =0; j<15; j++){
                             outCode+=points.get(i).extraCode.charAt(j);
                             
                         }
