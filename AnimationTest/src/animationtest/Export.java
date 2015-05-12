@@ -17,8 +17,8 @@ public class Export {
         String out = "";
         
         for(int i = 0; i<FTCauto.points.size();  i++){
-            out+=FTCauto.points.get(i).getX()+" "+FTCauto.points.get(i).getY()
-                    +" "+FTCauto.points.get(i).extraCode+ "\n";
+            out+=FTCauto.points.get(i).x+" "+FTCauto.points.get(i).y
+                    +" \""+FTCauto.points.get(i).extraCode+ "\"\n";
         }
         
         return(out);
