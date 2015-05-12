@@ -3,8 +3,8 @@ package animationtest;
 import static animationtest.FTCauto.fieldSize;
 
 public class Point implements Cloneable {
-    private double x;
-    private double y;
+    public double x;
+    public double y;
     private int speed = 50;
     public int size = 100;
     public int sizeSpeed = 1;
