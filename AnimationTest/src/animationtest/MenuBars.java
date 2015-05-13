@@ -10,6 +10,8 @@ import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
 import animationtest.FTCauto.MainGraphicsPanel;
+
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -92,12 +94,21 @@ public class MenuBars{
             public void actionPerformed(ActionEvent e) {
                 try {
                     Export.writeFile(Export.pointsToString(), "save.autodraw");
+                    MainGraphicsPanel.tool.history = new History(FTCauto.points);
                 } catch (FileNotFoundException ex) {
                     Logger.getLogger(MenuBars.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
-        
+
+        menuItem3.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                FTCauto.points = Export.fileToPoints(new File("save.autodraw"));
+                MainGraphicsPanel.tool.history = new History(FTCauto.points);
+            }
+        });
+
         //------------Tool Menu----------------
         
         tool.setMnemonic(KeyEvent.VK_B);
@@ -163,6 +174,7 @@ public class MenuBars{
             public void actionPerformed(ActionEvent e) {
                 FTCauto.points.get(MainGraphicsPanel.tool.selectedPoint).extraCode = JOptionPane.showInputDialog(null, 
                         "Enter you code here:", "Extra code", JOptionPane.PLAIN_MESSAGE);
+                MainGraphicsPanel.tool.history.addVersion(FTCauto.points);
             }
         });
         
@@ -188,7 +200,7 @@ public class MenuBars{
             testingJFileChooser.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    System.out.print(FileChooser.fileChooser("Save as","Cats","Save the file"));
+                    System.out.print(FileChooser.fileChooser("Save as","Save","Save the file"));
                     
                 }
             });

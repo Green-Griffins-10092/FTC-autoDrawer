@@ -19,7 +19,7 @@ public class Export {
         String out = "";
         
         for(int i = 0; i<FTCauto.points.size();  i++){
-            out+= FTCauto.points.get(i).toString()+ "\"\n";
+            out+= FTCauto.points.get(i).toString()+ "\n";
         }
         
         return(out);
