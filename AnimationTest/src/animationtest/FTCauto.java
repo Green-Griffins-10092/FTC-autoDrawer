@@ -26,7 +26,7 @@ public class FTCauto extends JFrame {
     public static double fieldSize = 1;
     
     //!!Only for development version!!
-    public static boolean developing = false;
+    public static boolean developing = true;
 
     public static PointArray points = new PointArray();
     
@@ -50,7 +50,7 @@ public class FTCauto extends JFrame {
         private static final Image autoDrawer = new ImageIcon("autoDrawer.png").getImage();
         
         
-        private static final double FIELD_HEIGHT_IN_INCHES = 18;
+        private static final double FIELD_HEIGHT_IN_INCHES = 144;
         private static double inchesToPixels = FIELD_HEIGHT_IN_INCHES/fieldSize;
 
         public static double getInchesToPixels()
@@ -103,9 +103,23 @@ public class FTCauto extends JFrame {
             Graphics2D g2 = (Graphics2D) g;
             
             //Update the dragged point
-            if(tool.pointDragging!=-1){
-                points.get(tool.pointDragging).setX(mouseX);
-                points.get(tool.pointDragging).setY(mouseY);
+            if(tool.pointDragging!=-1 ){
+                if(mouseX>100+fieldSize){
+                    points.get(tool.pointDragging).setX((int) (100+fieldSize));
+                }else if (mouseX < 100){
+                    points.get(tool.pointDragging).setX(100);
+                }else{
+                    points.get(tool.pointDragging).setX(mouseX);
+                }
+
+                if(mouseY>10+fieldSize){
+                    points.get(tool.pointDragging).setY((int) (10+fieldSize));
+                }else if (mouseY < 10) {
+                    points.get(tool.pointDragging).setY(10);
+                }else {
+                    points.get(tool.pointDragging).setY(mouseY);
+                }
+
             }
             
             

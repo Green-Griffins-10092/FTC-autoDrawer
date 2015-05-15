@@ -120,7 +120,6 @@ public class MenuBars{
                 }catch (NullPointerException ex)
                 {
                     Logger.getLogger(FileChooser.class.getName()).log(Level.SEVERE, null, ex);
-
                 }
 
             }
@@ -189,8 +188,8 @@ public class MenuBars{
         changeExtraCode.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                FTCauto.points.get(MainGraphicsPanel.tool.selectedPoint).extraCode = JOptionPane.showInputDialog(null, 
-                        "Enter you code here:", "Extra code", JOptionPane.PLAIN_MESSAGE);
+                FTCauto.points.get(MainGraphicsPanel.tool.selectedPoint).extraCode = JOptionPane.showInputDialog("Put your extra code here:",
+                        FTCauto.points.get(MainGraphicsPanel.tool.selectedPoint).extraCode);
                 MainGraphicsPanel.tool.history.addVersion(FTCauto.points);
             }
         });

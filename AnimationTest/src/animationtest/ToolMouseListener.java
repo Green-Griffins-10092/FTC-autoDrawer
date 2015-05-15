@@ -67,7 +67,8 @@ public class ToolMouseListener implements MouseListener{
 
     private void movePoint(int index, int x, int y)
     {
-        FTCauto.points.set(index, new Point(x, y));
+        FTCauto.points.get(index).setX(x);
+        FTCauto.points.get(index).setY(y);
         selectedPoint = index;
         history.addVersion(FTCauto.points);
     }
@@ -116,6 +117,7 @@ public class ToolMouseListener implements MouseListener{
             pointDragging = clickedPoint(e.getX(), e.getY());
             
         }
+
     }
 
     @Override
