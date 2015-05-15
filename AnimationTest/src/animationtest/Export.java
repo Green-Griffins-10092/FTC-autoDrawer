@@ -3,16 +3,25 @@ package animationtest;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class Export {
     
-    public static void writeFile(String code,String fileName) throws FileNotFoundException{
-        PrintWriter outFile = new PrintWriter(fileName);
+    public static void writeTextFile(String code, String filePath) throws FileNotFoundException{
+        PrintWriter outFile = new PrintWriter(filePath);
         
         outFile.write(code);
         outFile.close();
+    }
+
+    public static void writeBinaryFile(String fileName) throws IOException {
+        FileOutputStream fos = new FileOutputStream(fileName);
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
     }
     
     public static String pointsToString(){
@@ -27,9 +36,10 @@ public class Export {
 
     public static PointArray fileToPoints(File f) {
         PointArray rtn = new PointArray();
+        Scanner scan;
 
         try {
-            Scanner scan = new Scanner(f);
+            scan = new Scanner(f);
 
             String aPoint;
 
@@ -55,6 +65,7 @@ public class Export {
                 rtn.add(new Point(x, y, code, speed));
             }
 
+            scan.close();
         } catch (FileNotFoundException e) {
             System.out.print("file not found!");
             e.printStackTrace();
@@ -66,6 +77,12 @@ public class Export {
         finally {
             return rtn;
         }
+    }
+
+    public static PointArray readFile(String path)
+    {
+        PointArray rtn = fileToPoints(new File(path));
+        return rtn;
     }
     
 }

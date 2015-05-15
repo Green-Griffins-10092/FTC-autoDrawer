@@ -38,10 +38,15 @@ public class MenuBars{
         file.getAccessibleContext().setAccessibleDescription("Test Main menu");
         menuBar.add(file);
         
-        JMenuItem save = new JMenuItem("Save",KeyEvent.VK_S);
-        save.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,ActionEvent.CTRL_MASK));
-        save.getAccessibleContext().setAccessibleDescription("Save the file");
-        file.add(save);
+        JMenuItem saveText = new JMenuItem("Save Text",KeyEvent.VK_S);
+        saveText.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
+        saveText.getAccessibleContext().setAccessibleDescription("Save the file in text format");
+        file.add(saveText);
+
+        JMenuItem saveBinary = new JMenuItem("Save Binary",KeyEvent.VK_S);
+        saveText.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
+        saveText.getAccessibleContext().setAccessibleDescription("Save the file in binary format");
+        file.add(saveBinary);
         
         JMenuItem menuItem2 = new JMenuItem("Save As",KeyEvent.VK_S);
         //menuItem2.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,ActionEvent.CTRL_MASK));
@@ -54,10 +59,15 @@ public class MenuBars{
         
         file.addSeparator();
         
-        JMenuItem menuItem3 = new JMenuItem("Open",KeyEvent.VK_S);
-        menuItem3.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
-        menuItem3.getAccessibleContext().setAccessibleDescription("Open a file");
-        file.add(menuItem3);
+        JMenuItem openText = new JMenuItem("Open Text",KeyEvent.VK_S);
+        openText.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
+        openText.getAccessibleContext().setAccessibleDescription("Open a text file");
+        file.add(openText);
+
+        JMenuItem openBinary = new JMenuItem("Open Binary",KeyEvent.VK_S);
+        openText.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
+        openText.getAccessibleContext().setAccessibleDescription("Open a binary file");
+        file.add(openBinary);
         
         file.addSeparator();
         
@@ -89,11 +99,11 @@ public class MenuBars{
             }
         });
         
-        save.addActionListener(new ActionListener() {
+        saveText.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Export.writeFile(Export.pointsToString(), "save.autodraw");
+                    Export.writeTextFile(Export.pointsToString(), FileChooser.fileChooser("Save", "Save", "Save a file")+".tAD"); // tAd = text AutoDrawer
                     MainGraphicsPanel.tool.history = new History(FTCauto.points);
                 } catch (FileNotFoundException ex) {
                     Logger.getLogger(MenuBars.class.getName()).log(Level.SEVERE, null, ex);
@@ -101,11 +111,18 @@ public class MenuBars{
             }
         });
 
-        menuItem3.addActionListener(new ActionListener() {
+        openText.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                FTCauto.points = Export.fileToPoints(new File("save.autodraw"));
-                MainGraphicsPanel.tool.history = new History(FTCauto.points);
+                try {
+                    FTCauto.points = Export.fileToPoints(new File(FileChooser.fileChooser("Open", "Open", "Open a file")));
+                    MainGraphicsPanel.tool.history = new History(FTCauto.points);
+                }catch (NullPointerException ex)
+                {
+                    Logger.getLogger(FileChooser.class.getName()).log(Level.SEVERE, null, ex);
+
+                }
+
             }
         });
 
@@ -165,8 +182,8 @@ public class MenuBars{
         menuBar.add(selectedPoints);
         
         JMenuItem changeExtraCode = new JMenuItem("Change Extra code",KeyEvent.VK_S);
-        menuItem3.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.ALT_MASK));
-        menuItem3.getAccessibleContext().setAccessibleDescription("Change the extra code");
+        openText.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, ActionEvent.ALT_MASK));
+        openText.getAccessibleContext().setAccessibleDescription("Change the extra code");
         selectedPoints.add(changeExtraCode);
         
         changeExtraCode.addActionListener(new ActionListener() {

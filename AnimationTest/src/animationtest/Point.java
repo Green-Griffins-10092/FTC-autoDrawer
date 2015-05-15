@@ -1,8 +1,10 @@
 package animationtest;
 
+import java.io.Serializable;
+
 import static animationtest.FTCauto.fieldSize;
 
-public class Point implements Cloneable {
+public class Point implements Cloneable, Serializable {
     public double x;
     public double y;
     private int speed = 50;
