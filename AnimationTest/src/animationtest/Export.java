@@ -2,10 +2,12 @@
 package animationtest;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.Scanner;
@@ -22,6 +24,11 @@ public class Export {
     public static void writeBinaryFile(String fileName) throws IOException {
         FileOutputStream fos = new FileOutputStream(fileName);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
+        oos.writeInt(FTCauto.points.size());
+        for (Point p:FTCauto.points)
+        {
+            oos.writeObject(p);
+        }
     }
     
     public static String pointsToString(){
@@ -79,9 +86,34 @@ public class Export {
         }
     }
 
-    public static PointArray readFile(String path)
+    public static PointArray readTextFile(String path)
     {
         PointArray rtn = fileToPoints(new File(path));
+        return rtn;
+    }
+
+    public static PointArray readBinaryFile(String path)
+    {
+        PointArray rtn = new PointArray();
+
+        try {
+            FileInputStream fis = new FileInputStream(path);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+
+            int size = ois.readInt();
+
+            for (int i = 0; i < size; i++)
+            {
+                rtn.add((Point) ois.readObject());
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
         return rtn;
     }
     

@@ -12,7 +12,7 @@ public class FileChooser{
         chooser.setApproveButtonText(type);
         chooser.setApproveButtonToolTipText(toolTip);
         chooser.setAcceptAllFileFilterUsed(false);
-        FileFilter filter = new FileNameExtensionFilter("autoDrawer TextFile","tAD");
+        FileFilter filter = new FileNameExtensionFilter("autoDrawer File","tAD", "bAD");
         chooser.addChoosableFileFilter(filter);
         int n = chooser.showOpenDialog(null);
         File f = chooser.getSelectedFile();

@@ -11,8 +11,8 @@ import javax.swing.KeyStroke;
 
 import animationtest.FTCauto.MainGraphicsPanel;
 
-import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -111,17 +111,56 @@ public class MenuBars{
             }
         });
 
+        saveBinary.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    Export.writeBinaryFile(FileChooser.fileChooser("Save", "Save", "Save a file")+".bAD"); // bAd = binary AutoDrawer
+                    MainGraphicsPanel.tool.history = new History(FTCauto.points);
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(MenuBars.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(MenuBars.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+
         openText.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    FTCauto.points = Export.fileToPoints(new File(FileChooser.fileChooser("Open", "Open", "Open a file")));
-                    MainGraphicsPanel.tool.history = new History(FTCauto.points);
+                    String path = FileChooser.fileChooser("Open", "Open", "Open a file");
+                    if (path.substring(path.lastIndexOf('.')).equals(".tAD")) {
+                        FTCauto.points = Export.readTextFile(path);
+                        MainGraphicsPanel.tool.history = new History(FTCauto.points);
+                    }
+                    else {
+                        System.out.println("Invalid file type!");
+                    }
                 }catch (NullPointerException ex)
                 {
                     Logger.getLogger(FileChooser.class.getName()).log(Level.SEVERE, null, ex);
                 }
 
+            }
+        });
+
+        openBinary.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    String path = FileChooser.fileChooser("Open", "Open", "Open a file");
+                    if (path.substring(path.lastIndexOf('.')).equals(".bAD")) {
+                        FTCauto.points = Export.readBinaryFile(path);
+                        MainGraphicsPanel.tool.history = new History(FTCauto.points);
+                    }
+                    else {
+                        System.out.println("Invalid file type!");
+                    }
+                }catch (NullPointerException ex)
+                {
+                    Logger.getLogger(FileChooser.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
 
