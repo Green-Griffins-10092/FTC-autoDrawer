@@ -16,8 +16,10 @@ public class FileChooser{
         chooser.addChoosableFileFilter(filter);
         int n = chooser.showOpenDialog(null);
         File f = chooser.getSelectedFile();
-
+        
+        Settings.lastSavePath = f;
+        
         return(f.getAbsolutePath());
-
+        
     }
 }
