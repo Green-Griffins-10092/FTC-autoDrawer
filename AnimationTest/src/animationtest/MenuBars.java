@@ -15,17 +15,19 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
 public class MenuBars{
     
+    
     public static JMenuBar menuBar = new JMenuBar();
     public static JMenu file = new JMenu("File");
     public static JMenu tool = new JMenu("Tool Type");
-    public static JMenuItem toolAdd = new JMenuItem("Add",KeyEvent.VK_T);
-    public static JMenuItem toolDelete = new JMenuItem("Delete",KeyEvent.VK_T);
-    public static JMenuItem toolEdit = new JMenuItem("Edit", KeyEvent.VK_T);
-
+    public static JMenuItem toolAdd = new JMenuItem("Add",new ImageIcon("Waypoint.png"));
+    public static JMenuItem toolDelete = new JMenuItem("Delete");
+    public static JMenuItem toolEdit = new JMenuItem("Edit",new ImageIcon("Edit.png"));
+    
     //testing methods, will be added to menu if
     //developing in FTCauto is true
     public static JMenu testing = new JMenu("Testing Methods");
