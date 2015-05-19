@@ -23,7 +23,7 @@ public class FTCauto extends JFrame {
         add(new MainGraphicsPanel());
     }
     
-    public static double fieldSize = 1;
+    public static double fieldSize = 10;
     
     //!!Only for development version!!
     public static boolean developing = true;

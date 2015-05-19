@@ -30,8 +30,6 @@ public class MenuBars{
     //developing in FTCauto is true
     public static JMenu testing = new JMenu("Testing Methods");
     public static JMenuItem testingGetDistance = new JMenuItem("Get Distance");
-    public static JMenuItem testingJFileChooser = new JMenuItem("Show File Chooser");
-    
     public static JMenuBar menuBars(){
         
         file.setMnemonic(KeyEvent.VK_A);
@@ -241,9 +239,6 @@ public class MenuBars{
                     "the clicked on point to the terminal");
             testing.add(testingGetDistance);
             
-            
-            testing.add(testingJFileChooser);
-            
             testingGetDistance.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -252,13 +247,7 @@ public class MenuBars{
                 }
             });
             
-            testingJFileChooser.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    System.out.print(FileChooser.fileChooser("Save as","Save","Save the file"));
-                    
-                }
-            });
+            
         }
 
         return(menuBar);
