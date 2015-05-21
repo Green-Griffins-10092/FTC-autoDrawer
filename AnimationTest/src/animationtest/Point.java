@@ -18,8 +18,7 @@ public class Point implements Cloneable, Serializable {
         this.y = (y - 10) / (fieldSize / 1000);
     }
 
-    Point(double x, double y, String code, int speed)
-    {
+    Point(double x, double y, String code, int speed) {
         this.x = x;
         this.y = y;
         extraCode = code;
@@ -54,9 +53,8 @@ public class Point implements Cloneable, Serializable {
     public void setSpeed(int speed) {
         this.speed = speed;
     }
-    
-    
-    
+
+
     public double getDistance(Point p) {
         double x1 = this.getX();
         double x2 = p.getX();
@@ -91,7 +89,7 @@ public class Point implements Cloneable, Serializable {
 
     @Override
     public String toString() {
-        return "x:"+x+" y:"+y
-                +" \""+extraCode+ "\"," + " ["+ speed + "]";
+        return "x:" + x + " y:" + y
+                + " \"" + extraCode + "\"," + " [" + speed + "]";
     }
 }

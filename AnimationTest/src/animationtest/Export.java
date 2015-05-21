@@ -5,7 +5,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -13,10 +12,10 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class Export {
-    
-    public static void writeTextFile(String code, String filePath) throws FileNotFoundException{
+
+    public static void writeTextFile(String code, String filePath) throws FileNotFoundException {
         PrintWriter outFile = new PrintWriter(filePath);
-        
+
         outFile.write(code);
         outFile.close();
     }
@@ -25,20 +24,19 @@ public class Export {
         FileOutputStream fos = new FileOutputStream(fileName);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
         oos.writeInt(FTCauto.points.size());
-        for (Point p:FTCauto.points)
-        {
+        for (Point p : FTCauto.points) {
             oos.writeObject(p);
         }
     }
-    
-    public static String pointsToString(){
+
+    public static String pointsToString() {
         String out = "";
-        
-        for(int i = 0; i<FTCauto.points.size();  i++){
-            out+= FTCauto.points.get(i).toString()+ "\n";
+
+        for (int i = 0; i < FTCauto.points.size(); i++) {
+            out += FTCauto.points.get(i).toString() + "\n";
         }
-        
-        return(out);
+
+        return (out);
     }
 
     public static PointArray fileToPoints(File f) {
@@ -80,20 +78,17 @@ public class Export {
             System.out.print("Illegal file format!");
             e.printStackTrace();
             rtn.clear();
-        }
-        finally {
+        } finally {
             return rtn;
         }
     }
 
-    public static PointArray readTextFile(String path)
-    {
+    public static PointArray readTextFile(String path) {
         PointArray rtn = fileToPoints(new File(path));
         return rtn;
     }
 
-    public static PointArray readBinaryFile(String path)
-    {
+    public static PointArray readBinaryFile(String path) {
         PointArray rtn = new PointArray();
 
         try {
@@ -102,8 +97,7 @@ public class Export {
 
             int size = ois.readInt();
 
-            for (int i = 0; i < size; i++)
-            {
+            for (int i = 0; i < size; i++) {
                 rtn.add((Point) ois.readObject());
             }
         } catch (FileNotFoundException e) {
@@ -116,5 +110,5 @@ public class Export {
 
         return rtn;
     }
-    
+
 }
