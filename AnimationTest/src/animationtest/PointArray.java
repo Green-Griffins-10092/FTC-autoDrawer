@@ -6,8 +6,8 @@ import java.util.ArrayList;
 public class PointArray extends ArrayList<Point> implements Cloneable{
 
 
-    public void addPoint(int x, int y){
-        super.add(new Point(x, y));
+    public void addPoint(int index, int x, int y){
+        super.add(index, new Point(x, y));
     }
 
     public double getAngle(int i){

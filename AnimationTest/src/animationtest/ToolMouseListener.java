@@ -45,11 +45,11 @@ public class ToolMouseListener implements MouseListener{
         return clickedOn;
     }
 
-    private void addPoint(int x, int y){
+    private void addPoint(int index, int x, int y){
         // add point to list
-        FTCauto.points.addPoint(x, y);
+        FTCauto.points.addPoint(index + 1, x, y);
         //make new point the selected point
-        selectedPoint = FTCauto.points.size() - 1;
+        selectedPoint = index+1;
 
         //add to history
         history.addVersion(FTCauto.points);
@@ -77,32 +77,27 @@ public class ToolMouseListener implements MouseListener{
     public void mouseClicked(MouseEvent e) {
         //check if the mouse was clicked inside the field
         if (e.getX() > 100 && e.getX() < FTCauto.fieldSize + 100 && e.getY() > 10 && e.getY() < FTCauto.fieldSize + 10) {
-            if(toolType == 1){
-                // check if the button pressed is the left button
-                if (e.getButton() == MouseEvent.BUTTON1) {
-                    //add the point where clicked
-                    addPoint(e.getX(), e.getY());
+            if(toolType == 1) {
+                //add the point where clicked
+                if (clickedPoint(e.getX(), e.getY()) == -1) {
+                    addPoint(selectedPoint, e.getX(), e.getY());
+                } else {
+                    selectedPoint = clickedPoint(e.getX(), e.getY());
                 }
-            }else if(toolType == 2){
+            } else if(toolType == 2) {
                 removePoint(e.getX(), e.getY());
-            }else if(toolType == 3)
-            {
+            } else if(toolType == 3) {
                 int point = clickedPoint(e.getX(), e.getY());
                 if(point == -1 && selectedPoint != -1) {
                     movePoint(selectedPoint, e.getX(), e.getY());
-                }else if (point != -1)
-                {
+                } else if (point != -1) {
                     selectedPoint = point;
                 }
-            }else if (FTCauto.developing && toolType == -1)
-            {
+            } else if (FTCauto.developing && toolType == -1) {
                 int point = clickedPoint(e.getX(), e.getY());
-                if (selectedPoint == -1)
-                {
+                if (selectedPoint == -1) {
                     selectedPoint = point;
-                }
-                else if (point != -1)
-                {
+                } else if (point != -1) {
                     System.out.println("Distance between point " + selectedPoint + " and point " + point + " is \n"
                             + FTCauto.points.get(selectedPoint).getDistance(FTCauto.points.get(point)) + " inches");
                 }
@@ -112,8 +107,7 @@ public class ToolMouseListener implements MouseListener{
 
     @Override
     public void mousePressed(MouseEvent e) {
-        if (e.isShiftDown() && pointDragging == -1 && toolType == 3)
-        {
+        if (e.isShiftDown() && pointDragging == -1 && toolType == 3) {
             pointDragging = clickedPoint(e.getX(), e.getY());
             
         }
@@ -122,8 +116,7 @@ public class ToolMouseListener implements MouseListener{
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        if (pointDragging != -1)
-        {
+        if (pointDragging != -1) {
             pointDragging = -1;
             history.addVersion(FTCauto.points);
         }
