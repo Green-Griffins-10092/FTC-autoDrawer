@@ -24,13 +24,13 @@ public class MenuBars {
     public static JMenu file = new JMenu("File");
     public static JMenu tool = new JMenu("Tool Type");
     public static JMenuItem toolAdd = new JMenuItem("Add", new ImageIcon("Waypoint.png"));
-    public static JMenuItem toolDelete = new JMenuItem("Delete");
+    public static JMenuItem toolDelete = new JMenuItem("Delete", new ImageIcon("Delete.jpg"));
     public static JMenuItem toolEdit = new JMenuItem("Edit", new ImageIcon("Edit.png"));
 
     //testing methods, will be added to menu if
     //developing in FTCauto is true
     public static JMenu testing = new JMenu("Testing Methods");
-    public static JMenuItem testingGetDistance = new JMenuItem("Get Distance");
+    public static JMenuItem testingGetDistance = new JMenuItem("Get Distance", new ImageIcon("Ruler.jpg"));
 
     public static JMenuBar menuBars() {
 

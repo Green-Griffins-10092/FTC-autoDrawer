@@ -1,5 +1,8 @@
 package animationtest;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 import static animationtest.FTCauto.fieldSize;
@@ -13,9 +16,9 @@ public class Point implements Cloneable, Serializable {
     public int transparency = 1;
     public String extraCode = "";
 
-    public Point(double x, double y) {
-        this.x = (x - 100) / (fieldSize / 1000);
-        this.y = (y - 10) / (fieldSize / 1000);
+    public Point(int x, int y) {
+        setX(x);
+        setY(y);
     }
 
     Point(double x, double y, String code, int speed) {
