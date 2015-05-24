@@ -18,15 +18,15 @@ import javax.swing.KeyStroke;
 import animationtest.FTCauto.MainGraphicsPanel;
 
 public class MenuBars {
-
-
+    
+    
     public static JMenuBar menuBar = new JMenuBar();
     public static JMenu file = new JMenu("File");
     public static JMenu tool = new JMenu("Tool Type");
     public static JMenuItem toolAdd = new JMenuItem("Add", new ImageIcon("Waypoint.png"));
     public static JMenuItem toolDelete = new JMenuItem("Delete");
     public static JMenuItem toolEdit = new JMenuItem("Edit", new ImageIcon("Edit.png"));
-
+    
     //testing methods, will be added to menu if
     //developing in FTCauto is true
     public static JMenu testing = new JMenu("Testing Methods");
@@ -37,7 +37,12 @@ public class MenuBars {
         file.setMnemonic(KeyEvent.VK_A);
         file.getAccessibleContext().setAccessibleDescription("Test Main menu");
         menuBar.add(file);
-
+        
+        JMenuItem newFile = new JMenuItem("New File", KeyEvent.VK_S);
+        //newFile.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
+        newFile.getAccessibleContext().setAccessibleDescription("Make a new blank file");
+        file.add(newFile);
+        
         JMenuItem saveText = new JMenuItem("Save Text", KeyEvent.VK_S);
         saveText.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
         saveText.getAccessibleContext().setAccessibleDescription("Save the file in text format");
@@ -47,36 +52,36 @@ public class MenuBars {
         saveText.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, ActionEvent.CTRL_MASK));
         saveText.getAccessibleContext().setAccessibleDescription("Save the file in binary format");
         file.add(saveBinary);
-
+        
         JMenuItem menuItem2 = new JMenuItem("Save As", KeyEvent.VK_S);
         //menuItem2.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,ActionEvent.CTRL_MASK));
         menuItem2.getAccessibleContext().setAccessibleDescription("Save the file");
         file.add(menuItem2);
-
+        
         JMenuItem menuItem5 = new JMenuItem("Export");
         menuItem5.getAccessibleContext().setAccessibleDescription("Export the file");
         file.add(menuItem5);
 
         file.addSeparator();
-
+        
         JMenuItem openText = new JMenuItem("Open Text", KeyEvent.VK_S);
         openText.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
         openText.getAccessibleContext().setAccessibleDescription("Open a text file");
         file.add(openText);
-
+        
         JMenuItem openBinary = new JMenuItem("Open Binary", KeyEvent.VK_S);
         openText.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
         openText.getAccessibleContext().setAccessibleDescription("Open a binary file");
         file.add(openBinary);
 
         file.addSeparator();
-
+        
         JMenuItem menuItem4 = new JMenuItem("Close");
         menuItem4.getAccessibleContext().setAccessibleDescription("Close the program");
         file.add(menuItem4);
 
         file.addSeparator();
-
+        
         JMenuItem undo = new JMenuItem("Undo", KeyEvent.VK_S);
         undo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_Z, ActionEvent.CTRL_MASK));
         file.add(undo);
@@ -98,7 +103,24 @@ public class MenuBars {
                 FTCauto.points = MainGraphicsPanel.tool.history.getNextVersion();
             }
         });
-
+        
+        newFile.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int n = JOptionPane.showConfirmDialog(null, "Are you sure you want to overwrite the existing data?", "New File", 0, JOptionPane.WARNING_MESSAGE);
+                
+                System.out.println(n);
+                
+                if(n == JOptionPane.YES_OPTION){
+                    //Reset All data
+                    
+                    FTCauto.points.clear();
+                }else{
+                    
+                }
+            }
+        });
+        
         saveText.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
