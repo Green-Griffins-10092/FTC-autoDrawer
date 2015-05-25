@@ -7,7 +7,7 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class FileChooser {
-    public static String fileChooser(String title, String type, String toolTip) {
+    public static File fileChooser(String title, String type, String toolTip) {
         JFileChooser chooser = new JFileChooser();
         chooser.setDialogTitle(title);
         chooser.setApproveButtonText(type);
@@ -20,7 +20,7 @@ public class FileChooser {
 
         Settings.lastSavePath = f;
 
-        return (f.getAbsolutePath());
+        return f;
 
     }
 }

@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Line2D;
+import java.io.File;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -56,6 +57,9 @@ public class FTCauto extends JFrame {
         }
 
         static ToolMouseListener tool;
+
+        //This file stores the currently opened file
+        public static File file;
 
         public MainGraphicsPanel() {
 

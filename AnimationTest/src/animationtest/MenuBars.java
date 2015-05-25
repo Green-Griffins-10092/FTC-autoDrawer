@@ -3,6 +3,7 @@ package animationtest;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -53,10 +54,10 @@ public class MenuBars {
         saveText.getAccessibleContext().setAccessibleDescription("Save the file in binary format");
         file.add(saveBinary);
         
-        JMenuItem menuItem2 = new JMenuItem("Save As", KeyEvent.VK_S);
+        JMenuItem saveAs = new JMenuItem("Save As", KeyEvent.VK_S);
         //menuItem2.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,ActionEvent.CTRL_MASK));
-        menuItem2.getAccessibleContext().setAccessibleDescription("Save the file");
-        file.add(menuItem2);
+        saveAs.getAccessibleContext().setAccessibleDescription("Save the file");
+        file.add(saveAs);
         
         JMenuItem menuItem5 = new JMenuItem("Export");
         menuItem5.getAccessibleContext().setAccessibleDescription("Export the file");
@@ -115,6 +116,7 @@ public class MenuBars {
                     //Reset All data
                     FTCauto.points = new PointArray();
                     MainGraphicsPanel.tool.history = new History(FTCauto.points);
+                    MainGraphicsPanel.file = null;
                 }
             }
         });
@@ -123,8 +125,14 @@ public class MenuBars {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Export.writeTextFile(Export.pointsToString(), FileChooser.fileChooser("Save", "Save", "Save a file") + ".tAD"); // tAd = text AutoDrawer
-                    MainGraphicsPanel.tool.history = new History(FTCauto.points);
+                    if (MainGraphicsPanel.file == null) {
+                        MainGraphicsPanel.file = FileChooser.fileChooser("Save", "Save", "Save a file");
+                        Export.writeTextFile(Export.pointsToString(), MainGraphicsPanel.file.getAbsolutePath() + ".tAD"); // tAd = text AutoDrawer
+                        MainGraphicsPanel.tool.history = new History(FTCauto.points);
+                    } else {
+                        Export.writeTextFile(Export.pointsToString(), MainGraphicsPanel.file.getAbsolutePath() + ".tAD"); // tAd = text AutoDrawer
+                        MainGraphicsPanel.tool.history = new History(FTCauto.points);
+                    }
                 } catch (FileNotFoundException ex) {
                     Logger.getLogger(MenuBars.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -135,11 +143,25 @@ public class MenuBars {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    Export.writeBinaryFile(FileChooser.fileChooser("Save", "Save", "Save a file") + ".bAD"); // bAd = binary AutoDrawer
-                    MainGraphicsPanel.tool.history = new History(FTCauto.points);
+                    if (MainGraphicsPanel.file == null) {
+                        MainGraphicsPanel.file = FileChooser.fileChooser("Save", "Save", "Save a file");
+                        Export.writeBinaryFile(MainGraphicsPanel.file.getAbsolutePath() + ".bAD"); // bAD = binary AutoDrawer
+                        MainGraphicsPanel.tool.history = new History(FTCauto.points);
+                    } else {
+                        Export.writeBinaryFile(MainGraphicsPanel.file.getAbsolutePath() + ".bAD"); // bAD = binary AutoDrawer
+                        MainGraphicsPanel.tool.history = new History(FTCauto.points);
+                    }
                 } catch (IOException ex) {
                     Logger.getLogger(MenuBars.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            }
+        });
+
+        saveAs.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                MainGraphicsPanel.file = FileChooser.fileChooser("Save", "Save", "Save a file");
+                //TODO: Ask User What format, then call the appropriate saving methods.
             }
         });
 
@@ -147,10 +169,11 @@ public class MenuBars {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    String path = FileChooser.fileChooser("Open", "Open", "Open a file");
+                    String path = FileChooser.fileChooser("Open", "Open", "Open a file").getAbsolutePath();
                     if (path.substring(path.lastIndexOf('.')).equals(".tAD")) {
                         FTCauto.points = Export.readTextFile(path);
                         MainGraphicsPanel.tool.history = new History(FTCauto.points);
+                        MainGraphicsPanel.file = new File(path);
                     } else {
                         System.out.println("Invalid file type!");
                     }
@@ -165,10 +188,11 @@ public class MenuBars {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    String path = FileChooser.fileChooser("Open", "Open", "Open a file");
+                    String path = FileChooser.fileChooser("Open", "Open", "Open a file").getAbsolutePath();
                     if (path.substring(path.lastIndexOf('.')).equals(".bAD")) {
                         FTCauto.points = Export.readBinaryFile(path);
                         MainGraphicsPanel.tool.history = new History(FTCauto.points);
+                        MainGraphicsPanel.file = new File(path);
                     } else {
                         System.out.println("Invalid file type!");
                     }
