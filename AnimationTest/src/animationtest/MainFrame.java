@@ -32,7 +32,6 @@ public class MainFrame extends JFrame {
         frame.setLocationRelativeTo(null);
         frame.setJMenuBar(MenuBars.menuBars());
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setCursor(Cursor.CROSSHAIR_CURSOR);
         frame.setVisible(true);
     }
 }

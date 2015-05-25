@@ -5,6 +5,11 @@ import java.util.ArrayList;
 
 public class PointArray extends ArrayList<Point> implements Cloneable {
 
+    //The point that is selected
+    //(will default to the last point placed, so we will not have
+    //errors with it trying to look at a non existent point)
+    //-1 represents no selected point
+    public int selectedPoint = -1;
 
     public void addPoint(int index, int x, int y) {
         super.add(index, new Point(x, y));
@@ -28,21 +33,19 @@ public class PointArray extends ArrayList<Point> implements Cloneable {
         double uLength = Math.sqrt(Math.pow(u1, 2) + Math.pow(u2, 2));
         double vLength = Math.sqrt(Math.pow(v1, 2) + Math.pow(v2, 2));
 
-        double angle = Math.toDegrees(Math.acos(dotProduct / (uLength * vLength)));
-
-        return (angle);
+        return Math.toDegrees(Math.acos(dotProduct / (uLength * vLength)));
     }
 
     @Override
     public Object clone() {
         PointArray v = new PointArray();
+        v.selectedPoint = this.selectedPoint;
         for (Point p : this) {
             try {
                 v.add((Point) p.clone());
-            } catch (CloneNotSupportedException e) {
+            } catch (CloneNotSupportedException ignored) {
 
             }
-
         }
 
         return v;

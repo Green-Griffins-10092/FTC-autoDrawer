@@ -113,10 +113,8 @@ public class MenuBars {
                 
                 if(n == JOptionPane.YES_OPTION){
                     //Reset All data
-                    
-                    FTCauto.points.clear();
-                }else{
-                    
+                    FTCauto.points = new PointArray();
+                    MainGraphicsPanel.tool.history = new History(FTCauto.points);
                 }
             }
         });
@@ -139,8 +137,6 @@ public class MenuBars {
                 try {
                     Export.writeBinaryFile(FileChooser.fileChooser("Save", "Save", "Save a file") + ".bAD"); // bAd = binary AutoDrawer
                     MainGraphicsPanel.tool.history = new History(FTCauto.points);
-                } catch (FileNotFoundException ex) {
-                    Logger.getLogger(MenuBars.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
                     Logger.getLogger(MenuBars.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -245,8 +241,8 @@ public class MenuBars {
         changeExtraCode.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                FTCauto.points.get(MainGraphicsPanel.tool.selectedPoint).extraCode = JOptionPane.showInputDialog("Put your extra code here:",
-                        FTCauto.points.get(MainGraphicsPanel.tool.selectedPoint).extraCode);
+                FTCauto.points.get(FTCauto.points.selectedPoint).extraCode = JOptionPane.showInputDialog("Put your extra code here:",
+                        FTCauto.points.get(FTCauto.points.selectedPoint).extraCode);
                 MainGraphicsPanel.tool.history.addVersion(FTCauto.points);
             }
         });

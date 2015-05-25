@@ -84,8 +84,7 @@ public class Export {
     }
 
     public static PointArray readTextFile(String path) {
-        PointArray rtn = fileToPoints(new File(path));
-        return rtn;
+        return fileToPoints(new File(path));
     }
 
     public static PointArray readBinaryFile(String path) {
@@ -100,11 +99,7 @@ public class Export {
             for (int i = 0; i < size; i++) {
                 rtn.add((Point) ois.readObject());
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
 

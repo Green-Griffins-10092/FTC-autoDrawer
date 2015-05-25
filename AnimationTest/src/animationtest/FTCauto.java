@@ -26,7 +26,7 @@ public class FTCauto extends JFrame {
     public static double fieldSize = 10;
 
     //!!Only for development version!!
-    public static boolean developing = true;
+    public static boolean developing = false;
 
     public static PointArray points = new PointArray();
 
@@ -36,8 +36,6 @@ public class FTCauto extends JFrame {
         //Variables
         public static int mouseX = 0;
         public static int mouseY = 0;
-
-        private int movePoint = 1;
 
         private int openingTrans = 255;
         private int openingTextTrans = 255;
@@ -187,7 +185,7 @@ public class FTCauto extends JFrame {
 
                 int transMax = 250;
                 //if the point is selected, then set color to be blue, if not green.
-                if (tool.selectedPoint == i) {
+                if (points.selectedPoint == i) {
                     point = new Color(0, 10, 150, points.get(i).transparency);
                     g.setColor(point);
                     transMax = 150;
