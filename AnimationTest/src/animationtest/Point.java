@@ -63,10 +63,10 @@ public class Point implements Cloneable, Serializable {
 
         double x = x1 - x2;
         double y = y1 - y2;
-
+        
         x = x * x;
         y = y * y;
-
+        
         double rtn = Math.sqrt(x + y);
         return rtn * FTCauto.MainGraphicsPanel.getInchesToPixels();
     }
