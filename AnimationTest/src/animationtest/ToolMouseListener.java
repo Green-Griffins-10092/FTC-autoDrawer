@@ -3,7 +3,8 @@ package animationtest;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import static animationtest.FTCauto.*;
+import static animationtest.FTCauto.developing;
+import static animationtest.FTCauto.fieldSize;
 import static animationtest.FTCauto.points;
 
 /**
@@ -32,8 +33,8 @@ public class ToolMouseListener implements MouseListener {
     private int clickedPoint(int x, int y) {
         int clickedOn = -1;
         for (int i = 0; i < points.size(); i++) {
-            if (Math.abs((points.get(i).getX() + 100) - x) < 20) {
-                if (Math.abs((points.get(i).getY() + 10) - y) < 20) {
+            if (Math.abs((points.get(i).getX() + 100) - x) < 10) {
+                if (Math.abs((points.get(i).getY() + 10) - y) < 10) {
                     clickedOn = i;
                     break;
                 }
@@ -102,7 +103,7 @@ public class ToolMouseListener implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-        if ((e.isShiftDown() || e.getButton() == MouseEvent.BUTTON3)&& pointDragging == -1 && toolType == 3) {
+        if ((e.isShiftDown() || e.getButton() == MouseEvent.BUTTON3) && pointDragging == -1 && toolType == 3) {
             pointDragging = clickedPoint(e.getX(), e.getY());
 
         }

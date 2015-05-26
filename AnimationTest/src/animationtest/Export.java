@@ -1,4 +1,3 @@
-
 package animationtest;
 
 import java.io.File;

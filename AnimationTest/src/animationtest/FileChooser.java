@@ -7,8 +7,9 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class FileChooser {
+    private static JFileChooser chooser = new JFileChooser();
+
     public static File fileChooser(String title, String type, String toolTip) {
-        JFileChooser chooser = new JFileChooser();
         chooser.setDialogTitle(title);
         chooser.setApproveButtonText(type);
         chooser.setApproveButtonToolTipText(toolTip);

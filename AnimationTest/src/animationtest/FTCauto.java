@@ -27,7 +27,7 @@ public class FTCauto extends JFrame {
     public static double fieldSize = 10;
 
     //!!Only for development version!!
-    public static boolean developing = false;
+    public static boolean developing = true;
 
     public static PointArray points = new PointArray();
 
@@ -102,6 +102,9 @@ public class FTCauto extends JFrame {
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
 
+            //the ratio of inches to pixels in the field
+            inchesToPixels = FIELD_HEIGHT_IN_INCHES / fieldSize;
+
             Graphics2D g2 = (Graphics2D) g;
 
             //Update the dragged point
@@ -155,7 +158,9 @@ public class FTCauto extends JFrame {
             int[] shadowYPoints = {10, 30, getHeight(), getHeight()};
 
             g.fillPolygon(shadowXPoints, shadowYPoints, 4);
-
+            g.setColor(new Color(0, 0, 0, 50));
+            int eighteenInchesInPixels = (int) (18 / inchesToPixels);
+            g.drawRect(mouseX - eighteenInchesInPixels / 2, mouseY - eighteenInchesInPixels / 2, eighteenInchesInPixels, eighteenInchesInPixels);
 
             //Draw the Points
             for (int i = 0; i < points.size(); i++) {
@@ -299,8 +304,6 @@ public class FTCauto extends JFrame {
                 g.drawString("Developing!", 5, 20);
             }
 
-            //the ratio of inches to pixels in the field
-            inchesToPixels = FIELD_HEIGHT_IN_INCHES / fieldSize;
 
             frames++;
         }
