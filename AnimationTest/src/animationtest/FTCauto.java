@@ -48,6 +48,7 @@ public class FTCauto extends JFrame {
         private static final Image field = new ImageIcon("Field.png").getImage();
         private static final Image autoDrawer = new ImageIcon("autoDrawer.png").getImage();
 
+        public static boolean showRobot = false;
 
         private static final double FIELD_HEIGHT_IN_INCHES = 144;
         private static double inchesToPixels = FIELD_HEIGHT_IN_INCHES / fieldSize;
@@ -160,7 +161,11 @@ public class FTCauto extends JFrame {
             g.fillPolygon(shadowXPoints, shadowYPoints, 4);
             g.setColor(new Color(0, 0, 0, 50));
             int eighteenInchesInPixels = (int) (18 / inchesToPixels);
-            g.drawRect(mouseX - eighteenInchesInPixels / 2, mouseY - eighteenInchesInPixels / 2, eighteenInchesInPixels, eighteenInchesInPixels);
+
+            //draw a robot outline
+            if (showRobot) {
+                g.drawRect(mouseX - eighteenInchesInPixels / 2, mouseY - eighteenInchesInPixels / 2, eighteenInchesInPixels, eighteenInchesInPixels);
+            }
 
             //Draw the Points
             for (int i = 0; i < points.size(); i++) {
