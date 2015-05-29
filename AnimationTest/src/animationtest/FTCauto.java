@@ -159,12 +159,19 @@ public class FTCauto extends JFrame {
             int[] shadowYPoints = {10, 30, getHeight(), getHeight()};
 
             g.fillPolygon(shadowXPoints, shadowYPoints, 4);
-            g.setColor(new Color(0, 0, 0, 50));
+            
             int eighteenInchesInPixels = (int) (18 / inchesToPixels);
+            g.setColor(new Color(0, 0, 0, 50));
+            if(Math.abs((mouseX)-(100+(fieldSize/2)))>(fieldSize-eighteenInchesInPixels)/2||Math.abs((mouseY)-(10+(fieldSize/2)))>(fieldSize-eighteenInchesInPixels)/2){
+                g.setColor(new Color(255, 0, 0, (int) ((Math.sin((double) frames / 10) * 110) + 120)));
+            }
+            
+            
 
             //draw a robot outline
             if (showRobot) {
                 g.drawRect(mouseX - eighteenInchesInPixels / 2, mouseY - eighteenInchesInPixels / 2, eighteenInchesInPixels, eighteenInchesInPixels);
+                
             }
 
             //Draw the Points
