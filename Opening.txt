@@ -1,0 +1,9 @@
+Importing into Android Studio:
+Navigate to the welcome screen.
+Select "Check out project from Version Control", then selected GitHub.
+If prompted login to GitHub with your account or create one.
+In the Git Repository Field enter "https://github.com/archerD/FTC-autoWriter.git" and enter your desired Parent Directory.
+Click clone.
+
+If you would like to open the file click open when prompted.
+To see source code click project.  
