@@ -44,9 +44,9 @@ public class FTCauto extends JFrame {
         private int frames = 0;
 
         //Picture stuff  !!You have to use png so you can have transparency
-        private static final Image stuffedGriffins = new ImageIcon("STUFFED_GRIFFINS_FINAL_GRN.png").getImage();
-        private static final Image field = new ImageIcon("Field.png").getImage();
-        private static final Image autoDrawer = new ImageIcon("autoDrawer.png").getImage();
+        private static final Image stuffedGriffins = new ImageIcon("Images/STUFFED_GRIFFINS_FINAL_GRN.png").getImage();
+        private static final Image field = new ImageIcon("Images/Field.png").getImage();
+        private static final Image autoDrawer = new ImageIcon("Images/autoDrawer.png").getImage();
 
         public static boolean showRobot = false;
 

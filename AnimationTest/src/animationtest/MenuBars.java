@@ -24,9 +24,9 @@ public class MenuBars {
 
     public static JMenuBar menuBar = new JMenuBar();
     public static JMenu tool = new JMenu("Tool Type");
-    public static JMenuItem toolAdd = new JMenuItem("Add", new ImageIcon("Waypoint.png"));
-    public static JMenuItem toolDelete = new JMenuItem("Delete", new ImageIcon("Delete.jpg"));
-    public static JMenuItem toolEdit = new JMenuItem("Edit", new ImageIcon("Edit.png"));
+    public static JMenuItem toolAdd = new JMenuItem("Add", new ImageIcon("Images/Waypoint.png"));
+    public static JMenuItem toolDelete = new JMenuItem("Delete", new ImageIcon("Images/Delete.jpg"));
+    public static JMenuItem toolEdit = new JMenuItem("Edit", new ImageIcon("Images/Edit.png"));
 
     public static JMenu file = new JMenu("File");
     public static JMenuItem newFile = new JMenuItem("New File", KeyEvent.VK_S);
@@ -47,7 +47,7 @@ public class MenuBars {
     //testing methods, will be added to menu if
     //developing in FTCauto is true
     public static JMenu testing = new JMenu("Testing Methods");
-    public static JMenuItem testingGetDistance = new JMenuItem("Get Distance", new ImageIcon("Ruler.jpg"));
+    public static JMenuItem testingGetDistance = new JMenuItem("Get Distance", new ImageIcon("Images/Ruler.jpg"));
 
     public static JMenuBar menuBars() {
 
