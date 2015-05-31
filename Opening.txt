@@ -9,6 +9,8 @@ If you would like to open the file click open when prompted.
 To see source code click project.
 You will most likely need to fix the working directory.
 To do so navigate to "Run" then "Edit Configurations..." and add "\AnimationTest" to the end of the string for Working Directory.
+To run for the first time, open MainFrame.java, press Alt+Shift+F10 then select MainFrame.
+To run afterward, just press Shift+F10.
 
 Importing into Intellij IDEA:
 Follow the same steps as for Android Studio.
