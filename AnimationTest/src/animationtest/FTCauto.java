@@ -27,6 +27,7 @@ public class FTCauto extends JFrame {
     public static double fieldSize = 10;
 
     //!!Only for development version!!
+    //TODO: make this a command line argument
     public static boolean developing = true;
 
     public static PointArray points = new PointArray();
