@@ -43,6 +43,9 @@ public class FTCauto extends JFrame {
 
         private int frames = 0;
 
+        static final int FIELD_X_OFFSET = 100;
+        static final int FIELD_Y_OFFSET = 10;
+
         //Picture stuff  !!You have to use png so you can have transparency
         private static final Image stuffedGriffins = new ImageIcon("Images/STUFFED_GRIFFINS_FINAL_GRN.png").getImage();
         private static final Image field = new ImageIcon("Images/Field.png").getImage();
@@ -110,18 +113,18 @@ public class FTCauto extends JFrame {
 
             //Update the dragged point
             if (tool.pointDragging != -1) {
-                if (mouseX > 100 + fieldSize) {
-                    points.get(tool.pointDragging).setX((int) (100 + fieldSize));
-                } else if (mouseX < 100) {
-                    points.get(tool.pointDragging).setX(100);
+                if (mouseX > FIELD_X_OFFSET + fieldSize) {
+                    points.get(tool.pointDragging).setX((int) (FIELD_X_OFFSET + fieldSize));
+                } else if (mouseX < FIELD_X_OFFSET) {
+                    points.get(tool.pointDragging).setX(FIELD_X_OFFSET);
                 } else {
                     points.get(tool.pointDragging).setX(mouseX);
                 }
 
-                if (mouseY > 10 + fieldSize) {
-                    points.get(tool.pointDragging).setY((int) (10 + fieldSize));
-                } else if (mouseY < 10) {
-                    points.get(tool.pointDragging).setY(10);
+                if (mouseY > FIELD_Y_OFFSET + fieldSize) {
+                    points.get(tool.pointDragging).setY((int) (FIELD_Y_OFFSET + fieldSize));
+                } else if (mouseY < FIELD_Y_OFFSET) {
+                    points.get(tool.pointDragging).setY(FIELD_Y_OFFSET);
                 } else {
                     points.get(tool.pointDragging).setY(mouseY);
                 }
@@ -134,35 +137,30 @@ public class FTCauto extends JFrame {
             g.fillRect(0, 0, getWidth(), getHeight());
 
             g.setColor(sidePanel);
-            g.fillRect(0, 0, 100, getHeight());
+            g.fillRect(0, 0, FIELD_X_OFFSET, getHeight());
 
 
             g.setColor(sidePanelLight);
-            g.fillRect(0, 0, 100, 10);
+            g.fillRect(0, 0, FIELD_X_OFFSET, FIELD_Y_OFFSET);
 
 
             //Resizing the field
-            if (getWidth() - 100 < getHeight() - 10) {
-                fieldSize = getWidth() - 100;
+            if (getWidth() - FIELD_X_OFFSET < getHeight() - FIELD_Y_OFFSET) {
+                fieldSize = getWidth() - FIELD_X_OFFSET;
             } else {
-                fieldSize = getHeight() - 10;
+                fieldSize = getHeight() - FIELD_Y_OFFSET;
             }
 
-            g.drawImage(field, 100, 10, (int) fieldSize, (int) fieldSize, null);
+            g.drawImage(field, FIELD_X_OFFSET, FIELD_Y_OFFSET, (int) fieldSize, (int) fieldSize, null);
 
 
             //Menu Shadow
             g.setColor(sidePanelDark);
             //g.fillRect(90, 0, 10, getHeight());
 
-            int[] shadowXPoints = {100, 130, 130, 100};
-            int[] shadowYPoints = {10, 30, getHeight(), getHeight()};
-
-            g.fillPolygon(shadowXPoints, shadowYPoints, 4);
-            
             int eighteenInchesInPixels = (int) (18 / inchesToPixels);
             g.setColor(new Color(0, 0, 0, 50));
-            if(Math.abs((mouseX)-(100+(fieldSize/2)))>(fieldSize-eighteenInchesInPixels)/2||Math.abs((mouseY)-(10+(fieldSize/2)))>(fieldSize-eighteenInchesInPixels)/2){
+            if(Math.abs((mouseX)-(FIELD_X_OFFSET+(fieldSize/2)))>(fieldSize-eighteenInchesInPixels)/2||Math.abs((mouseY)-(FIELD_Y_OFFSET+(fieldSize/2)))>(fieldSize-eighteenInchesInPixels)/2){
                 g.setColor(new Color(255, 0, 0, (int) ((Math.sin((double) frames / 10) * 110) + 120)));
             }
             
@@ -185,11 +183,11 @@ public class FTCauto extends JFrame {
                 g.setColor(point);
 
                 //Draw the point
-                g.fillOval((int) points.get(i).getX() + 100 - (size / 2), (int) points.get(i).getY() + 10 - (size / 2),
+                g.fillOval((int) points.get(i).getX() + FIELD_X_OFFSET - (size / 2), (int) points.get(i).getY() + FIELD_Y_OFFSET - (size / 2),
                         size, size);
 
                 //Changing the size
-                if (size > 10) {
+                if (size > FIELD_Y_OFFSET) {
                     points.get(i).size -= points.get(i).sizeSpeed;
 
                     points.get(i).sizeSpeed += 0.5;
@@ -200,20 +198,20 @@ public class FTCauto extends JFrame {
                 }
                 if (i > 0) {
                     g2.setStroke(new BasicStroke(5));
-                    g2.draw(new Line2D.Float((float) points.get(i).getX() + 100, (float) points.get(i).getY() + 10,
-                            (float) points.get(i - 1).getX() + 100, (float) points.get(i - 1).getY() + 10));
+                    g2.draw(new Line2D.Float((float) points.get(i).getX() + FIELD_X_OFFSET, (float) points.get(i).getY() + FIELD_Y_OFFSET,
+                            (float) points.get(i - 1).getX() + FIELD_X_OFFSET, (float) points.get(i - 1).getY() + FIELD_Y_OFFSET));
                 }
 
                 int transMax = 250;
                 //if the point is selected, then set color to be blue, if not green.
                 if (points.selectedPoint == i) {
-                    point = new Color(0, 10, 150, points.get(i).transparency);
+                    point = new Color(0, FIELD_Y_OFFSET, 150, points.get(i).transparency);
                     g.setColor(point);
                     transMax = 150;
                 }
 
                 //Draw the point
-                g.fillOval((int) points.get(i).getX() + 100 - (size / 2), (int) points.get(i).getY() + 10 - (size / 2),
+                g.fillOval((int) points.get(i).getX() + FIELD_X_OFFSET - (size / 2), (int) points.get(i).getY() + FIELD_Y_OFFSET - (size / 2),
                         size, size);
 
                 //Draw the angle
@@ -221,14 +219,14 @@ public class FTCauto extends JFrame {
                     g.setColor(new Color(0, 0, 0, points.get(i).transparency));
                     String angle = String.valueOf((int) points.getAngle(i));
                     g.drawString(angle,
-                            (int) (points.get(i).getX() + 100), (int) points.get(i).getY() + 10);
+                            (int) (points.get(i).getX() + FIELD_X_OFFSET), (int) points.get(i).getY() + FIELD_Y_OFFSET);
 
                 }
 
                 if (!points.get(i).extraCode.equals("")) {
                     g.setColor(new Color(0, 0, 0));
                     g2.setStroke(new BasicStroke(2));
-                    g2.draw(new Line2D.Float((float) points.get(i).getX() + 100, (float) points.get(i).getY() + 10,
+                    g2.draw(new Line2D.Float((float) points.get(i).getX() + FIELD_X_OFFSET, (float) points.get(i).getY() + FIELD_Y_OFFSET,
                             (float) points.get(i).getX() + 70, (float) points.get(i).getY() - 10));
 
                     String outCode = "";
@@ -303,7 +301,7 @@ public class FTCauto extends JFrame {
 
                 if (frames < 300) {
                     g.drawImage(stuffedGriffins, 50, getHeight() - 150, 748 / 3, 299 / 3, null);
-                    g.drawImage(autoDrawer, (getWidth() / 2) - 300, (getHeight() / 2) - 100, 629, 236, null);
+                    g.drawImage(autoDrawer, (getWidth() / 2) - 300, (getHeight() / 2) - FIELD_X_OFFSET, 629, 236, null);
                 }
 
 
