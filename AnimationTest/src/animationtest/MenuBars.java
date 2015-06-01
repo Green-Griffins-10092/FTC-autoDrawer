@@ -41,7 +41,7 @@ public class MenuBars {
     public static JMenuItem redo = new JMenuItem("Redo", KeyEvent.VK_S);
     public static JMenuItem changeExtraCode = new JMenuItem("Change Extra code", KeyEvent.VK_S);
     
-    public static JMenu view = new JMenu("view");
+    public static JMenu view = new JMenu("View");
     public static JMenuItem showRobot = new JMenuItem("Show Robot Outline", KeyEvent.VK_S);
     
     //testing methods, will be added to menu if

@@ -16,7 +16,6 @@ public class MainFrame extends JFrame {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-
         MainFrame frame = new MainFrame();
         frame.getContentPane().setLayout(new BorderLayout());
         frame.getContentPane().add(new InfoBar.MainGraphicsPanel(), BorderLayout.LINE_START);
