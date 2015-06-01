@@ -1,19 +1,12 @@
 package animationtest;
 
+import java.awt.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.JFrame;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.WindowConstants;
+import javax.swing.*;
 
 public class MainFrame extends JFrame {
-    public MainFrame() {
-        add(new FTCauto.MainGraphicsPanel());
-
-    }
-
 
     public static void main(String[] args) {
 
@@ -25,6 +18,10 @@ public class MainFrame extends JFrame {
 
 
         MainFrame frame = new MainFrame();
+        frame.getContentPane().setLayout(new BorderLayout());
+        frame.getContentPane().add(new InfoBar.MainGraphicsPanel(), BorderLayout.LINE_START);
+        frame.getContentPane().add(new FTCauto.MainGraphicsPanel(), BorderLayout.CENTER);
+        frame.pack();
         frame.setTitle("AutoDrawer");
         frame.setSize(1000, 700);
         frame.setLocationRelativeTo(null);

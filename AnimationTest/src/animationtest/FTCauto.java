@@ -28,7 +28,7 @@ public class FTCauto extends JFrame {
 
     //!!Only for development version!!
     //TODO: make this a command line argument
-    public static boolean developing = false;
+    public static boolean developing = true;
 
     public static PointArray points = new PointArray();
 
@@ -44,8 +44,8 @@ public class FTCauto extends JFrame {
 
         private int frames = 0;
 
-        static final int FIELD_X_OFFSET = 100;
-        static final int FIELD_Y_OFFSET = 10;
+        static final int FIELD_X_OFFSET = 0;
+        static final int FIELD_Y_OFFSET = 0;
 
         //Picture stuff  !!You have to use png so you can have transparency
         private static final Image stuffedGriffins = new ImageIcon("Images/STUFFED_GRIFFINS_FINAL_GRN.png").getImage();
