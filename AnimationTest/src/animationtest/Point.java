@@ -3,6 +3,8 @@ package animationtest;
 import java.io.Serializable;
 
 import static animationtest.FTCauto.fieldSize;
+import static animationtest.FTCauto.MainGraphicsPanel.FIELD_X_OFFSET;
+import static animationtest.FTCauto.MainGraphicsPanel.FIELD_Y_OFFSET;
 
 public class Point implements Cloneable, Serializable {
     public double x;
@@ -43,11 +45,11 @@ public class Point implements Cloneable, Serializable {
     }
 
     public void setX(int x) {
-        this.x = (x - 100) / (fieldSize / 1000);
+        this.x = (x - FIELD_X_OFFSET) / (fieldSize / 1000);
     }
 
     public void setY(int y) {
-        this.y = (y - 10) / (fieldSize / 1000);
+        this.y = (y - FIELD_Y_OFFSET) / (fieldSize / 1000);
     }
 
     public void setSpeed(int speed) {

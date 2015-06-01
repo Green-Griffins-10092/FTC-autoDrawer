@@ -6,6 +6,8 @@ import java.awt.event.MouseListener;
 import static animationtest.FTCauto.developing;
 import static animationtest.FTCauto.fieldSize;
 import static animationtest.FTCauto.points;
+import static animationtest.FTCauto.MainGraphicsPanel.FIELD_X_OFFSET;
+import static animationtest.FTCauto.MainGraphicsPanel.FIELD_Y_OFFSET;
 
 /**
  * Created by david on 4/29/2015.
@@ -33,8 +35,8 @@ public class ToolMouseListener implements MouseListener {
     private int clickedPoint(int x, int y) {
         int clickedOn = -1;
         for (int i = 0; i < points.size(); i++) {
-            if (Math.abs((points.get(i).getX() + 100) - x) < 10) {
-                if (Math.abs((points.get(i).getY() + 10) - y) < 10) {
+            if (Math.abs((points.get(i).getX() + FIELD_X_OFFSET) - x) < 10) {
+                if (Math.abs((points.get(i).getY() + FIELD_Y_OFFSET) - y) < 10) {
                     clickedOn = i;
                     break;
                 }
@@ -72,7 +74,7 @@ public class ToolMouseListener implements MouseListener {
     @Override
     public void mouseClicked(MouseEvent e) {
         //check if the mouse was clicked inside the field
-        if (e.getX() > 100 && e.getX() < fieldSize + 100 && e.getY() > 10 && e.getY() < fieldSize + 10) {
+        if (e.getX() > FIELD_X_OFFSET && e.getX() < fieldSize + FIELD_X_OFFSET && e.getY() > FIELD_Y_OFFSET && e.getY() < fieldSize + FIELD_Y_OFFSET) {
             if (toolType == 1) {
                 //add the point where clicked
                 if (clickedPoint(e.getX(), e.getY()) == -1) {
