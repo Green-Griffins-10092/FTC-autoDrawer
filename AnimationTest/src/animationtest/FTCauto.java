@@ -28,7 +28,7 @@ public class FTCauto extends JFrame {
 
     //!!Only for development version!!
     //TODO: make this a command line argument
-    public static boolean developing = true;
+    public static boolean developing = false;
 
     public static PointArray points = new PointArray();
 
