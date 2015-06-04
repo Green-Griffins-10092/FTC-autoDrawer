@@ -1,9 +1,6 @@
 package animationtest;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -19,8 +16,6 @@ public class InfoBar extends JFrame {
         add(new MainGraphicsPanel());
     }
 
-    public static double fieldSize = 100;
-    
     public static class MainGraphicsPanel extends JPanel {
 
 
@@ -59,6 +54,8 @@ public class InfoBar extends JFrame {
             //The animation timer
             Timer timer = new Timer(10, new TimerListener());
             timer.start();
+
+            setPreferredSize(new Dimension(140, 100));
         }
 
         Color background = new Color(200, 200, 200);
