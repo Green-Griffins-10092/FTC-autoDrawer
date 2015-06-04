@@ -9,13 +9,13 @@ import javax.swing.*;
 public class MainFrame extends JFrame {
 
     public static void main(String[] args) {
-
+        
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
         }
-
+        
         MainFrame frame = new MainFrame();
         frame.getContentPane().setLayout(new BorderLayout());
         frame.getContentPane().add(new InfoBar.MainGraphicsPanel(), BorderLayout.LINE_START);

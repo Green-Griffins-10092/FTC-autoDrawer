@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Line2D;
@@ -22,6 +23,7 @@ public class FTCauto extends JFrame {
 
     public FTCauto() {
         add(new MainGraphicsPanel());
+        
     }
 
     public static double fieldSize = 10;
@@ -34,11 +36,13 @@ public class FTCauto extends JFrame {
 
     public static class MainGraphicsPanel extends JPanel {
 
-
+        
         //Variables
         public static int mouseX = 0;
         public static int mouseY = 0;
-
+        
+        public static boolean mouseOver = true;
+        
         private int openingTrans = 255;
         private int openingTextTrans = 255;
 
@@ -53,7 +57,7 @@ public class FTCauto extends JFrame {
         private static final Image autoDrawer = new ImageIcon("Images/autoDrawer.png").getImage();
 
         public static boolean showRobot = false;
-
+        
         private static final double FIELD_HEIGHT_IN_INCHES = 144;
         private static double inchesToPixels = FIELD_HEIGHT_IN_INCHES / fieldSize;
 
@@ -71,8 +75,6 @@ public class FTCauto extends JFrame {
 
             //Getting mouse location when moved
             addMouseMotionListener(new MouseMotionAdapter() {
-
-
                 public void mouseMoved(MouseEvent e) {
                     mouseX = e.getX();
                     mouseY = e.getY();
@@ -80,15 +82,25 @@ public class FTCauto extends JFrame {
                 }
             });
             addMouseMotionListener(new MouseMotionAdapter() {
-
-
                 public void mouseDragged(MouseEvent e) {
                     mouseX = e.getX();
                     mouseY = e.getY();
 
                 }
             });
-
+            
+            addMouseListener(new MouseAdapter() {
+                public void mouseEntered(MouseEvent e) {
+                    mouseOver = true;
+                }
+            });
+            
+            addMouseListener(new MouseAdapter() {
+                public void mouseExited(MouseEvent e) {
+                    mouseOver = false;
+                }
+            });
+            
             //The animation timer
             Timer timer = new Timer(10, new TimerListener());
             timer.start();
@@ -129,7 +141,7 @@ public class FTCauto extends JFrame {
                 } else {
                     points.get(tool.pointDragging).setY(mouseY);
                 }
-
+                
             }
 
 
@@ -265,6 +277,7 @@ public class FTCauto extends JFrame {
             }
 
             //Changing the tool color
+            
             if (tool.toolType == 1) {
                 Color point = new Color(0, 200, 50, (int) ((Math.sin((double) frames / 20) * 50) + 130));
                 g.setColor(point);
@@ -277,15 +290,19 @@ public class FTCauto extends JFrame {
             } else if (developing && tool.toolType == -1) {
                 g.setColor(warningRed);
             }
+            
+            
 
             //Mouse stuff
-            g2.setStroke(new BasicStroke(2));
-            g.drawLine(mouseX, 0, mouseX, getHeight());
-            g.drawLine(0, mouseY, getWidth(), mouseY);
+            if(mouseOver){
+                g2.setStroke(new BasicStroke(2));
+                g.drawLine(mouseX, 0, mouseX, getHeight());
+                g.drawLine(0, mouseY, getWidth(), mouseY);
 
-            g.drawLine(mouseX + 1, 0, mouseX + 1, getHeight());
-            g.drawLine(0, mouseY + 1, getWidth(), mouseY + 1);
-
+                g.drawLine(mouseX + 1, 0, mouseX + 1, getHeight());
+                g.drawLine(0, mouseY + 1, getWidth(), mouseY + 1);
+            }
+            
             //Opening credits & stuff
             if (!developing) {
                 if (openingTrans > 0 && frames > 300) {
