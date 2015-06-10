@@ -8,8 +8,19 @@ import javax.swing.*;
 
 public class MainFrame extends JFrame {
 
+    public static boolean developing = false;
     public static void main(String[] args) {
-        
+
+
+        if (args.length > 0)
+        {
+            for(String s:args)
+            {
+                if (s.equals("-d") || s.equalsIgnoreCase("true") || s.equalsIgnoreCase("--developing") || s.equals("developing"))
+                    developing = true;
+            }
+        }
+
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
@@ -17,6 +28,7 @@ public class MainFrame extends JFrame {
         }
         
         MainFrame frame = new MainFrame();
+        FTCauto.developing = developing;
         frame.getContentPane().setLayout(new BorderLayout());
         frame.getContentPane().add(new InfoBar.MainGraphicsPanel(), BorderLayout.LINE_START);
         frame.getContentPane().add(new FTCauto.MainGraphicsPanel(), BorderLayout.CENTER);

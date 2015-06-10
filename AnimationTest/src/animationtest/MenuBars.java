@@ -43,7 +43,7 @@ public class MenuBars {
     
     public static JMenu view = new JMenu("View");
     public static JMenuItem showRobot = new JMenuItem("Show Robot Outline", KeyEvent.VK_S);
-    
+
     //testing methods, will be added to menu if
     //developing in FTCauto is true
     public static JMenu testing = new JMenu("Testing Methods");

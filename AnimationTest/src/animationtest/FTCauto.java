@@ -29,8 +29,7 @@ public class FTCauto extends JFrame {
     public static double fieldSize = 10;
 
     //!!Only for development version!!
-    //TODO: make this a command line argument
-    public static boolean developing = true;
+    public static boolean developing = false;
 
     public static PointArray points = new PointArray();
 
@@ -200,7 +199,7 @@ public class FTCauto extends JFrame {
                         size, size);
 
                 //Changing the size
-                if (size > FIELD_Y_OFFSET) {
+                if (size > 10) {
                     points.get(i).size -= points.get(i).sizeSpeed;
 
                     points.get(i).sizeSpeed += 0.5;
