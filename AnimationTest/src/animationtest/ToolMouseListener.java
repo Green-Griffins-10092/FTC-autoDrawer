@@ -3,9 +3,6 @@ package animationtest;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import static animationtest.FTCauto.developing;
-import static animationtest.FTCauto.fieldSize;
-import static animationtest.FTCauto.points;
 import static animationtest.FTCauto.MainGraphicsPanel.FIELD_X_OFFSET;
 import static animationtest.FTCauto.MainGraphicsPanel.FIELD_Y_OFFSET;
 
@@ -24,19 +21,25 @@ public class ToolMouseListener implements MouseListener {
     //(Hopefully with a point selected you will be able to precisely change the x & y and the speed)
     //-1 - Get Distance: This tool prints the distance between the selected point and the clicked point
     public int toolType = 0;
-
-    public History history = new History(points);
-
     public int pointDragging = -1;
+    public History history;
+    private boolean developing;
+    private FTCauto.MainGraphicsPanel autoPanel;
+
+    public ToolMouseListener(FTCauto.MainGraphicsPanel autoPanel, boolean developing) {
+        this.developing = developing;
+        history = new History(autoPanel.points);
+        this.autoPanel = autoPanel;
+    }
 
     //This method checks if the coordinates represented by the parameters
     //is one of the points stored in List points.
     //returns the index of the point that was clicked, or -1 if no point was clicked.
     private int clickedPoint(int x, int y) {
         int clickedOn = -1;
-        for (int i = 0; i < points.size(); i++) {
-            if (Math.abs((points.get(i).getX() + FIELD_X_OFFSET) - x) < 10) {
-                if (Math.abs((points.get(i).getY() + FIELD_Y_OFFSET) - y) < 10) {
+        for (int i = 0; i < autoPanel.points.size(); i++) {
+            if (Math.abs((autoPanel.points.get(i).getX() + FIELD_X_OFFSET) - x) < 10) {
+                if (Math.abs((autoPanel.points.get(i).getY() + FIELD_Y_OFFSET) - y) < 10) {
                     clickedOn = i;
                     break;
                 }
@@ -47,57 +50,57 @@ public class ToolMouseListener implements MouseListener {
 
     private void addPoint(int index, int x, int y) {
         // add point to list
-        points.addPoint(index + 1, x, y);
+        autoPanel.points.addPoint(index + 1, x, y);
         //make new point the selected point
-        points.selectedPoint = index + 1;
+        autoPanel.points.selectedPoint = index + 1;
 
         //add to history
-        history.addVersion(points);
+        history.addVersion(autoPanel.points);
     }
 
     private void removePoint(int x, int y) {
         int point = clickedPoint(x, y);
         if (point != -1) {
-            points.remove(point);
-            points.selectedPoint = -1;
-            history.addVersion(points);
+            autoPanel.points.remove(point);
+            autoPanel.points.selectedPoint = -1;
+            history.addVersion(autoPanel.points);
         }
     }
 
     private void movePoint(int index, int x, int y) {
-        points.get(index).setX(x);
-        points.get(index).setY(y);
-        points.selectedPoint = index;
-        history.addVersion(points);
+        autoPanel.points.get(index).setX(x);
+        autoPanel.points.get(index).setY(y);
+        autoPanel.points.selectedPoint = index;
+        history.addVersion(autoPanel.points);
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         //check if the mouse was clicked inside the field
-        if (e.getX() > FIELD_X_OFFSET && e.getX() < fieldSize + FIELD_X_OFFSET && e.getY() > FIELD_Y_OFFSET && e.getY() < fieldSize + FIELD_Y_OFFSET) {
+        if (e.getX() > FIELD_X_OFFSET && e.getX() < autoPanel.fieldSize + FIELD_X_OFFSET && e.getY() > FIELD_Y_OFFSET && e.getY() < autoPanel.fieldSize + FIELD_Y_OFFSET) {
             if (toolType == 1) {
                 //add the point where clicked
                 if (clickedPoint(e.getX(), e.getY()) == -1) {
-                    addPoint(points.selectedPoint, e.getX(), e.getY());
+                    addPoint(autoPanel.points.selectedPoint, e.getX(), e.getY());
                 } else {
-                    points.selectedPoint = clickedPoint(e.getX(), e.getY());
+                    autoPanel.points.selectedPoint = clickedPoint(e.getX(), e.getY());
                 }
             } else if (toolType == 2) {
                 removePoint(e.getX(), e.getY());
             } else if (toolType == 3) {
                 int point = clickedPoint(e.getX(), e.getY());
-                if (point == -1 && points.selectedPoint != -1) {
-                    movePoint(points.selectedPoint, e.getX(), e.getY());
+                if (point == -1 && autoPanel.points.selectedPoint != -1) {
+                    movePoint(autoPanel.points.selectedPoint, e.getX(), e.getY());
                 } else if (point != -1) {
-                    points.selectedPoint = point;
+                    autoPanel.points.selectedPoint = point;
                 }
             } else if (developing && toolType == -1) {
                 int point = clickedPoint(e.getX(), e.getY());
-                if (points.selectedPoint == -1) {
-                    points.selectedPoint = point;
+                if (autoPanel.points.selectedPoint == -1) {
+                    autoPanel.points.selectedPoint = point;
                 } else if (point != -1) {
-                    System.out.println("Distance between point " + points.selectedPoint + " and point " + point + " is \n"
-                            + points.get(points.selectedPoint).getDistance(points.get(point)) + " inches");
+                    System.out.println("Distance between point " + autoPanel.points.selectedPoint + " and point " + point + " is \n"
+                            + autoPanel.points.get(autoPanel.points.selectedPoint).getDistance(autoPanel.points.get(point)) + " inches");
                 }
             }
         }
@@ -116,7 +119,7 @@ public class ToolMouseListener implements MouseListener {
     public void mouseReleased(MouseEvent e) {
         if (pointDragging != -1) {
             pointDragging = -1;
-            history.addVersion(points);
+            history.addVersion(autoPanel.points);
         }
     }
 

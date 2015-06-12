@@ -12,10 +12,6 @@ public class History {
 
     private int currentVersion = 0;
 
-    //default constructor
-    public History() {
-    }
-
     //constructor that adds the passed PointArray to the historyList
     public History(PointArray p) {
         addVersion(p);
@@ -59,15 +55,5 @@ public class History {
             currentVersion++;
         }
         return getVersion();
-    }
-
-    //returns the size of historyList
-    public int size() {
-        return historyList.size();
-    }
-
-    //returns the index of the current version
-    public int getCurrentVersion() {
-        return currentVersion;
     }
 }

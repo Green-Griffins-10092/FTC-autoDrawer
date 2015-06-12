@@ -17,17 +17,17 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.KeyStroke;
 
-import animationtest.FTCauto.MainGraphicsPanel;
+import static animationtest.MainFrame.auto;
 
 public class MenuBars {
-    
-    
+
+
     public static JMenuBar menuBar = new JMenuBar();
     public static JMenu tool = new JMenu("Tool Type");
     public static JMenuItem toolAdd = new JMenuItem("Add", new ImageIcon("Images/Waypoint.png"));
     public static JMenuItem toolDelete = new JMenuItem("Delete", new ImageIcon("Images/Delete.png"));
     public static JMenuItem toolEdit = new JMenuItem("Edit", new ImageIcon("Images/Edit.png"));
-    
+
     public static JMenu file = new JMenu("File");
     public static JMenuItem newFile = new JMenuItem("New File", KeyEvent.VK_S);
     public static JMenuItem saveText = new JMenuItem("Save Text", KeyEvent.VK_S);
@@ -40,16 +40,16 @@ public class MenuBars {
     public static JMenuItem undo = new JMenuItem("Undo", KeyEvent.VK_S);
     public static JMenuItem redo = new JMenuItem("Redo", KeyEvent.VK_S);
     public static JMenuItem changeExtraCode = new JMenuItem("Change Extra code", KeyEvent.VK_S);
-    
+
     public static JMenu view = new JMenu("View");
     public static JMenuItem showRobot = new JMenuItem("Show Robot Outline", KeyEvent.VK_S);
 
     //testing methods, will be added to menu if
-    //developing in FTCauto is true
+    //developing in MainFrame is true
     public static JMenu testing = new JMenu("Testing Methods");
     public static JMenuItem testingGetDistance = new JMenuItem("Get Distance", new ImageIcon("Images/Ruler.jpg"));
-    
-    public static JMenuBar menuBars() {
+
+    public static JMenuBar menuBars(boolean developing) {
 
         file.setMnemonic(KeyEvent.VK_A);
         file.getAccessibleContext().setAccessibleDescription("Test Main menu");
@@ -97,7 +97,7 @@ public class MenuBars {
         undo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                FTCauto.points = MainGraphicsPanel.tool.history.getPreviousVersion();
+                auto.points = auto.tool.history.getPreviousVersion();
             }
         });
 
@@ -107,7 +107,7 @@ public class MenuBars {
         redo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                FTCauto.points = MainGraphicsPanel.tool.history.getNextVersion();
+                auto.points = auto.tool.history.getNextVersion();
             }
         });
 
@@ -120,9 +120,9 @@ public class MenuBars {
 
                 if (n == JOptionPane.YES_OPTION) {
                     //Reset All data
-                    FTCauto.points = new PointArray();
-                    MainGraphicsPanel.tool.history = new History(FTCauto.points);
-                    MainGraphicsPanel.file = null;
+                    auto.points = new PointArray();
+                    auto.tool.history = new History(auto.points);
+                    auto.file = null;
                 }
             }
         });
@@ -131,13 +131,13 @@ public class MenuBars {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    if (MainGraphicsPanel.file == null) {
-                        MainGraphicsPanel.file = FileChooser.fileChooser("Save", "Save", "Save a file");
-                        Export.writeTextFile(Export.pointsToString(), MainGraphicsPanel.file.getAbsolutePath() + ".tAD"); // tAd = text AutoDrawer
-                        MainGraphicsPanel.tool.history = new History(FTCauto.points);
+                    if (auto.file == null) {
+                        auto.file = FileChooser.fileChooser("Save", "Save", "Save a file");
+                        Export.writeTextFile(Export.pointArrayToString(auto.points), auto.file.getAbsolutePath() + ".tAD"); // tAd = text AutoDrawer
+                        auto.tool.history = new History(auto.points);
                     } else {
-                        Export.writeTextFile(Export.pointsToString(), MainGraphicsPanel.file.getAbsolutePath() + ".tAD"); // tAd = text AutoDrawer
-                        MainGraphicsPanel.tool.history = new History(FTCauto.points);
+                        Export.writeTextFile(Export.pointArrayToString(auto.points), auto.file.getAbsolutePath() + ".tAD"); // tAd = text AutoDrawer
+                        auto.tool.history = new History(auto.points);
                     }
                 } catch (FileNotFoundException ex) {
                     Logger.getLogger(MenuBars.class.getName()).log(Level.SEVERE, null, ex);
@@ -149,13 +149,13 @@ public class MenuBars {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    if (MainGraphicsPanel.file == null) {
-                        MainGraphicsPanel.file = FileChooser.fileChooser("Save", "Save", "Save a file");
-                        Export.writeBinaryFile(MainGraphicsPanel.file.getAbsolutePath() + ".bAD"); // bAD = binary AutoDrawer
-                        MainGraphicsPanel.tool.history = new History(FTCauto.points);
+                    if (auto.file == null) {
+                        auto.file = FileChooser.fileChooser("Save", "Save", "Save a file");
+                        Export.writeBinaryFile(auto.file.getAbsolutePath() + ".bAD", auto.points); // bAD = binary AutoDrawer
+                        auto.tool.history = new History(auto.points);
                     } else {
-                        Export.writeBinaryFile(MainGraphicsPanel.file.getAbsolutePath() + ".bAD"); // bAD = binary AutoDrawer
-                        MainGraphicsPanel.tool.history = new History(FTCauto.points);
+                        Export.writeBinaryFile(auto.file.getAbsolutePath() + ".bAD", auto.points); // bAD = binary AutoDrawer
+                        auto.tool.history = new History(auto.points);
                     }
                 } catch (IOException ex) {
                     Logger.getLogger(MenuBars.class.getName()).log(Level.SEVERE, null, ex);
@@ -166,7 +166,7 @@ public class MenuBars {
         saveAs.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MainGraphicsPanel.file = FileChooser.fileChooser("Save", "Save", "Save a file");
+                auto.file = FileChooser.fileChooser("Save", "Save", "Save a file");
                 //TODO: Ask User What format, then call the appropriate saving methods.
             }
         });
@@ -177,9 +177,9 @@ public class MenuBars {
                 try {
                     String path = FileChooser.fileChooser("Open", "Open", "Open a file").getAbsolutePath();
                     if (path.substring(path.lastIndexOf('.')).equals(".tAD")) {
-                        FTCauto.points = Export.readTextFile(path);
-                        MainGraphicsPanel.tool.history = new History(FTCauto.points);
-                        MainGraphicsPanel.file = new File(path);
+                        auto.points = Export.readTextFile(path);
+                        auto.tool.history = new History(auto.points);
+                        auto.file = new File(path);
                     } else {
                         System.out.println("Invalid file type!");
                     }
@@ -196,9 +196,9 @@ public class MenuBars {
                 try {
                     String path = FileChooser.fileChooser("Open", "Open", "Open a file").getAbsolutePath();
                     if (path.substring(path.lastIndexOf('.')).equals(".bAD")) {
-                        FTCauto.points = Export.readBinaryFile(path);
-                        MainGraphicsPanel.tool.history = new History(FTCauto.points);
-                        MainGraphicsPanel.file = new File(path);
+                        auto.points = Export.readBinaryFile(path);
+                        auto.tool.history = new History(auto.points);
+                        auto.file = new File(path);
                     } else {
                         System.out.println("Invalid file type!");
                     }
@@ -218,7 +218,7 @@ public class MenuBars {
         showRobot.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MainGraphicsPanel.showRobot = !MainGraphicsPanel.showRobot;
+                auto.showRobot = !auto.showRobot;
             }
         });
 
@@ -245,24 +245,24 @@ public class MenuBars {
         toolAdd.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MainGraphicsPanel.tool.toolType = 1;
-                System.out.println("Add");
+                auto.tool.toolType = 1;
+                //System.out.println("Add");
             }
         });
 
         toolDelete.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MainGraphicsPanel.tool.toolType = 2;
-                System.out.println(MainGraphicsPanel.tool.toolType);
+                auto.tool.toolType = 2;
+                //System.out.println(auto.tool.toolType);
             }
         });
 
         toolEdit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MainGraphicsPanel.tool.toolType = 3;
-                System.out.println(MainGraphicsPanel.tool.toolType);
+                auto.tool.toolType = 3;
+                //System.out.println(auto.tool.toolType);
             }
         });
 
@@ -284,13 +284,13 @@ public class MenuBars {
         changeExtraCode.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                FTCauto.points.get(FTCauto.points.selectedPoint).extraCode = JOptionPane.showInputDialog("Put your extra code here:",
-                        FTCauto.points.get(FTCauto.points.selectedPoint).extraCode);
-                MainGraphicsPanel.tool.history.addVersion(FTCauto.points);
+                auto.points.get(auto.points.selectedPoint).extraCode = JOptionPane.showInputDialog("Put your extra code here:",
+                        auto.points.get(auto.points.selectedPoint).extraCode);
+                auto.tool.history.addVersion(auto.points);
             }
         });
 
-        if (FTCauto.developing) {
+        if (developing) {
             menuBar.add(testing);
             testingGetDistance.getAccessibleContext().setAccessibleDescription("Test the getDistance method\n" +
                     " prints the distance between the selected point and\n " +
@@ -300,8 +300,8 @@ public class MenuBars {
             testingGetDistance.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    MainGraphicsPanel.tool.toolType = -1;
-                    System.out.println(MainGraphicsPanel.tool.toolType);
+                    auto.tool.toolType = -1;
+                    //System.out.println(auto.tool.toolType);
                 }
             });
 

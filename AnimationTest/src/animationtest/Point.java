@@ -2,18 +2,18 @@ package animationtest;
 
 import java.io.Serializable;
 
-import static animationtest.FTCauto.fieldSize;
 import static animationtest.FTCauto.MainGraphicsPanel.FIELD_X_OFFSET;
 import static animationtest.FTCauto.MainGraphicsPanel.FIELD_Y_OFFSET;
+import static animationtest.MainFrame.auto;
 
 public class Point implements Cloneable, Serializable {
     public double x;
     public double y;
-    private int speed = 50;
     public int size = 100;
     public int sizeSpeed = 1;
     public int transparency = 1;
     public String extraCode = "";
+    private int speed = 50;
 
     public Point(int x, int y) {
         setX(x);
@@ -33,23 +33,23 @@ public class Point implements Cloneable, Serializable {
     }
 
     public double getX() {
-        return (x * (fieldSize / 1000));
+        return (x * (auto.fieldSize / 1000));
+    }
+
+    public void setX(int x) {
+        this.x = (x - FIELD_X_OFFSET) / (auto.fieldSize / 1000);
     }
 
     public double getY() {
-        return (y * (fieldSize / 1000));
+        return (y * (auto.fieldSize / 1000));
+    }
+
+    public void setY(int y) {
+        this.y = (y - FIELD_Y_OFFSET) / (auto.fieldSize / 1000);
     }
 
     public int getSpeed() {
         return speed;
-    }
-
-    public void setX(int x) {
-        this.x = (x - FIELD_X_OFFSET) / (fieldSize / 1000);
-    }
-
-    public void setY(int y) {
-        this.y = (y - FIELD_Y_OFFSET) / (fieldSize / 1000);
     }
 
     public void setSpeed(int speed) {
@@ -70,7 +70,7 @@ public class Point implements Cloneable, Serializable {
         y = y * y;
 
         double rtn = Math.sqrt(x + y);
-        return rtn * FTCauto.MainGraphicsPanel.getInchesToPixels();
+        return rtn * auto.getInchesToPixels();
     }
 
     @Override
@@ -81,7 +81,7 @@ public class Point implements Cloneable, Serializable {
             v.x = this.x;
             v.y = this.y;
             v.speed = this.speed;
-            v.extraCode = this.extraCode.substring(0);
+            v.extraCode = this.extraCode;
             return v;
         } catch (CloneNotSupportedException e) {
             // this shouldn't happen, since we are Cloneable

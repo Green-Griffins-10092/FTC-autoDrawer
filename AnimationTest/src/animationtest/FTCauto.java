@@ -21,55 +21,43 @@ import javax.swing.Timer;
 
 public class FTCauto extends JFrame {
 
-    public FTCauto() {
-        add(new MainGraphicsPanel());
-        
+    public FTCauto(boolean developing) {
+        add(new MainGraphicsPanel(developing));
+
     }
 
-    public static double fieldSize = 10;
-
-    //!!Only for development version!!
-    public static boolean developing = false;
-
-    public static PointArray points = new PointArray();
 
     public static class MainGraphicsPanel extends JPanel {
 
-        
-        //Variables
-        public static int mouseX = 0;
-        public static int mouseY = 0;
-        
-        public static boolean mouseOver = true;
-        
-        private int openingTrans = 255;
-        private int openingTextTrans = 255;
-
-        private int frames = 0;
 
         static final int FIELD_X_OFFSET = 0;
         static final int FIELD_Y_OFFSET = 0;
-
         //Picture stuff  !!You have to use png so you can have transparency
         private static final Image stuffedGriffins = new ImageIcon("Images/STUFFED_GRIFFINS_FINAL_GRN.png").getImage();
         private static final Image field = new ImageIcon("Images/Field.png").getImage();
         private static final Image autoDrawer = new ImageIcon("Images/autoDrawer.png").getImage();
-
-        public static boolean showRobot = false;
-        
         private static final double FIELD_HEIGHT_IN_INCHES = 144;
-        private static double inchesToPixels = FIELD_HEIGHT_IN_INCHES / fieldSize;
-
-        public static double getInchesToPixels() {
-            return inchesToPixels;
-        }
-
-        static ToolMouseListener tool;
-
+        //Variables
+        public int mouseX = 0;
+        public int mouseY = 0;
+        public boolean mouseOver = true;
         //This file stores the currently opened file
-        public static File file;
-
-        public MainGraphicsPanel() {
+        public File file;
+        protected boolean showRobot = false;
+        PointArray points = new PointArray();
+        double fieldSize = 10;
+        ToolMouseListener tool;
+        Color background = new Color(200, 200, 200);
+        Color sidePanelDark = new Color(0, 0, 0, 50);
+        Color sidePanel = new Color(0, 90, 33);
+        Color sidePanelLight = new Color(200, 200, 200);
+        Color warningRed = new Color(250, 0, 0);
+        private int openingTrans = 255;
+        private int openingTextTrans = 255;
+        private int frames = 0;
+        private double inchesToPixels = FIELD_HEIGHT_IN_INCHES / fieldSize;
+        private boolean developing;
+        public MainGraphicsPanel(boolean developing) {
 
 
             //Getting mouse location when moved
@@ -87,33 +75,32 @@ public class FTCauto extends JFrame {
 
                 }
             });
-            
+
             addMouseListener(new MouseAdapter() {
                 public void mouseEntered(MouseEvent e) {
                     mouseOver = true;
                 }
             });
-            
+
             addMouseListener(new MouseAdapter() {
                 public void mouseExited(MouseEvent e) {
                     mouseOver = false;
                 }
             });
-            
+
             //The animation timer
             Timer timer = new Timer(10, new TimerListener());
             timer.start();
 
-            tool = new ToolMouseListener();
+            tool = new ToolMouseListener(this, developing);
             addMouseListener(tool);
+
+            this.developing = developing;
         }
 
-        Color background = new Color(200, 200, 200);
-        Color sidePanelDark = new Color(0, 0, 0, 50);
-        Color sidePanel = new Color(0, 90, 33);
-        Color sidePanelLight = new Color(200, 200, 200);
-        Color warningRed = new Color(250, 0, 0);
-
+        public double getInchesToPixels() {
+            return inchesToPixels;
+        }
 
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -140,7 +127,7 @@ public class FTCauto extends JFrame {
                 } else {
                     points.get(tool.pointDragging).setY(mouseY);
                 }
-                
+
             }
 
 
@@ -172,16 +159,15 @@ public class FTCauto extends JFrame {
 
             int eighteenInchesInPixels = (int) (18 / inchesToPixels);
             g.setColor(new Color(0, 0, 0, 50));
-            if(Math.abs((mouseX)-(FIELD_X_OFFSET+(fieldSize/2)))>(fieldSize-eighteenInchesInPixels)/2||Math.abs((mouseY)-(FIELD_Y_OFFSET+(fieldSize/2)))>(fieldSize-eighteenInchesInPixels)/2){
+            if (Math.abs((mouseX) - (FIELD_X_OFFSET + (fieldSize / 2))) > (fieldSize - eighteenInchesInPixels) / 2 || Math.abs((mouseY) - (FIELD_Y_OFFSET + (fieldSize / 2))) > (fieldSize - eighteenInchesInPixels) / 2) {
                 g.setColor(new Color(255, 0, 0, (int) ((Math.sin((double) frames / 10) * 110) + 120)));
             }
-            
-            
+
 
             //draw a robot outline
             if (showRobot) {
                 g.drawRect(mouseX - eighteenInchesInPixels / 2, mouseY - eighteenInchesInPixels / 2, eighteenInchesInPixels, eighteenInchesInPixels);
-                
+
             }
 
             //Draw the Points
@@ -276,7 +262,7 @@ public class FTCauto extends JFrame {
             }
 
             //Changing the tool color
-            
+
             if (tool.toolType == 1) {
                 Color point = new Color(0, 200, 50, (int) ((Math.sin((double) frames / 20) * 50) + 130));
                 g.setColor(point);
@@ -289,11 +275,10 @@ public class FTCauto extends JFrame {
             } else if (developing && tool.toolType == -1) {
                 g.setColor(warningRed);
             }
-            
-            
+
 
             //Mouse stuff
-            if(mouseOver){
+            if (mouseOver) {
                 g2.setStroke(new BasicStroke(2));
                 g.drawLine(mouseX, 0, mouseX, getHeight());
                 g.drawLine(0, mouseY, getWidth(), mouseY);
@@ -301,7 +286,7 @@ public class FTCauto extends JFrame {
                 g.drawLine(mouseX + 1, 0, mouseX + 1, getHeight());
                 g.drawLine(0, mouseY + 1, getWidth(), mouseY + 1);
             }
-            
+
             //Opening credits & stuff
             if (!developing) {
                 if (openingTrans > 0 && frames > 300) {

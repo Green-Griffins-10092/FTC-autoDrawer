@@ -19,20 +19,20 @@ public class Export {
         outFile.close();
     }
 
-    public static void writeBinaryFile(String fileName) throws IOException {
+    public static void writeBinaryFile(String fileName, PointArray pointArray) throws IOException {
         FileOutputStream fos = new FileOutputStream(fileName);
         ObjectOutputStream oos = new ObjectOutputStream(fos);
-        oos.writeInt(FTCauto.points.size());
-        for (Point p : FTCauto.points) {
+        oos.writeInt(pointArray.size());
+        for (Point p : pointArray.getList()) {
             oos.writeObject(p);
         }
     }
 
-    public static String pointsToString() {
+    public static String pointArrayToString(PointArray pointArray) {
         String out = "";
 
-        for (int i = 0; i < FTCauto.points.size(); i++) {
-            out += FTCauto.points.get(i).toString() + "\n";
+        for (int i = 0; i < pointArray.size(); i++) {
+            out += pointArray.get(i).toString() + "\n";
         }
 
         return (out);
