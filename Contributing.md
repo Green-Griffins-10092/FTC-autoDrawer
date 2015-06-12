@@ -1,4 +1,4 @@
-________Please check the wiki for more detaild instructons (with pictures!)______
+___Please check the wiki for more detailed instructons (with pictures!)___
 
 __Importing into Android Studio__
 Navigate to the welcome screen.
