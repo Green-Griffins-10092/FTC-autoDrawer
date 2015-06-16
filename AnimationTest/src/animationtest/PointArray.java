@@ -3,7 +3,6 @@ package animationtest;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class PointArray implements Cloneable {
 
     //The point that is selected
@@ -26,19 +25,26 @@ public class PointArray implements Cloneable {
         return (result);
     }
 
-    public void addPoint(int index, int x, int y) {
-        list.add(index, new Point(x, y));
+    public void addPoint(int index, int x, int y, double conversionFactor) {
+        list.add(index, new Point(x, y, conversionFactor));
     }
 
+    public double getDistance(int index) {
+        double x1 = list.get(index).x;
+        double x2 = list.get(index + 1).x;
+        double y1 = list.get(index).y;
+        double y2 = list.get(index + 1).y;
+        return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+    }
 
     public double getAngle(int i) {
         ///Lots of trig stuff :P
-        double x1 = list.get(i).getX();
-        double y1 = list.get(i).getY();
-        double x2 = list.get(i + 1).getX();
-        double y2 = list.get(i + 1).getY();
-        double x3 = list.get(i - 1).getX();
-        double y3 = list.get(i - 1).getY();
+        double x1 = list.get(i).x;
+        double y1 = list.get(i).y;
+        double x2 = list.get(i + 1).x;
+        double y2 = list.get(i + 1).y;
+        double x3 = list.get(i - 1).x;
+        double y3 = list.get(i - 1).y;
 
         double u1 = x3 - x1;
         double u2 = y3 - y1;
@@ -54,12 +60,12 @@ public class PointArray implements Cloneable {
 
     public double angleDirection(int i) {
         ///Lots of trig stuff :P
-        double x1 = list.get(i).getX();
-        double y1 = list.get(i).getY();
-        double x2 = list.get(i + 1).getX();
-        double y2 = list.get(i + 1).getY();
-        double x3 = list.get(i - 1).getX();
-        double y3 = list.get(i - 1).getY();
+        double x1 = list.get(i).x;
+        double y1 = list.get(i).y;
+        double x2 = list.get(i + 1).x;
+        double y2 = list.get(i + 1).y;
+        double x3 = list.get(i - 1).x;
+        double y3 = list.get(i - 1).y;
 
         double[] rotate = RotateVector(x1 - x2, y1 - y2, 180 * Math.PI);
         x1 = rotate[0] + x2;
@@ -106,8 +112,8 @@ public class PointArray implements Cloneable {
         return list.get(i);
     }
 
-    public Point remove(int i) {
-        return list.remove(i);
+    public void remove(int i) {
+        list.remove(i);
     }
 
     public void clear() {

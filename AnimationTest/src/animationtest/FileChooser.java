@@ -1,10 +1,9 @@
 package animationtest;
 
-import java.io.File;
-
-import javax.swing.JFileChooser;
+import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.File;
 
 public class FileChooser {
     private static JFileChooser chooser = new JFileChooser();
@@ -16,7 +15,7 @@ public class FileChooser {
         chooser.setAcceptAllFileFilterUsed(false);
         FileFilter filter = new FileNameExtensionFilter("autoDrawer File", "tAD", "bAD");
         chooser.addChoosableFileFilter(filter);
-        int n = chooser.showOpenDialog(null);
+        chooser.showOpenDialog(null);
         File f = chooser.getSelectedFile();
 
         Settings.lastSavePath = f;

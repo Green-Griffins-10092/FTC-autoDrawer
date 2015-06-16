@@ -1,19 +1,15 @@
 package animationtest;
 
-import java.awt.BorderLayout;
+import javax.swing.*;
+import java.awt.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.JFrame;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-import javax.swing.WindowConstants;
+class MainFrame extends JFrame {
 
-public class MainFrame extends JFrame {
-
-    public static boolean developing = false;
-    public static FTCauto.MainGraphicsPanel auto;
-    public static InfoBar.MainGraphicsPanel infoBar;
+    static FTCauto.MainGraphicsPanel auto;
+    static InfoBar.MainGraphicsPanel infoBar;
+    private static boolean developing = false;
 
     public static void main(String[] args) {
 

@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import static animationtest.FTCauto.MainGraphicsPanel.FIELD_X_OFFSET;
 import static animationtest.FTCauto.MainGraphicsPanel.FIELD_Y_OFFSET;
-import static animationtest.MainFrame.auto;
 
 public class Point implements Cloneable, Serializable {
     public double x;
@@ -15,9 +14,9 @@ public class Point implements Cloneable, Serializable {
     public String extraCode = "";
     private int speed = 50;
 
-    public Point(int x, int y) {
-        setX(x);
-        setY(y);
+    public Point(int x, int y, double conversionFactor) {
+        setX(x, conversionFactor);
+        setY(y, conversionFactor);
     }
 
     Point(double x, double y, String code, int speed) {
@@ -27,25 +26,20 @@ public class Point implements Cloneable, Serializable {
         this.speed = speed;
     }
 
-    public void movePoint(int newX, int newY) {
-        this.x = newX;
-        this.y = newY;
+    public double getX(double conversionFactor) {
+        return (x / conversionFactor);
     }
 
-    public double getX() {
-        return (x * (auto.fieldSize / 1000));
+    public void setX(int x, double conversionFactor) {
+        this.x = (x - FIELD_X_OFFSET) * conversionFactor;
     }
 
-    public void setX(int x) {
-        this.x = (x - FIELD_X_OFFSET) / (auto.fieldSize / 1000);
+    public double getY(double conversionFactor) {
+        return (y / conversionFactor);
     }
 
-    public double getY() {
-        return (y * (auto.fieldSize / 1000));
-    }
-
-    public void setY(int y) {
-        this.y = (y - FIELD_Y_OFFSET) / (auto.fieldSize / 1000);
+    public void setY(int y, double conversionFactor) {
+        this.y = (y - FIELD_Y_OFFSET) * conversionFactor;
     }
 
     public int getSpeed() {
@@ -58,10 +52,10 @@ public class Point implements Cloneable, Serializable {
 
 
     public double getDistance(Point p) {
-        double x1 = this.getX();
-        double x2 = p.getX();
-        double y1 = this.getY();
-        double y2 = p.getY();
+        double x1 = this.x;
+        double x2 = p.x;
+        double y1 = this.y;
+        double y2 = p.y;
 
         double x = x1 - x2;
         double y = y1 - y2;
@@ -69,8 +63,7 @@ public class Point implements Cloneable, Serializable {
         x = x * x;
         y = y * y;
 
-        double rtn = Math.sqrt(x + y);
-        return rtn * auto.getInchesToPixels();
+        return Math.sqrt(x + y);
     }
 
     @Override

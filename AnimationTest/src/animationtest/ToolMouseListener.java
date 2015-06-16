@@ -38,8 +38,8 @@ public class ToolMouseListener implements MouseListener {
     private int clickedPoint(int x, int y) {
         int clickedOn = -1;
         for (int i = 0; i < autoPanel.points.size(); i++) {
-            if (Math.abs((autoPanel.points.get(i).getX() + FIELD_X_OFFSET) - x) < 10) {
-                if (Math.abs((autoPanel.points.get(i).getY() + FIELD_Y_OFFSET) - y) < 10) {
+            if (Math.abs((autoPanel.points.get(i).getX(autoPanel.getInchesToPixels()) + FIELD_X_OFFSET) - x) < 10) {
+                if (Math.abs((autoPanel.points.get(i).getY(autoPanel.getInchesToPixels()) + FIELD_Y_OFFSET) - y) < 10) {
                     clickedOn = i;
                     break;
                 }
@@ -50,7 +50,7 @@ public class ToolMouseListener implements MouseListener {
 
     private void addPoint(int index, int x, int y) {
         // add point to list
-        autoPanel.points.addPoint(index + 1, x, y);
+        autoPanel.points.addPoint(index + 1, x, y, autoPanel.getInchesToPixels());
         //make new point the selected point
         autoPanel.points.selectedPoint = index + 1;
 
@@ -68,8 +68,8 @@ public class ToolMouseListener implements MouseListener {
     }
 
     private void movePoint(int index, int x, int y) {
-        autoPanel.points.get(index).setX(x);
-        autoPanel.points.get(index).setY(y);
+        autoPanel.points.get(index).setX(x, autoPanel.getInchesToPixels());
+        autoPanel.points.get(index).setY(y, autoPanel.getInchesToPixels());
         autoPanel.points.selectedPoint = index;
         history.addVersion(autoPanel.points);
     }
