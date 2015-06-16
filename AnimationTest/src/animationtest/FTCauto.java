@@ -130,7 +130,7 @@ public class FTCauto extends JFrame {
 
             }
 
-
+            
             //Main frame
             g.setColor(background);
             g.fillRect(0, 0, getWidth(), getHeight());
@@ -296,17 +296,17 @@ public class FTCauto extends JFrame {
                 if (frames > 50 && openingTextTrans > 0) {
                     openingTextTrans -= 5;
                 }
-
+                
                 Color OpeningBackground = new Color(255, 255, 255, openingTrans);
                 g.setColor(OpeningBackground);
                 g.fillRect(0, 0, getWidth(), getHeight());
-
+                
                 if (frames < 300) {
                     g.drawImage(stuffedGriffins, 50, getHeight() - 150, 748 / 3, 299 / 3, null);
-                    g.drawImage(autoDrawer, (getWidth() / 2) - 300, (getHeight() / 2) - FIELD_X_OFFSET, 629, 236, null);
+                    g.drawImage(autoDrawer, ((getWidth()-100) / 2)-310, (getHeight() / 2)-100, 629, 236, null);
                 }
-
-
+                
+                
                 OpeningBackground = new Color(10, 10, 10, openingTextTrans);
                 g.setColor(OpeningBackground);
                 g.fillRect(0, 0, getWidth(), getHeight());
