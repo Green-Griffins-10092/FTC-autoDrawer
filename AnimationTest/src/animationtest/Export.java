@@ -133,7 +133,7 @@ public class Export {
 
         for (ItemData data : info.getServos()) {
             rtn += "    Servo " + data.getProgramName() + ";\n";
-            rtn += "    volatile double " + data.getProgramName() + "Position;\n";
+            rtn += "    volatile double " + data.getProgramName() + "Position;\n\n";
         }
 
         rtn += "    public void start() {\n";
@@ -170,8 +170,10 @@ public class Export {
                 "    }\n\n" +
                 "    public void stop() {\n\n" +
                 "    }\n" +
-                "    private class " + info.getProgramName() + "Thread extends Thread {\n" +
                 "\n" +
+                "    //This class keeps track of what the robot needs to do. \n" +
+                "    //You need to make sure that methods autoDrive and autoTurn move the correct motors." +
+                "    private class " + info.getProgramName() + "Thread extends Thread {\n" +
                 "\n" +
                 "        @Override\n" +
                 "        public void run() {\n" +
@@ -194,7 +196,7 @@ public class Export {
 
         rtn += "        }\n" +
                 "\n" +
-                "        private void autoDrive(double inches){\n" +
+                "        private void autoDrive(double inches){\n" +  //TODO: Finish filling out autoDrive
                 "            synchronized (syncLock){\n" +
                 "                //set motors here\n" +
                 "            }\n" +
@@ -206,7 +208,7 @@ public class Export {
                 "            }\n" +
                 "        }\n" +
                 "\n" +
-                "        private void autoTurn(double degrees){\n" +
+                "        private void autoTurn(double degrees){\n" +  //TODO: Finish filling out autoTurn
                 "            synchronized (syncLock){\n" +
                 "                //set motors here\n" +
                 "            }\n" +
@@ -217,7 +219,7 @@ public class Export {
                 "                //stop motors here\n" +
                 "            }\n" +
                 "        }\n" +
-                "    }" +
+                "    }\n" +
                 "}";
 
         return rtn;

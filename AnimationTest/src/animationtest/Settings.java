@@ -6,4 +6,6 @@ public class Settings {
     public static File defaultSavePath = new File("");
     public static File lastSavePath;
 
+    public static File opmodeFile;
+
 }
