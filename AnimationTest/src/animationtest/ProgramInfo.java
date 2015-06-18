@@ -10,15 +10,15 @@ import java.util.List;
 public class ProgramInfo {
     private List<ItemData> servos;
     private List<ItemData> motors;
-
+    
     private double wheelDiameter;
     private double distanceBetweenWheels;
-
+    
     private String programName;
-
+    
     private PointArray pointArray;
     private File saveLocation;
-
+    
     public ProgramInfo(PointArray points, File file, String programName, List<ItemData> servos, List<ItemData> motors) {
         pointArray = points;
         saveLocation = file;
@@ -26,7 +26,7 @@ public class ProgramInfo {
         this.motors = motors;
         this.programName = programName;
     }
-
+    
     public PointArray getPointArray() {
         return pointArray;
     }

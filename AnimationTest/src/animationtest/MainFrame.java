@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.UIManager.LookAndFeelInfo;
 
 class MainFrame extends JFrame {
 
@@ -21,10 +22,21 @@ class MainFrame extends JFrame {
 
 
         try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+            } catch (Exception e) {
+                // If Nimbus is not available, fall back to cross-platform
+             try {
+                UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+            } catch (Exception ex) {
+
+            }
         }
+
 
         MainFrame frame = new MainFrame();
         infoBar = new InfoBar.MainGraphicsPanel(developing);
