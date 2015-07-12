@@ -1,18 +1,29 @@
 package animationtest;
 
 import javax.swing.*;
-import java.awt.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.UIManager.LookAndFeelInfo;
+import java.awt.*;
+
+import static java.lang.Thread.sleep;
 
 class MainFrame extends JFrame {
 
+    protected static boolean splashScreen = true;
+    protected static SplashScreen spSc;
     static FTCauto.MainGraphicsPanel auto;
     static InfoBar.MainGraphicsPanel infoBar;
     private static boolean developing = false;
 
     public static void main(String[] args) {
+
+        spSc = SplashScreen.getSplashScreen();
+
+        if (spSc == null) {
+            splashScreen = false;
+            System.out.println("No Splash Screen");
+        } else {
+            System.out.println("Splash Screen!");
+        }
 
 
         for (String s : args) {
@@ -28,15 +39,23 @@ class MainFrame extends JFrame {
                     break;
                 }
             }
-            } catch (Exception e) {
-                // If Nimbus is not available, fall back to cross-platform
-             try {
+        } catch (Exception e) {
+            // If Nimbus is not available, fall back to cross-platform
+            try {
                 UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
             } catch (Exception ex) {
 
             }
         }
 
+        //display the splash screen for a little
+        if (splashScreen && !developing) {
+            try {
+                sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
 
         MainFrame frame = new MainFrame();
         infoBar = new InfoBar.MainGraphicsPanel(developing);

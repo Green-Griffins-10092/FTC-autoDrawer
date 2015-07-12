@@ -1,16 +1,11 @@
 package animationtest;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.Timer;
 
 public class InfoBar extends JFrame {
 
@@ -28,9 +23,6 @@ public class InfoBar extends JFrame {
         Color sidePanelDark = new Color(0, 0, 0, 50);
         Color sidePanel = new Color(0, 90, 33);
         Color sidePanelLight = new Color(200, 200, 200);
-        private int openingTrans = 255;
-        private int openingTextTrans = 255;
-        private int frames = 0;
         private boolean developing;
 
         public MainGraphicsPanel(boolean developing) {
@@ -89,27 +81,6 @@ public class InfoBar extends JFrame {
 
             g.fillPolygon(shadowXPoints, shadowYPoints, 4);
 
-            //Opening credits & stuff
-            if (!developing) {
-                if (openingTrans > 0 && frames > 300) {
-                    openingTrans -= 5;
-                }
-
-                if (frames > 50 && openingTextTrans > 0) {
-                    openingTextTrans -= 5;
-                }
-
-                Color OpeningBackground = new Color(255, 255, 255, openingTrans);
-                g.setColor(OpeningBackground);
-                g.fillRect(0, 0, getWidth(), getHeight());
-
-
-                OpeningBackground = new Color(10, 10, 10, openingTextTrans);
-                g.setColor(OpeningBackground);
-                g.fillRect(0, 0, getWidth(), getHeight());
-            }
-
-            frames++;
         }
 
 

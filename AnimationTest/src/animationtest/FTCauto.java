@@ -19,10 +19,7 @@ public class FTCauto extends JFrame {
 
         static final int FIELD_X_OFFSET = 0;
         static final int FIELD_Y_OFFSET = 0;
-        //Picture stuff  !!You have to use png so you can have transparency
-        private static final Image stuffedGriffins = new ImageIcon("Images/STUFFED_GRIFFINS_FINAL_GRN.png").getImage();
         private static final Image field = new ImageIcon("Images/Field.png").getImage();
-        private static final Image autoDrawer = new ImageIcon("Images/autoDrawer.png").getImage();
         private static final double FIELD_HEIGHT_IN_INCHES = 144;
         final Color background = new Color(200, 200, 200);
         final Color sidePanelDark = new Color(0, 0, 0, 50);
@@ -40,8 +37,6 @@ public class FTCauto extends JFrame {
         PointArray points = new PointArray();
         double fieldSize = 10;
         ToolMouseListener tool;
-        private int openingTrans = 255;
-        private int openingTextTrans = 255;
         private int frames = 0;
         private double inchesToPixels = FIELD_HEIGHT_IN_INCHES / fieldSize;
         public MainGraphicsPanel(boolean developing) {
@@ -275,29 +270,7 @@ public class FTCauto extends JFrame {
             }
 
             //Opening credits & stuff
-            if (!developing) {
-                if (openingTrans > 0 && frames > 300) {
-                    openingTrans -= 5;
-                }
-
-                if (frames > 50 && openingTextTrans > 0) {
-                    openingTextTrans -= 5;
-                }
-                
-                Color OpeningBackground = new Color(255, 255, 255, openingTrans);
-                g.setColor(OpeningBackground);
-                g.fillRect(0, 0, getWidth(), getHeight());
-                
-                if (frames < 300) {
-                    g.drawImage(stuffedGriffins, 50, getHeight() - 150, 748 / 3, 299 / 3, null);
-                    g.drawImage(autoDrawer, ((getWidth()-100) / 2)-310, (getHeight() / 2)-100, 629, 236, null);
-                }
-                
-                
-                OpeningBackground = new Color(10, 10, 10, openingTextTrans);
-                g.setColor(OpeningBackground);
-                g.fillRect(0, 0, getWidth(), getHeight());
-            } else {
+            if (developing) {
                 g.setColor(warningRed);
                 g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 35));
                 g.drawString("Developing!", 5, 20);
