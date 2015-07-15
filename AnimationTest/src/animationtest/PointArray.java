@@ -58,9 +58,6 @@ public class PointArray implements Cloneable {
         //2. rotate counterclockwise by variable angle
         double vPrime1 = v1 * cos(angle) - v2 * sin(angle);
         double vPrime2 = v2 * cos(angle) + v1 * sin(angle);
-        System.out.println("check");
-        System.out.println("v\'1: " + vPrime1 + " u1: " + u1);
-        System.out.println("v\'2: " + vPrime2 + " u2: " + u2);
         //3. check if v' is the same as u,
         //  if so we rotated clockwise and don't need to change angle,
         //  otherwise we rotated counterclockwise and need to negate angle.
