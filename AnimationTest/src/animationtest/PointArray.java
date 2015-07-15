@@ -3,6 +3,9 @@ package animationtest;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
+
 public class PointArray implements Cloneable {
 
     //The point that is selected
@@ -14,15 +17,6 @@ public class PointArray implements Cloneable {
 
     public PointArray() {
         list = new ArrayList<>();
-    }
-
-    static double[] RotateVector(double x, double y, double t) {
-
-        double[] result = new double[2];
-        result[1] = x * Math.cos(t) - y * Math.sin(t);
-        result[1] = y * Math.cos(t) - x * Math.sin(t);
-
-        return (result);
     }
 
     public void addPoint(int index, int x, int y, double conversionFactor) {
@@ -39,50 +33,44 @@ public class PointArray implements Cloneable {
 
     public double getAngle(int i) {
         ///Lots of trig stuff :P
-        double x1 = list.get(i).x;
-        double y1 = list.get(i).y;
-        double x2 = list.get(i + 1).x;
-        double y2 = list.get(i + 1).y;
-        double x3 = list.get(i - 1).x;
-        double y3 = list.get(i - 1).y;
+        double x1 = list.get(i - 1).x;
+        double y1 = list.get(i - 1).y;
+        double x2 = list.get(i).x;
+        double y2 = list.get(i).y;
+        double x3 = list.get(i + 1).x;
+        double y3 = list.get(i + 1).y;
 
-        double u1 = x3 - x1;
-        double u2 = y3 - y1;
-        double v1 = x1 - x2;
-        double v2 = y1 - y2;
-
-        double dotProduct = u1 * v1 + u2 * v2;
-        double uLength = Math.sqrt(Math.pow(u1, 2) + Math.pow(u2, 2));
-        double vLength = Math.sqrt(Math.pow(v1, 2) + Math.pow(v2, 2));
-
-        return Math.toDegrees(Math.acos(dotProduct / (uLength * vLength))) * angleDirection(i);
-    }
-
-    public double angleDirection(int i) {
-        ///Lots of trig stuff :P
-        double x1 = list.get(i).x;
-        double y1 = list.get(i).y;
-        double x2 = list.get(i + 1).x;
-        double y2 = list.get(i + 1).y;
-        double x3 = list.get(i - 1).x;
-        double y3 = list.get(i - 1).y;
-
-        double[] rotate = RotateVector(x1 - x2, y1 - y2, 180 * Math.PI);
-        x1 = rotate[0] + x2;
-        y1 = rotate[1] + y2;
-
-        double u1 = x3 - x1;
-        double u2 = y3 - y1;
-        double v1 = x1 - x2;
-        double v2 = y1 - y2;
+        double u1 = x2 - x1;
+        double u2 = y2 - y1;
+        double v1 = x3 - x2;
+        double v2 = y3 - y2;
 
         double dotProduct = u1 * v1 + u2 * v2;
+        double uNorm = Math.sqrt(u1 * u1 + u2 * u2);
+        double vNorm = Math.sqrt(v1 * v1 + v2 * v2);
 
-        if (dotProduct > 0) {
-            return 1;
-        } else {
-            return -1;
+        double angle = Math.acos(dotProduct / (uNorm * vNorm));
+
+        //rotation test
+        //1. take vector v and scale it so the norms of u and v are the same.
+        v1 *= uNorm / vNorm;
+        v2 *= uNorm / vNorm;
+        //2. rotate counterclockwise by variable angle
+        double vPrime1 = v1 * cos(angle) - v2 * sin(angle);
+        double vPrime2 = v2 * cos(angle) + v1 * sin(angle);
+        System.out.println("check");
+        System.out.println("v\'1: " + vPrime1 + " u1: " + u1);
+        System.out.println("v\'2: " + vPrime2 + " u2: " + u2);
+        //3. check if v' is the same as u,
+        //  if so we rotated clockwise and don't need to change angle,
+        //  otherwise we rotated counterclockwise and need to negate angle.
+        //(the tests are stated in this manner to avoid round off error)
+        if (Math.abs(vPrime1 - u1) <= .000001 && Math.abs(vPrime2 - u2) <= .000001) {
+            angle = -angle;
         }
+
+        return Math.toDegrees(angle);
+
     }
 
     @Override
