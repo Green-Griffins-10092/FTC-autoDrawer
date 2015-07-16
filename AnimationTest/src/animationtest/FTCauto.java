@@ -44,6 +44,7 @@ public class FTCauto extends JFrame {
         private int openingTextTrans = 255;
         private int frames = 0;
         private double inchesToPixels = FIELD_HEIGHT_IN_INCHES / fieldSize;
+
         public MainGraphicsPanel(boolean developing) {
 
 
@@ -117,7 +118,7 @@ public class FTCauto extends JFrame {
 
             }
 
-            
+
             //Main frame
             g.setColor(background);
             g.fillRect(0, 0, getWidth(), getHeight());
@@ -157,8 +158,90 @@ public class FTCauto extends JFrame {
 
             }
 
-            //Draw the Points
-            for (int i = 0; i < points.size(); i++) {
+            //drawing the lines
+            for (int i = 1; i < points.size(); i++) {
+                g2.setColor(new Color(0, 200, 50, 250));
+                g2.setStroke(new BasicStroke(5));
+                g2.draw(new Line2D.Float((float) points.get(i).getX(inchesToPixels) + FIELD_X_OFFSET, (float) points.get(i).getY(inchesToPixels) + FIELD_Y_OFFSET,
+                        (float) points.get(i - 1).getX(inchesToPixels) + FIELD_X_OFFSET, (float) points.get(i - 1).getY(inchesToPixels) + FIELD_Y_OFFSET));
+            }
+
+            if (points.size() > 0) { //dealing with the first point
+                //Making it into a more usable form
+                int size = points.get(0).size;
+
+                Color point = new Color(0, 200, 50, points.get(0).transparency);
+
+                //set color
+                g.setColor(point);
+
+                //Changing the size
+                if (size > 10) {
+                    points.get(0).size -= points.get(0).sizeSpeed;
+
+                    points.get(0).sizeSpeed += 0.5;
+                }
+                //And the transparency
+                if (points.get(0).transparency < 250) {
+                    points.get(0).transparency += 2;
+                }
+
+                g.setColor(new Color(10, 127, 25, points.get(0).transparency));
+
+                int transMax = 250;
+                //if the point is selected, then set color to be blue, if not green.
+                if (points.selectedPoint == 0) {
+                    point = new Color(0, FIELD_Y_OFFSET, 150, points.get(0).transparency);
+                    g.setColor(point);
+                    transMax = 150;
+                }
+
+                //Draw the point
+                g.fillOval((int) points.get(0).getX(inchesToPixels) + FIELD_X_OFFSET - (size / 2), (int) points.get(0).getY(inchesToPixels) + FIELD_Y_OFFSET - (size / 2),
+                        size, size);
+
+                if (!points.get(0).extraCode.equals("")) {
+                    g.setColor(new Color(0, 0, 0));
+                    g2.setStroke(new BasicStroke(2));
+                    g2.draw(new Line2D.Float((float) points.get(0).getX(inchesToPixels) + FIELD_X_OFFSET, (float) points.get(0).getY(inchesToPixels) + FIELD_Y_OFFSET,
+                            (float) points.get(0).getX(inchesToPixels) + 70, (float) points.get(0).getY(inchesToPixels) - 10));
+
+                    String outCode = "";
+
+                    if (points.get(0).extraCode.length() > 15) {
+                        for (int j = 0; j < 15; j++) {
+                            outCode += points.get(0).extraCode.charAt(j);
+
+                        }
+                        outCode += "...";
+                    } else {
+                        outCode = points.get(0).extraCode;
+                    }
+
+                    g.setColor(new Color(0, 0, 0, 50));
+                    g.fillRect((int) points.get(0).getX(inchesToPixels) + 63, (int) points.get(0).getY(inchesToPixels) - 26, (8 * outCode.length()) + 4, 14);
+                    g.drawRect((int) points.get(0).getX(inchesToPixels) + 63, (int) points.get(0).getY(inchesToPixels) - 26, (8 * outCode.length()) + 4, 14);
+
+                    g.setColor(new Color(0, 0, 0));
+                    g.drawString(outCode, (int) points.get(0).getX(inchesToPixels) + 65, (int) points.get(0).getY(inchesToPixels) - 15);
+                }
+
+
+                //Changing the size
+                if (size > 10) {
+                    points.get(0).size -= points.get(0).sizeSpeed;
+
+                    points.get(points.size() - 1).sizeSpeed += 0.1;
+                }
+
+                //And the transparency
+                if (points.get(0).transparency < transMax) {
+                    points.get(0).transparency += 2;
+                }
+            }
+
+            //Draw the middle points
+            for (int i = 1; i < points.size() - 1; i++) {
                 //Making it into a more usable form
                 int size = points.get(i).size;
 
@@ -180,11 +263,6 @@ public class FTCauto extends JFrame {
                 //And the transparency
                 if (points.get(i).transparency < 250) {
                     points.get(i).transparency += 2;
-                }
-                if (i > 0) {
-                    g2.setStroke(new BasicStroke(5));
-                    g2.draw(new Line2D.Float((float) points.get(i).getX(inchesToPixels) + FIELD_X_OFFSET, (float) points.get(i).getY(inchesToPixels) + FIELD_Y_OFFSET,
-                            (float) points.get(i - 1).getX(inchesToPixels) + FIELD_X_OFFSET, (float) points.get(i - 1).getY(inchesToPixels) + FIELD_Y_OFFSET));
                 }
 
                 int transMax = 250;
@@ -248,6 +326,85 @@ public class FTCauto extends JFrame {
                 }
             }
 
+            if (points.size() > 1) { //Dealing with the last point
+                //Making it into a more usable form
+                int size = points.get(points.size() - 1).size;
+
+                Color point = new Color(0, 200, 50, points.get(points.size() - 1).transparency);
+
+                //set color
+                g.setColor(point);
+
+                //Draw the point
+                g.fillOval((int) points.get(points.size() - 1).getX(inchesToPixels) + FIELD_X_OFFSET - (size / 2), (int) points.get(points.size() - 1).getY(inchesToPixels) + FIELD_Y_OFFSET - (size / 2),
+                        size, size);
+
+                //Changing the size
+                if (size > 10) {
+                    points.get(points.size() - 1).size -= points.get(points.size() - 1).sizeSpeed;
+
+                    points.get(points.size() - 1).sizeSpeed += 0.5;
+                }
+
+                //And the transparency
+                if (points.get(points.size() - 1).transparency < 250) {
+                    points.get(points.size() - 1).transparency += 2;
+                }
+
+                g.setColor(new Color(250, 0, 0, points.get(points.size() - 1).transparency));
+
+                int transMax = 250;
+                //if the point is selected, then set color to be blue, if not red.
+                if (points.selectedPoint == points.size() - 1) {
+                    point = new Color(0, FIELD_Y_OFFSET, 150, points.get(points.size() - 1).transparency);
+                    g.setColor(point);
+                    transMax = 150;
+                }
+
+                //Draw the point
+                g.fillOval((int) points.get(points.size() - 1).getX(inchesToPixels) + FIELD_X_OFFSET - (size / 2), (int) points.get(points.size() - 1).getY(inchesToPixels) + FIELD_Y_OFFSET - (size / 2),
+                        size, size);
+
+                if (!points.get(points.size() - 1).extraCode.equals("")) {
+                    g.setColor(new Color(0, 0, 0));
+                    g2.setStroke(new BasicStroke(2));
+                    g2.draw(new Line2D.Float((float) points.get(points.size() - 1).getX(inchesToPixels) + FIELD_X_OFFSET, (float) points.get(points.size() - 1).getY(inchesToPixels) + FIELD_Y_OFFSET,
+                            (float) points.get(points.size() - 1).getX(inchesToPixels) + 70, (float) points.get(points.size() - 1).getY(inchesToPixels) - 10));
+
+                    String outCode = "";
+
+                    if (points.get(points.size() - 1).extraCode.length() > 15) {
+                        for (int j = 0; j < 15; j++) {
+                            outCode += points.get(points.size() - 1).extraCode.charAt(j);
+
+                        }
+                        outCode += "...";
+                    } else {
+                        outCode = points.get(points.size() - 1).extraCode;
+                    }
+
+                    g.setColor(new Color(0, 0, 0, 50));
+                    g.fillRect((int) points.get(points.size() - 1).getX(inchesToPixels) + 63, (int) points.get(points.size() - 1).getY(inchesToPixels) - 26, (8 * outCode.length()) + 4, 14);
+                    g.drawRect((int) points.get(points.size() - 1).getX(inchesToPixels) + 63, (int) points.get(points.size() - 1).getY(inchesToPixels) - 26, (8 * outCode.length()) + 4, 14);
+
+                    g.setColor(new Color(0, 0, 0));
+                    g.drawString(outCode, (int) points.get(points.size() - 1).getX(inchesToPixels) + 65, (int) points.get(points.size() - 1).getY(inchesToPixels) - 15);
+                }
+
+
+                //Changing the size
+                if (size > 10) {
+                    points.get(points.size() - 1).size -= points.get(points.size() - 1).sizeSpeed;
+
+                    points.get(points.size() - 1).sizeSpeed += 0.1;
+                }
+
+                //And the transparency
+                if (points.get(points.size() - 1).transparency < transMax) {
+                    points.get(points.size() - 1).transparency += 2;
+                }
+            }
+
             //Changing the tool color
 
             if (tool.toolType == 1) {
@@ -283,17 +440,17 @@ public class FTCauto extends JFrame {
                 if (frames > 50 && openingTextTrans > 0) {
                     openingTextTrans -= 5;
                 }
-                
+
                 Color OpeningBackground = new Color(255, 255, 255, openingTrans);
                 g.setColor(OpeningBackground);
                 g.fillRect(0, 0, getWidth(), getHeight());
-                
+
                 if (frames < 300) {
                     g.drawImage(stuffedGriffins, 50, getHeight() - 150, 748 / 3, 299 / 3, null);
-                    g.drawImage(autoDrawer, ((getWidth()-100) / 2)-310, (getHeight() / 2)-100, 629, 236, null);
+                    g.drawImage(autoDrawer, ((getWidth() - 100) / 2) - 310, (getHeight() / 2) - 100, 629, 236, null);
                 }
-                
-                
+
+
                 OpeningBackground = new Color(10, 10, 10, openingTextTrans);
                 g.setColor(OpeningBackground);
                 g.fillRect(0, 0, getWidth(), getHeight());
