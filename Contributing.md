@@ -4,7 +4,7 @@ __Importing into Android Studio__
 Navigate to the welcome screen.
 Select "Check out project from Version Control", then selected GitHub.
 If prompted login to GitHub with your account or create one.
-In the Git Repository Field enter "https://github.com/archerD/FTC-autoWriter.git" and enter your desired Parent Directory.
+In the Git Repository Field enter "https://github.com/archerD/FTC-autoDrawer.git" and enter your desired Parent Directory.
 Click clone.
 
 If you would like to open the file click open when prompted.
@@ -20,7 +20,7 @@ Follow the same steps as for Android Studio.
 __Importing to netbeans__
 Start up net beans
 Next you will click the Team button at the top of the page and under git click clone:
-This will bring up a dialog asking what respository you want to clone: Paste this into the Repository URL: https://github.com/archerD/FTC-autoWriter.git
+This will bring up a dialog asking what respository you want to clone: Paste this into the Repository URL: https://github.com/archerD/FTC-autoDrawer.git
 
 (This is the https location that the project is hosted at)
 
