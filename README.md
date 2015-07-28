@@ -8,5 +8,5 @@ The users can save the current screen to work with later, or export the points a
 The code will be exported as a opmode for the programer to add to their robot controller app.  
 The robot should follow the path laid out by the points in the program.
 
-To open in netbeans, android studio, or intellij idea, use the built in tool to open projects with git and use "https://github.com/archerD/FTC-autoWriter.git" as the repository to clone.
+To open in netbeans, android studio, or intellij idea, use the built in tool to open projects with git and use "https://github.com/archerD/FTC-autoDrawer.git" as the repository to clone.
 For more detailed instructions, see Contributing.md or the wiki.
