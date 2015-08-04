@@ -1,4 +1,4 @@
-# FTC-autoWriter
+# FTC-autoDrawer
 
 The purpose of this student developed project is to make the development of a autonoumous program for FIRST Tech Challenge easier.
 
