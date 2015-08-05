@@ -173,7 +173,7 @@ class MenuBars {
                     if (path.substring(path.lastIndexOf('.')).equals(".tAD")) {
                         auto.points = Export.readTextFile(path);
                         auto.tool.history = new History(auto.points);
-                        auto.file = new File(path);
+                        auto.file = new File(path.substring(0, path.lastIndexOf(".")));
                     } else {
                         System.out.println("Invalid file type!");
                     }
@@ -192,7 +192,7 @@ class MenuBars {
                     if (path.substring(path.lastIndexOf('.')).equals(".bAD")) {
                         auto.points = Export.readBinaryFile(path);
                         auto.tool.history = new History(auto.points);
-                        auto.file = new File(path);
+                        auto.file = new File(path.substring(0, path.lastIndexOf(".")));
                     } else {
                         System.out.println("Invalid file type!");
                     }
