@@ -300,10 +300,29 @@ public class Export {
         if (!points.get(points.size() - 1).extraCode.equals("")) {
             rtn += "        " + points.get(points.size() - 1).extraCode + "\n";
         }
-        rtn += "    }\n";
+        rtn += "    }\n\n";
 
-
-        rtn += "}";
+        //defining autoDrive and autoTurn
+        rtn += "    private void autoDrive(double inches){\n" +  //TODO: Finish filling out autoDrive
+                "        //start motors here\n" +
+                "\n" +
+                "        waitOneHardwareCycle();\n" +
+                "        //wait code\n" +
+                "\n" +
+                "        //stop motors here\n" +
+                "        waitOneHardwareCycle();\n" +
+                "    }\n" +
+                "\n" +
+                "    private void autoTurn(double degrees){\n" +  //TODO: Finish filling out autoTurn
+                "        //start motors here\n" +
+                "\n" +
+                "        waitOneHardwareCycle();\n" +
+                "        //wait code\n" +
+                "\n" +
+                "        //stop motors here\n" +
+                "        waitOneHardwareCycle();\n" +
+                "    }\n" +
+                "}";
 
         return rtn;
     }
