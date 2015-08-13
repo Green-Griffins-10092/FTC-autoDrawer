@@ -54,18 +54,22 @@ public class ProgramInfo {
     public String getProgramName() {
         return programName;
     }
-
+    
+    public static void updateData(){
+        
+    }
+    
     protected static class ItemData {
         private String programName;
         private String controllerName;
         private boolean reversed;
-
+        
         protected ItemData(String programName, String controllerName) {
             this.programName = programName;
             this.controllerName = controllerName;
             reversed = false;
         }
-
+        
         public ItemData(String programName, String controllerName, boolean reversed) {
             this.programName = programName;
             this.controllerName = controllerName;
