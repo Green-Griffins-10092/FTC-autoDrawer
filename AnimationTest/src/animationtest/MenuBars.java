@@ -315,6 +315,13 @@ class MenuBars {
         openRobotEditor.getAccessibleContext().setAccessibleDescription("Change the extra code");
         robot.add(openRobotEditor);
         
+        openRobotEditor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                RobotEditorFrame.REF();
+            }
+        });
+        
         return (menuBar);
     }
 }

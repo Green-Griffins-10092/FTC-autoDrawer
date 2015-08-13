@@ -7,14 +7,14 @@ import java.util.logging.Logger;
 import javax.swing.UIManager.LookAndFeelInfo;
 
 class MainFrame extends JFrame {
-
+    
     static FTCauto.MainGraphicsPanel auto;
     static InfoBar.MainGraphicsPanel infoBar;
     private static boolean developing = false;
-
+    
     public static void main(String[] args) {
-
-
+        System.out.println("test");
+        
         for (String s : args) {
             if (s.equals("-d") || s.equalsIgnoreCase("--developing") || s.equalsIgnoreCase("-developing") || s.equals("developing"))
                 developing = true;
