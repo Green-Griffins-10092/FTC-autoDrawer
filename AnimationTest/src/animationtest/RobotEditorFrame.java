@@ -5,6 +5,10 @@
  */
 package animationtest;
 
+import javax.swing.JFrame;
+import javax.swing.UIManager;
+import javax.swing.WindowConstants;
+
 /**
  *
  * @author thomas
@@ -31,14 +35,15 @@ public class RobotEditorFrame extends javax.swing.JFrame {
         wheelDiameter = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        wheelDiameter1 = new javax.swing.JTextField();
+        gearRatio1 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        wheelDiameter2 = new javax.swing.JTextField();
-        wheelDiameter3 = new javax.swing.JTextField();
+        gearRatio2 = new javax.swing.JTextField();
+        wheelDistance = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        doneButton = new javax.swing.JButton();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -63,10 +68,10 @@ public class RobotEditorFrame extends javax.swing.JFrame {
 
         jLabel2.setText("In");
 
-        wheelDiameter1.setText("1");
-        wheelDiameter1.addActionListener(new java.awt.event.ActionListener() {
+        gearRatio1.setText("1");
+        gearRatio1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                wheelDiameter1ActionPerformed(evt);
+                gearRatio1ActionPerformed(evt);
             }
         });
 
@@ -74,16 +79,16 @@ public class RobotEditorFrame extends javax.swing.JFrame {
 
         jLabel4.setText("Gear Ratio");
 
-        wheelDiameter2.setText("1");
-        wheelDiameter2.addActionListener(new java.awt.event.ActionListener() {
+        gearRatio2.setText("1");
+        gearRatio2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                wheelDiameter2ActionPerformed(evt);
+                gearRatio2ActionPerformed(evt);
             }
         });
 
-        wheelDiameter3.addActionListener(new java.awt.event.ActionListener() {
+        wheelDistance.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                wheelDiameter3ActionPerformed(evt);
+                wheelDistanceActionPerformed(evt);
             }
         });
 
@@ -93,6 +98,13 @@ public class RobotEditorFrame extends javax.swing.JFrame {
 
         jLabel7.setText("(How far they are apart)");
 
+        doneButton.setText("Apply");
+        doneButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                doneButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -101,61 +113,61 @@ public class RobotEditorFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(wheelDiameter, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(3, 3, 3)
-                                .addComponent(jLabel2)))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(12, 12, 12)
-                                .addComponent(wheelDiameter3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(3, 3, 3)
-                                .addComponent(jLabel6))
-                            .addComponent(jLabel7))
-                        .addGap(112, 112, 112))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(wheelDiameter1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(7, 7, 7)
-                        .addComponent(jLabel3)
-                        .addGap(3, 3, 3)
-                        .addComponent(wheelDiameter2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel4)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(wheelDiameter, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel2))
+                                    .addComponent(jLabel1))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(5, 5, 5)
+                                        .addComponent(wheelDistance, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel6)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel7))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jLabel5)))
+                                .addGap(0, 1, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(gearRatio1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(7, 7, 7)
+                                .addComponent(jLabel3)
+                                .addGap(3, 3, 3)
+                                .addComponent(gearRatio2, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(doneButton, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(8, 8, 8)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(wheelDiameter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(wheelDiameter3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
-                .addComponent(jLabel4)
-                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(wheelDiameter1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(wheelDiameter, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(wheelDistance, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addComponent(jLabel4)
+                .addGap(17, 17, 17)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(gearRatio1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(wheelDiameter2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(gearRatio2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(doneButton))
                 .addContainerGap())
         );
 
@@ -164,20 +176,26 @@ public class RobotEditorFrame extends javax.swing.JFrame {
     
     private void wheelDiameterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wheelDiameterActionPerformed
         // TODO add your handling code here:
-        System.out.println(wheelDiameter.getText());
     }//GEN-LAST:event_wheelDiameterActionPerformed
 
-    private void wheelDiameter1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wheelDiameter1ActionPerformed
+    private void gearRatio1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gearRatio1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_wheelDiameter1ActionPerformed
+    }//GEN-LAST:event_gearRatio1ActionPerformed
 
-    private void wheelDiameter2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wheelDiameter2ActionPerformed
+    private void gearRatio2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gearRatio2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_wheelDiameter2ActionPerformed
+    }//GEN-LAST:event_gearRatio2ActionPerformed
 
-    private void wheelDiameter3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wheelDiameter3ActionPerformed
+    private void wheelDistanceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_wheelDistanceActionPerformed
+         // TODO add your handling code here:
+    }//GEN-LAST:event_wheelDistanceActionPerformed
+
+    private void doneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doneButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_wheelDiameter3ActionPerformed
+        ProgramInfo.distanceBetweenWheels = Double.parseDouble(wheelDistance.getText());
+        ProgramInfo.wheelDiameter = Double.parseDouble(wheelDiameter.getText());
+        
+    }//GEN-LAST:event_doneButtonActionPerformed
     
     public static void REF(){
         /* Set the Nimbus look and feel */
@@ -202,7 +220,11 @@ public class RobotEditorFrame extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(RobotEditorFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
+        try {
+             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception ex) {
+
+        }
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -210,13 +232,20 @@ public class RobotEditorFrame extends javax.swing.JFrame {
                 
                 
                 ref.setResizable(false);
+                ref.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                
                 ref.setVisible(true);
+                
+               
                 
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton doneButton;
+    private javax.swing.JTextField gearRatio1;
+    private javax.swing.JTextField gearRatio2;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -226,8 +255,6 @@ public class RobotEditorFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JTextField wheelDiameter;
-    private javax.swing.JTextField wheelDiameter1;
-    private javax.swing.JTextField wheelDiameter2;
-    private javax.swing.JTextField wheelDiameter3;
+    private javax.swing.JTextField wheelDistance;
     // End of variables declaration//GEN-END:variables
 }

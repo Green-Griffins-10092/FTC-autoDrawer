@@ -11,8 +11,8 @@ public class ProgramInfo {
     private List<ItemData> servos;
     private List<ItemData> motors;
     
-    private double wheelDiameter;
-    private double distanceBetweenWheels;
+    public static double wheelDiameter;
+    public static double distanceBetweenWheels;
     
     private String programName;
     
@@ -55,9 +55,6 @@ public class ProgramInfo {
         return programName;
     }
     
-    public static void updateData(){
-        
-    }
     
     protected static class ItemData {
         private String programName;

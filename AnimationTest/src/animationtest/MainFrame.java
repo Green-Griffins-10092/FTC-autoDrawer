@@ -2,15 +2,14 @@ package animationtest;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.UIManager.LookAndFeelInfo;
 
 class MainFrame extends JFrame {
     
     static FTCauto.MainGraphicsPanel auto;
     static InfoBar.MainGraphicsPanel infoBar;
     private static boolean developing = false;
+    
+    private static final Image icon = new ImageIcon("Images/icon.png").getImage();
     
     public static void main(String[] args) {
         System.out.println("test");
@@ -21,23 +20,26 @@ class MainFrame extends JFrame {
         }
 
 
+//        try {
+//            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//            } catch (Exception e) {
+//                // If Nimbus is not available, fall back to cross-platform
+//             try {
+//                UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+//            } catch (Exception ex) {
+//
+//            }
+//        }
         try {
-            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-            } catch (Exception e) {
-                // If Nimbus is not available, fall back to cross-platform
-             try {
-                UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-            } catch (Exception ex) {
-
-            }
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception ex) {
         }
-
-
+        
         MainFrame frame = new MainFrame();
         infoBar = new InfoBar.MainGraphicsPanel(developing);
         auto = new FTCauto.MainGraphicsPanel(developing);
@@ -50,6 +52,7 @@ class MainFrame extends JFrame {
         frame.setLocationRelativeTo(null);
         frame.setJMenuBar(MenuBars.menuBars(developing));
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setIconImage(icon);
         frame.setVisible(true);
     }
 }

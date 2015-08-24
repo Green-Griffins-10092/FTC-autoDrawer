@@ -460,7 +460,8 @@ public class FTCauto extends JFrame {
                 g.drawString("Developing!", 5, 20);
             }
 
-
+            System.out.println(ProgramInfo.distanceBetweenWheels);
+            System.out.println(ProgramInfo.wheelDiameter);
             frames++;
         }
 
