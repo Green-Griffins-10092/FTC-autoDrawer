@@ -91,12 +91,12 @@ public class InfoBar extends JFrame {
 
             //Opening credits & stuff
             if (!developing) {
-                if (openingTrans > 0 && frames > 300) {
+                if (openingTrans > 0 && frames > 100) {
                     openingTrans -= 5;
                 }
 
-                if (frames > 50 && openingTextTrans > 0) {
-                    openingTextTrans -= 5;
+                if (frames > 30 && openingTextTrans > 10) {
+                    openingTextTrans -= 10;
                 }
 
                 Color OpeningBackground = new Color(255, 255, 255, openingTrans);

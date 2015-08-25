@@ -14,11 +14,11 @@ public class PointArray implements Cloneable {
     //-1 represents no selected point
     public int selectedPoint = -1;
     private List<Point> list;
-
+    
     public PointArray() {
         list = new ArrayList<>();
     }
-
+    
     public void addPoint(int index, int x, int y, double conversionFactor) {
         list.add(index, new Point(x, y, conversionFactor));
     }

@@ -54,5 +54,7 @@ class MainFrame extends JFrame {
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setIconImage(icon);
         frame.setVisible(true);
+        
+        auto.tool.toolType = 1;
     }
 }

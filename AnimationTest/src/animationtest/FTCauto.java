@@ -20,7 +20,6 @@ public class FTCauto extends JFrame {
         static final int FIELD_X_OFFSET = 0;
         static final int FIELD_Y_OFFSET = 0;
         //Picture stuff  !!You have to use png so you can have transparency
-        private static final Image stuffedGriffins = new ImageIcon("Images/STUFFED_GRIFFINS_FINAL_GRN.png").getImage();
         private static final Image field = new ImageIcon("Images/Field.png").getImage();
         private static final Image autoDrawer = new ImageIcon("Images/autoDrawer.png").getImage();
         private static final double FIELD_HEIGHT_IN_INCHES = 144;
@@ -79,7 +78,7 @@ public class FTCauto extends JFrame {
             //The animation timer
             Timer timer = new Timer(10, new TimerListener());
             timer.start();
-
+            
             tool = new ToolMouseListener(this, developing);
             addMouseListener(tool);
 
@@ -92,12 +91,12 @@ public class FTCauto extends JFrame {
 
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
-
+            
             //the ratio of inches to pixels in the field
             inchesToPixels = FIELD_HEIGHT_IN_INCHES / fieldSize;
 
             Graphics2D g2 = (Graphics2D) g;
-
+            
             //Update the dragged point
             if (tool.pointDragging != -1) {
                 if (mouseX > FIELD_X_OFFSET + fieldSize) {
@@ -230,7 +229,7 @@ public class FTCauto extends JFrame {
                 //Changing the size
                 if (size > 10) {
                     points.get(0).size -= points.get(0).sizeSpeed;
-
+                    
                     points.get(points.size() - 1).sizeSpeed += 0.1;
                 }
 
@@ -419,8 +418,8 @@ public class FTCauto extends JFrame {
             } else if (developing && tool.toolType == -1) {
                 g.setColor(warningRed);
             }
-
-
+            
+            
             //Mouse stuff
             if (mouseOver) {
                 g2.setStroke(new BasicStroke(2));
@@ -433,24 +432,23 @@ public class FTCauto extends JFrame {
 
             //Opening credits & stuff
             if (!developing) {
-                if (openingTrans > 0 && frames > 300) {
+                if (openingTrans > 0 && frames > 100) {
                     openingTrans -= 5;
                 }
-
-                if (frames > 50 && openingTextTrans > 0) {
-                    openingTextTrans -= 5;
+                
+                if (frames > 30 && openingTextTrans > 10) {
+                    openingTextTrans -= 10;
                 }
-
+                
                 Color OpeningBackground = new Color(255, 255, 255, openingTrans);
                 g.setColor(OpeningBackground);
                 g.fillRect(0, 0, getWidth(), getHeight());
-
-                if (frames < 300) {
-                    g.drawImage(stuffedGriffins, 50, getHeight() - 150, 748 / 3, 299 / 3, null);
+                
+                if (frames < 100) {
                     g.drawImage(autoDrawer, ((getWidth() - 100) / 2) - 310, (getHeight() / 2) - 100, 629, 236, null);
                 }
-
-
+                
+                
                 OpeningBackground = new Color(10, 10, 10, openingTextTrans);
                 g.setColor(OpeningBackground);
                 g.fillRect(0, 0, getWidth(), getHeight());
@@ -459,9 +457,6 @@ public class FTCauto extends JFrame {
                 g.setFont(new Font(Font.MONOSPACED, Font.BOLD, 35));
                 g.drawString("Developing!", 5, 20);
             }
-
-            System.out.println(ProgramInfo.distanceBetweenWheels);
-            System.out.println(ProgramInfo.wheelDiameter);
             frames++;
         }
 
