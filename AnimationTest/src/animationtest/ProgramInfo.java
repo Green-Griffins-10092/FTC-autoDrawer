@@ -46,6 +46,28 @@ public class ProgramInfo {
         return motors;
     }
 
+    public ItemData[] getDriveMotors() {
+        int length = 0;
+        for (ItemData motor : motors) {
+            if (motor.isDriveMotor())
+                length++;
+        }
+        ItemData[] rtn = new ItemData[length];
+        if (length != 0) {
+
+            int index = 0;
+            for (ItemData motor : motors) {
+                if (motor.isDriveMotor()) {
+                    rtn[index] = motor;
+                    index++;
+                }
+            }
+        } else {
+            rtn = (ItemData[]) motors.toArray();
+        }
+        return rtn;
+    }
+
     public double getWheelDiameter() {
         return wheelDiameter;
     }
