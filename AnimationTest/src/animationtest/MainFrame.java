@@ -10,10 +10,13 @@ class MainFrame extends JFrame {
 
     protected static boolean splashScreen = true;
     protected static SplashScreen spSc;
+
     static FTCauto.MainGraphicsPanel auto;
     static InfoBar.MainGraphicsPanel infoBar;
     private static boolean developing = false;
-
+    
+    private static final Image icon = new ImageIcon("Images/icon.png").getImage();
+    
     public static void main(String[] args) {
 
         spSc = SplashScreen.getSplashScreen();
@@ -25,13 +28,27 @@ class MainFrame extends JFrame {
             System.out.println("Splash Screen!");
         }
 
-
         for (String s : args) {
             if (s.equals("-d") || s.equalsIgnoreCase("--developing") || s.equalsIgnoreCase("-developing") || s.equals("developing"))
                 developing = true;
         }
 
 
+//        try {
+//            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//            } catch (Exception e) {
+//                // If Nimbus is not available, fall back to cross-platform
+//             try {
+//                UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+//            } catch (Exception ex) {
+//
+//            }
+//        }
         try {
             for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -69,6 +86,9 @@ class MainFrame extends JFrame {
         frame.setLocationRelativeTo(null);
         frame.setJMenuBar(MenuBars.menuBars(developing));
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        frame.setIconImage(icon);
         frame.setVisible(true);
+        
+        auto.tool.toolType = 1;
     }
 }

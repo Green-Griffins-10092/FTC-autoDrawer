@@ -80,7 +80,6 @@ public class InfoBar extends JFrame {
             int[] shadowYPoints = {10, 30, getHeight(), getHeight()};
 
             g.fillPolygon(shadowXPoints, shadowYPoints, 4);
-
         }
 
 

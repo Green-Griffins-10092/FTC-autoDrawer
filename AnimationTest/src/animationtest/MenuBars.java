@@ -14,8 +14,8 @@ import java.util.logging.Logger;
 import static animationtest.MainFrame.auto;
 
 class MenuBars {
-
-
+    
+    
     public static JMenuBar menuBar = new JMenuBar();
     public static JMenu tool = new JMenu("Tool Type");
     public static JMenuItem toolAdd = new JMenuItem("Add", new ImageIcon("Images/Waypoint.png"));
@@ -33,11 +33,16 @@ class MenuBars {
     public static JMenuItem close = new JMenuItem("Close");
     public static JMenuItem undo = new JMenuItem("Undo", KeyEvent.VK_S);
     public static JMenuItem redo = new JMenuItem("Redo", KeyEvent.VK_S);
+    
     public static JMenuItem changeExtraCode = new JMenuItem("Change Extra code", KeyEvent.VK_S);
 
     public static JMenu view = new JMenu("View");
     public static JMenuItem showRobot = new JMenuItem("Show Robot Outline", KeyEvent.VK_S);
-
+    
+    public static JMenu robot = new JMenu("Robot");
+    public static JMenuItem openRobotEditor = new JMenuItem("Open Robot Editor", KeyEvent.VK_S);
+    
+    
     //testing methods, will be added to menu if
     //developing in MainFrame is true
     public static JMenu testing = new JMenu("Testing Methods");
@@ -173,7 +178,7 @@ class MenuBars {
                     if (path.substring(path.lastIndexOf('.')).equals(".tAD")) {
                         auto.points = Export.readTextFile(path);
                         auto.tool.history = new History(auto.points);
-                        auto.file = new File(path);
+                        auto.file = new File(path.substring(0, path.lastIndexOf(".")));
                     } else {
                         System.out.println("Invalid file type!");
                     }
@@ -192,7 +197,7 @@ class MenuBars {
                     if (path.substring(path.lastIndexOf('.')).equals(".bAD")) {
                         auto.points = Export.readBinaryFile(path);
                         auto.tool.history = new History(auto.points);
-                        auto.file = new File(path);
+                        auto.file = new File(path.substring(0, path.lastIndexOf(".")));
                     } else {
                         System.out.println("Invalid file type!");
                     }
@@ -271,7 +276,7 @@ class MenuBars {
         JMenu selectedPoints = new JMenu("Selected point");
         menuBar.add(selectedPoints);
 
-        openText.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_E, InputEvent.ALT_MASK));
+        openText.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, InputEvent.CTRL_MASK));
         openText.getAccessibleContext().setAccessibleDescription("Change the extra code");
         selectedPoints.add(changeExtraCode);
 
@@ -301,7 +306,22 @@ class MenuBars {
 
 
         }
-
+        //--------Robot menu-------
+        robot.setMnemonic(KeyEvent.VK_A);
+        robot.getAccessibleContext().setAccessibleDescription("Test Main menu");
+        menuBar.add(robot);
+        
+        openRobotEditor.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_MASK));
+        openRobotEditor.getAccessibleContext().setAccessibleDescription("Change the extra code");
+        robot.add(openRobotEditor);
+        
+        openRobotEditor.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                RobotEditorFrame.REF();
+            }
+        });
+        
         return (menuBar);
     }
 }

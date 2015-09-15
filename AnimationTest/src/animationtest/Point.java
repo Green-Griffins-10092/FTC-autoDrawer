@@ -9,7 +9,7 @@ public class Point implements Cloneable, Serializable {
     public double x;
     public double y;
     public int size = 100;
-    public int sizeSpeed = 1;
+    public int sizeSpeed = 2;
     public int transparency = 1;
     public String extraCode = "";
     private int speed = 50;
