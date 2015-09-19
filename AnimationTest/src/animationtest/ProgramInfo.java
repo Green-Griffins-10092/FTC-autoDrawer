@@ -8,12 +8,11 @@ import java.util.List;
  * Designed to hold info about a robot for a export.
  */
 public class ProgramInfo {
-    private List<ItemData> servos;
-    private List<ItemData> motors;
-    
     public static double wheelDiameter;
     public static double distanceBetweenWheels;
-    
+    public static double gearRatio;
+    private List<ItemData> servos;
+    private List<ItemData> motors;
     private String programName;
     
     private PointArray pointArray;
@@ -26,7 +25,11 @@ public class ProgramInfo {
         this.motors = motors;
         this.programName = programName;
     }
-    
+
+    public static double getGearRatio() {
+        return gearRatio;
+    }
+
     public PointArray getPointArray() {
         return pointArray;
     }
@@ -43,6 +46,28 @@ public class ProgramInfo {
         return motors;
     }
 
+    public ItemData[] getDriveMotors() {
+        int length = 0;
+        for (ItemData motor : motors) {
+            if (motor.isDriveMotor())
+                length++;
+        }
+        ItemData[] rtn = new ItemData[length];
+        if (length != 0) {
+
+            int index = 0;
+            for (ItemData motor : motors) {
+                if (motor.isDriveMotor()) {
+                    rtn[index] = motor;
+                    index++;
+                }
+            }
+        } else {
+            rtn = (ItemData[]) motors.toArray();
+        }
+        return rtn;
+    }
+
     public double getWheelDiameter() {
         return wheelDiameter;
     }
@@ -54,23 +79,25 @@ public class ProgramInfo {
     public String getProgramName() {
         return programName;
     }
-    
-    
+
     protected static class ItemData {
         private String programName;
         private String controllerName;
         private boolean reversed;
+        private boolean driveMotor;
         
         protected ItemData(String programName, String controllerName) {
             this.programName = programName;
             this.controllerName = controllerName;
             reversed = false;
+            driveMotor = false;
         }
-        
-        public ItemData(String programName, String controllerName, boolean reversed) {
+
+        public ItemData(String programName, String controllerName, boolean reversed, boolean driveMotor) {
             this.programName = programName;
             this.controllerName = controllerName;
             this.reversed = reversed;
+            this.driveMotor = driveMotor;
         }
 
         public boolean isReversed() {
@@ -83,6 +110,10 @@ public class ProgramInfo {
 
         public String getControllerName() {
             return controllerName;
+        }
+
+        public boolean isDriveMotor() {
+            return driveMotor;
         }
     }
 }
