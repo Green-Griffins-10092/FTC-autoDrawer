@@ -23,7 +23,7 @@ public class History {
     public void addVersion(PointArray version) {
         if (currentVersion >= (historyList.size() - 1)) {
             //add the version
-            historyList.addLast((PointArray) version.clone());
+            historyList.addLast(version.clone());
             //then set the current version to be the added version
             currentVersion = historyList.size() - 1;
         } else {
@@ -33,7 +33,7 @@ public class History {
     }
 
     private PointArray getVersion(int i) {
-        return (PointArray) historyList.get(i).clone();
+        return historyList.get(i).clone();
     }
 
     //for getting the current version

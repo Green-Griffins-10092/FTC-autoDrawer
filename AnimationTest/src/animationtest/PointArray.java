@@ -71,15 +71,11 @@ public class PointArray implements Cloneable {
     }
 
     @Override
-    public Object clone() {
+    public PointArray clone() {
         PointArray v = new PointArray();
         v.selectedPoint = this.selectedPoint;
         for (Point p : this.list) {
-            try {
-                v.add((Point) p.clone());
-            } catch (CloneNotSupportedException ignored) {
-
-            }
+            v.add(p.clone());
         }
 
         return v;

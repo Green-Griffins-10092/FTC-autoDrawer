@@ -67,7 +67,7 @@ public class Point implements Cloneable, Serializable {
     }
 
     @Override
-    public Object clone() throws CloneNotSupportedException {
+    public Point clone() {
         try {
             @SuppressWarnings("unchecked")
             Point v = (Point) super.clone();
