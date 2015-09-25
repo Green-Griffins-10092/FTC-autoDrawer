@@ -2,15 +2,17 @@ package animationtest;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 
 class MainFrame extends JFrame {
-    
+
+    private static final Image icon = new ImageIcon("Images/icon.png").getImage();
     static FTCauto.MainGraphicsPanel auto;
     static InfoBar.MainGraphicsPanel infoBar;
     private static boolean developing = false;
-    
-    private static final Image icon = new ImageIcon("Images/icon.png").getImage();
-    
+    private static File file = null;
+    private static JMenuBar menubar;
+
     public static void main(String[] args) {
         System.out.println("test");
         
@@ -19,6 +21,11 @@ class MainFrame extends JFrame {
                 developing = true;
         }
 
+        for (int i = 0; i < args.length; i++) {
+            if ((args[i].equalsIgnoreCase("-f") || args[i].equalsIgnoreCase("--file")) && i + 1 < args.length) {
+                file = new File(args[i + 1]);
+            }
+        }
 
 //        try {
 //            for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -50,7 +57,8 @@ class MainFrame extends JFrame {
         frame.setTitle("AutoDrawer");
         frame.setSize(1000, 700);
         frame.setLocationRelativeTo(null);
-        frame.setJMenuBar(MenuBars.menuBars(developing));
+        menubar = MenuBars.menuBars(developing);
+        frame.setJMenuBar(menubar);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setIconImage(icon);
         frame.setVisible(true);

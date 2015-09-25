@@ -8,7 +8,7 @@ import java.util.LinkedList;
  */
 public class History {
 
-    private LinkedList<PointArray> historyList = new LinkedList<>();
+    private LinkedList<PointArray> historyList = new LinkedList<PointArray>();
 
     private int currentVersion = 0;
 

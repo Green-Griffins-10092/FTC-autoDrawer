@@ -16,7 +16,7 @@ public class PointArray implements Cloneable {
     private List<Point> list;
     
     public PointArray() {
-        list = new ArrayList<>();
+        list = new ArrayList<Point>();
     }
     
     public void addPoint(int index, int x, int y, double conversionFactor) {
