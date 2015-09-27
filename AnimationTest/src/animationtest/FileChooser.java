@@ -8,19 +8,23 @@ import java.io.File;
 public class FileChooser {
     private static JFileChooser chooser = new JFileChooser();
 
-    public static File fileChooser(String title, String type, String toolTip) {
+    public static File fileChooser(String title, String type, String toolTip, boolean fileFilter) {
         chooser.setDialogTitle(title);
         chooser.setApproveButtonText(type);
         chooser.setApproveButtonToolTipText(toolTip);
-        chooser.setAcceptAllFileFilterUsed(false);
-        FileFilter filter = new FileNameExtensionFilter("autoDrawer File", "tAD", "bAD");
-        chooser.addChoosableFileFilter(filter);
+        if (fileFilter) {
+            chooser.setAcceptAllFileFilterUsed(false);
+            FileFilter filter = new FileNameExtensionFilter("autoDrawer File", "tAD", "bAD");
+            chooser.addChoosableFileFilter(filter);
+        } else {
+            chooser.resetChoosableFileFilters();
+            chooser.setAcceptAllFileFilterUsed(true);
+        }
         chooser.showOpenDialog(null);
         File f = chooser.getSelectedFile();
 
         Settings.lastSavePath = f;
 
         return f;
-
     }
 }

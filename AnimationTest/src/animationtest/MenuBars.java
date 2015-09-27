@@ -133,7 +133,7 @@ class MenuBars {
             public void actionPerformed(ActionEvent e) {
                 try {
                     if (auto.file == null) {
-                        auto.file = FileChooser.fileChooser("Save", "Save", "Save a file");
+                        auto.file = FileChooser.fileChooser("Save", "Save", "Save a file", true);
                         Export.writeTextFile(Export.pointArrayToString(auto.points), auto.file.getAbsolutePath() + ".tAD"); // tAd = text AutoDrawer
                         auto.tool.history = new History(auto.points);
                     } else {
@@ -151,7 +151,7 @@ class MenuBars {
             public void actionPerformed(ActionEvent e) {
                 try {
                     if (auto.file == null) {
-                        auto.file = FileChooser.fileChooser("Save", "Save", "Save a file");
+                        auto.file = FileChooser.fileChooser("Save", "Save", "Save a file", true);
                         Export.writeBinaryFile(auto.file.getAbsolutePath() + ".bAD", auto.points); // bAD = binary AutoDrawer
                         auto.tool.history = new History(auto.points);
                     } else {
@@ -167,7 +167,7 @@ class MenuBars {
         saveAs.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                auto.file = FileChooser.fileChooser("Save", "Save", "Save a file");
+                auto.file = FileChooser.fileChooser("Save", "Save", "Save a file", true);
                 //TODO: Ask User What format, then call the appropriate saving methods.
             }
         });
@@ -176,7 +176,7 @@ class MenuBars {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    String path = FileChooser.fileChooser("Open", "Open", "Open a file").getAbsolutePath();
+                    String path = FileChooser.fileChooser("Open", "Open", "Open a file", true).getAbsolutePath();
                     if (path.substring(path.lastIndexOf('.')).equals(".tAD")) {
                         auto.points = Export.readTextFile(path);
                         auto.tool.history = new History(auto.points);
@@ -195,7 +195,7 @@ class MenuBars {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
-                    String path = FileChooser.fileChooser("Open", "Open", "Open a file").getAbsolutePath();
+                    String path = FileChooser.fileChooser("Open", "Open", "Open a file", true).getAbsolutePath();
                     if (path.substring(path.lastIndexOf('.')).equals(".bAD")) {
                         auto.points = Export.readBinaryFile(path);
                         auto.tool.history = new History(auto.points);
@@ -212,22 +212,40 @@ class MenuBars {
         export.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                File save = FileChooser.fileChooser("Save Location", "Save", "Save file to this location");
+                File save = FileChooser.fileChooser("Save Location", "Save", "Save file to this location", false);
+
+                //check for proper file type
+                if (save.getName().lastIndexOf('.') == -1) {
+                    save = new File(save.getPath() + ".java");
+                } else if (!save.getName().substring(save.getName().lastIndexOf('.')).equals(".java")) {
+                    JOptionPane.showMessageDialog(menuBar, "Not a .java file type!");
+                    return;
+                }
+
+                //no accidental overwrites
+                if (save.exists()) {
+                    switch (JOptionPane.showConfirmDialog(menuBar, "File specified already exists.  Continue?", "Overwrite Warning", JOptionPane.OK_CANCEL_OPTION)) {
+                        case JOptionPane.OK_OPTION:
+                            break;
+                        default:
+                            return;
+                    }
+                }
+
+                //TODO: replace with a simple assignment statement when the robotFrame is ready
+                LinkedList<ProgramInfo.ItemData> motors = new LinkedList<ProgramInfo.ItemData>();
+                motors.add(new ProgramInfo.ItemData("left", "left_motor", true, true));
+                motors.add(new ProgramInfo.ItemData("right", "right_motor", false, true));
+
+                ProgramInfo info = new ProgramInfo(auto.points, auto.file, save.getName().substring(save.getName().lastIndexOf('.')), new LinkedList<ProgramInfo.ItemData>(), motors);
+                ProgramInfo.gearRatio = 2;
+                ProgramInfo.wheelDiameter = 4;
+                ProgramInfo.distanceBetweenWheels = 17.5;
 
 
+                //handle the writing of the file
                 try {
                     PrintWriter writer = new PrintWriter(save);
-                    LinkedList<ProgramInfo.ItemData> servos = new LinkedList<ProgramInfo.ItemData>();
-                    LinkedList<ProgramInfo.ItemData> motors = new LinkedList<ProgramInfo.ItemData>();
-//                    servos.add(new ProgramInfo.ItemData("arm", "servo_1"));
-//                    servos.add(new ProgramInfo.ItemData("claw", "servo_6"));
-                    motors.add(new ProgramInfo.ItemData("left", "left_motor", true, true));
-                    motors.add(new ProgramInfo.ItemData("right", "right_motor", false, true));
-
-                    ProgramInfo info = new ProgramInfo(auto.points, auto.file, auto.file.getName(), servos, motors);
-                    ProgramInfo.gearRatio = 2;
-                    ProgramInfo.wheelDiameter = 4;
-                    ProgramInfo.distanceBetweenWheels = 17.5;
                     writer.print(Export.writeLinearOpMode(info));
                     writer.flush();
                     writer.close();

@@ -397,8 +397,8 @@ public class Export {
     }
 
     public static void main(String[] args) {
-        File file = FileChooser.fileChooser("Export", "Export", "Export this file");
-        File save = FileChooser.fileChooser("Save Location", "Save", "Save file to this location");
+        File file = FileChooser.fileChooser("Export", "Export", "Export this file", true);
+        File save = FileChooser.fileChooser("Save Location", "Save", "Save file to this location", true);
 
         LinkedList<ItemData> servos = new LinkedList<ItemData>();
         LinkedList<ItemData> motors = new LinkedList<ItemData>();
