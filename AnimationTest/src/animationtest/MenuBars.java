@@ -8,6 +8,8 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -203,6 +205,34 @@ class MenuBars {
                     }
                 } catch (NullPointerException ex) {
                     Logger.getLogger(FileChooser.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+
+        export.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                File save = FileChooser.fileChooser("Save Location", "Save", "Save file to this location");
+
+
+                try {
+                    PrintWriter writer = new PrintWriter(save);
+                    LinkedList<ProgramInfo.ItemData> servos = new LinkedList<ProgramInfo.ItemData>();
+                    LinkedList<ProgramInfo.ItemData> motors = new LinkedList<ProgramInfo.ItemData>();
+//                    servos.add(new ProgramInfo.ItemData("arm", "servo_1"));
+//                    servos.add(new ProgramInfo.ItemData("claw", "servo_6"));
+                    motors.add(new ProgramInfo.ItemData("left", "left_motor", true, true));
+                    motors.add(new ProgramInfo.ItemData("right", "right_motor", false, true));
+
+                    ProgramInfo info = new ProgramInfo(auto.points, auto.file, auto.file.getName(), servos, motors);
+                    ProgramInfo.gearRatio = 2;
+                    ProgramInfo.wheelDiameter = 4;
+                    ProgramInfo.distanceBetweenWheels = 17.5;
+                    writer.print(Export.writeLinearOpMode(info));
+                    writer.flush();
+                    writer.close();
+                } catch (FileNotFoundException exe) {
+                    exe.printStackTrace();
                 }
             }
         });
