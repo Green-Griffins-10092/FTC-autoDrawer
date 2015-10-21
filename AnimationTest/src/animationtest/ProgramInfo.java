@@ -2,15 +2,17 @@ package animationtest;
 
 import java.io.File;
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  * Created by David on 6/15/2015.
  * Designed to hold info about a robot for a export.
  */
+
 public class ProgramInfo {
-    public static double wheelDiameter;
-    public static double distanceBetweenWheels;
-    public static double gearRatio;
+    public double wheelDiameter;
+    public double distanceBetweenWheels;
+    public double gearRatio;
     private List<ItemData> servos;
     private List<ItemData> motors;
     private String programName;
@@ -26,7 +28,11 @@ public class ProgramInfo {
         this.programName = programName;
     }
 
-    public static double getGearRatio() {
+    public ProgramInfo()
+    {
+    }
+
+    public double getGearRatio() {
         return gearRatio;
     }
 

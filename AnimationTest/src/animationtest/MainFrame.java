@@ -1,5 +1,4 @@
 package animationtest;
-//hi mom
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -14,8 +13,7 @@ class MainFrame extends JFrame {
     private static JMenuBar menubar;
 
     public static void main(String[] args) {
-        System.out.println("test");
-        
+
         for (String s : args) {
             if (s.equals("-d") || s.equalsIgnoreCase("--developing") || s.equalsIgnoreCase("-developing") || s.equals("developing"))
                 developing = true;

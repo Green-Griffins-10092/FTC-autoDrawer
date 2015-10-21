@@ -254,7 +254,7 @@ public class Export {
 
         //defining some named constants
         rtn += "    final int ENCODER_COUNTS_PER_ROTATION = 1440; // 1440 for tetrix motor encoders, 1120 for andymark neverest 40 encoders\n" +
-                "    final double INCHES_PER_ROTATION =  Math.PI * " + info.getWheelDiameter() + " * " + ProgramInfo.getGearRatio() + ";\n" +
+                "    final double INCHES_PER_ROTATION =  Math.PI * " + info.getWheelDiameter() + " * " + info.getGearRatio() + ";\n" +
                 "    double driveSpeed = 1; //must be between 0 and 1, this is the speed the motors will drive at\n\n";
 
         rtn += "    //Create motor variables\n";
@@ -409,9 +409,9 @@ public class Export {
         motors.add(new ItemData("right", "motor_2", true, true));
 
         ProgramInfo info = new ProgramInfo(fileToPoints(file), file, "Test", servos, motors);
-        ProgramInfo.gearRatio = 2;
-        ProgramInfo.wheelDiameter = 4;
-        ProgramInfo.distanceBetweenWheels = 17.5;
+        info.gearRatio = 2;
+        info.wheelDiameter = 4;
+        info.distanceBetweenWheels = 17.5;
 
         try {
             PrintWriter writer = new PrintWriter(save);

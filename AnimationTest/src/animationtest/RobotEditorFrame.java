@@ -15,11 +15,14 @@ import javax.swing.WindowConstants;
  */
 public class RobotEditorFrame extends javax.swing.JFrame {
 
+    private ProgramInfo data;
+
     /**
      * Creates new form RobotEditorFrame
      */
     public RobotEditorFrame() {
         initComponents();
+        data = new ProgramInfo();
     }
 
     /**
@@ -280,9 +283,9 @@ public class RobotEditorFrame extends javax.swing.JFrame {
 
     private void doneButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doneButtonActionPerformed
         // TODO add your handling code here:
-        ProgramInfo.distanceBetweenWheels = Double.parseDouble(wheelDistance.getText());
-        ProgramInfo.wheelDiameter = Double.parseDouble(wheelDiameter.getText());
-        
+        data.distanceBetweenWheels = Double.parseDouble(wheelDistance.getText());
+        data.wheelDiameter = Double.parseDouble(wheelDiameter.getText());
+        data.gearRatio = Integer.parseInt(gearRatio1.getText())/Integer.parseInt(gearRatio2.getText());
     }//GEN-LAST:event_doneButtonActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
