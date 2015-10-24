@@ -238,9 +238,9 @@ class MenuBars {
                 motors.add(new ProgramInfo.ItemData("right", "right_motor", false, true));
 
                 ProgramInfo info = new ProgramInfo(auto.points, auto.file, save.getName().substring(save.getName().lastIndexOf('.')), new LinkedList<ProgramInfo.ItemData>(), motors);
-                ProgramInfo.gearRatio = 2;
-                ProgramInfo.wheelDiameter = 4;
-                ProgramInfo.distanceBetweenWheels = 17.5;
+                info.gearRatio = 2;
+                info.wheelDiameter = 4;
+                info.distanceBetweenWheels = 17.5;
 
 
                 //handle the writing of the file

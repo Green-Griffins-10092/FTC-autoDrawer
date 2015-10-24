@@ -52,6 +52,11 @@ public class ProgramInfo {
         return motors;
     }
 
+    public void clearMotors()
+    {
+        motors = new ArrayList<>();
+    }
+
     public ItemData[] getDriveMotors() {
         int length = 0;
         for (ItemData motor : motors) {
