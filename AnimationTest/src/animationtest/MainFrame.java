@@ -8,6 +8,7 @@ class MainFrame extends JFrame {
     private static final Image icon = new ImageIcon("Images/icon.png").getImage();
     static FTCauto.MainGraphicsPanel auto;
     static InfoBar.MainGraphicsPanel infoBar;
+    static ProgramInfo info = null;
     private static boolean developing = false;
     private static File file = null;
     private static JMenuBar menubar;

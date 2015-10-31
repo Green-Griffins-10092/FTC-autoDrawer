@@ -16,7 +16,22 @@ public class ProgramInfo {
     private List<ItemData> servos;
     private List<ItemData> motors;
     private String programName;
-    
+
+    public void setProgramName(String programName)
+    {
+        this.programName = programName;
+    }
+
+    public void setPointArray(PointArray pointArray)
+    {
+        this.pointArray = pointArray;
+    }
+
+    public void setSaveLocation(File saveLocation)
+    {
+        this.saveLocation = saveLocation;
+    }
+
     private PointArray pointArray;
     private File saveLocation;
     

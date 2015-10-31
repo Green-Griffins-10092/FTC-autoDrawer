@@ -9,15 +9,14 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static animationtest.MainFrame.auto;
 
 class MenuBars {
-    
-    
+
+
     public static JMenuBar menuBar = new JMenuBar();
     public static JMenu tool = new JMenu("Tool Type");
     public static JMenuItem toolAdd = new JMenuItem("Add", new ImageIcon("Images/Waypoint.png"));
@@ -35,16 +34,16 @@ class MenuBars {
     public static JMenuItem close = new JMenuItem("Close");
     public static JMenuItem undo = new JMenuItem("Undo", KeyEvent.VK_S);
     public static JMenuItem redo = new JMenuItem("Redo", KeyEvent.VK_S);
-    
+
     public static JMenuItem changeExtraCode = new JMenuItem("Change Extra code", KeyEvent.VK_S);
 
     public static JMenu view = new JMenu("View");
     public static JMenuItem showRobot = new JMenuItem("Show Robot Outline", KeyEvent.VK_S);
-    
+
     public static JMenu robot = new JMenu("Robot");
     public static JMenuItem openRobotEditor = new JMenuItem("Open Robot Editor", KeyEvent.VK_S);
-    
-    
+
+
     //testing methods, will be added to menu if
     //developing in MainFrame is true
     public static JMenu testing = new JMenu("Testing Methods");
@@ -232,21 +231,23 @@ class MenuBars {
                     }
                 }
 
-                //TODO: replace with a simple assignment statement when the robotFrame is ready
-                LinkedList<ProgramInfo.ItemData> motors = new LinkedList<ProgramInfo.ItemData>();
-                motors.add(new ProgramInfo.ItemData("left", "left_motor", true, true));
-                motors.add(new ProgramInfo.ItemData("right", "right_motor", false, true));
+                MainFrame.info.setPointArray(auto.points);
+                MainFrame.info.setSaveLocation(auto.file);
+                MainFrame.info.setProgramName(save.getName().substring(save.getName().lastIndexOf('.')));
 
-                ProgramInfo info = new ProgramInfo(auto.points, auto.file, save.getName().substring(save.getName().lastIndexOf('.')), new LinkedList<ProgramInfo.ItemData>(), motors);
-                info.gearRatio = 2;
-                info.wheelDiameter = 4;
-                info.distanceBetweenWheels = 17.5;
-
+                String linearOpMode;
+                try {
+                    linearOpMode = Export.writeLinearOpMode(MainFrame.info);
+                } catch (Exception e1) {
+                    JOptionPane.showMessageDialog(menuBar, "Error generating code.  Make sure you have run the robot editor.\n"
+                            + "If you have run the robot editor, and still get errors, please create an issue at https://github.com/archerD/FTC-autoDrawer.");
+                    return;
+                }
 
                 //handle the writing of the file
                 try {
                     PrintWriter writer = new PrintWriter(save);
-                    writer.print(Export.writeLinearOpMode(info));
+                    writer.print(linearOpMode);
                     writer.flush();
                     writer.close();
                 } catch (FileNotFoundException exe) {
@@ -358,18 +359,18 @@ class MenuBars {
         robot.setMnemonic(KeyEvent.VK_A);
         robot.getAccessibleContext().setAccessibleDescription("Test Main menu");
         menuBar.add(robot);
-        
+
         openRobotEditor.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_MASK));
         openRobotEditor.getAccessibleContext().setAccessibleDescription("Change the extra code");
         robot.add(openRobotEditor);
-        
+
         openRobotEditor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                RobotEditorFrame.REF();
+                MainFrame.info = RobotEditorFrame.REF();
             }
         });
-        
+
         return (menuBar);
     }
 }

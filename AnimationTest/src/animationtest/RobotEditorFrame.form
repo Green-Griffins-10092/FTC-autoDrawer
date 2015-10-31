@@ -280,12 +280,12 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel10">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Right"/>
+        <Property name="text" type="java.lang.String" value="Left"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel11">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Left"/>
+        <Property name="text" type="java.lang.String" value="Right"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel12">
