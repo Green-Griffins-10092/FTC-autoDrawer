@@ -302,7 +302,7 @@ public class RobotEditorFrame extends javax.swing.JFrame {
             data.getMotors().add(new ProgramInfo.ItemData(software2.getText(), hardware2.getText(), reversed2.isSelected(), true));
         }
 
-        done = true;
+        MainFrame.info = data;
     }//GEN-LAST:event_doneButtonActionPerformed
 
     private void reversed2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reversed2ActionPerformed
@@ -317,7 +317,7 @@ public class RobotEditorFrame extends javax.swing.JFrame {
     private void software1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_software1ActionPerformed
     }//GEN-LAST:event_software1ActionPerformed
 
-    public static ProgramInfo REF() {
+    public static void REF() {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -345,30 +345,20 @@ public class RobotEditorFrame extends javax.swing.JFrame {
         } catch (Exception ex) {
 
         }
-        final ProgramInfo[] info = {null};
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                RobotEditorFrame ref = new RobotEditorFrame();
+                javax.swing.JFrame ref = new RobotEditorFrame();
 
 
                 ref.setResizable(false);
                 ref.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
                 ref.setVisible(true);
-                while (!ref.done)
-                {
 
-                }
-                info[0] = ref.data;
-                ref.dispose();
+
             }
         });
-
-        while (info[0] == null)
-        {}
-
-        return info[0];
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

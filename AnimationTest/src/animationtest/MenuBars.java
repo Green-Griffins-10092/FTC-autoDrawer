@@ -367,7 +367,7 @@ class MenuBars {
         openRobotEditor.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                MainFrame.info = RobotEditorFrame.REF();
+                RobotEditorFrame.REF();
             }
         });
 
