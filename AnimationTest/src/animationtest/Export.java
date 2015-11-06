@@ -322,7 +322,7 @@ public class Export {
                 "        //reset encoders\n";
 
         for (ItemData motor : driveMotors) {
-            rtn += "        " + motor.getProgramName() + ".setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);\n";
+            rtn += "        " + motor.getProgramName() + ".setMode(DcMotorController.RunMode.RESET_ENCODERS);\n";
         }
 
         rtn += "        waitForNextHardwareCycle();\n" +
@@ -330,7 +330,7 @@ public class Export {
                 "        //set targets\n";
         for (ItemData motor : driveMotors) {
             rtn += "        " + motor.getProgramName() + ".setTargetPosition(encoderCounts);\n" +
-                    "        " + motor.getProgramName() + ".setChannelMode(DcMotorController.RunMode.RUN_TO_POSITION);\n";
+                    "        " + motor.getProgramName() + ".setMode(DcMotorController.RunMode.RUN_TO_POSITION);\n";
         }
         rtn += "        waitForNextHardwareCycle();\n" +
                 "        \n" +
@@ -359,7 +359,7 @@ public class Export {
         rtn += "    private void autoTurn(double degrees) throws InterruptedException{\n" +
                 "        int encoderCounts = (int)(ENCODER_COUNTS_PER_ROTATION/INCHES_PER_ROTATION*degrees*Math.PI/180*" + info.getDistanceBetweenWheels() / 2 + ");\n";
         for (ItemData motor : driveMotors) {
-            rtn += "        " + motor.getProgramName() + ".setChannelMode(DcMotorController.RunMode.RESET_ENCODERS);\n";
+            rtn += "        " + motor.getProgramName() + ".setMode(DcMotorController.RunMode.RESET_ENCODERS);\n";
         }
 
         rtn += "        waitForNextHardwareCycle();\n" +
@@ -367,7 +367,7 @@ public class Export {
                 "        //set targets\n";
         for (ItemData motor : driveMotors) {
             rtn += "        " + motor.getProgramName() + ".setTargetPosition(encoderCounts);\n" +
-                    "        " + motor.getProgramName() + ".setChannelMode(DcMotorController.RunMode.RUN_TO_POSITION);\n";
+                    "        " + motor.getProgramName() + ".setMode(DcMotorController.RunMode.RUN_TO_POSITION);\n";
         }
         rtn += "        waitForNextHardwareCycle();\n" +
                 "        \n" +
