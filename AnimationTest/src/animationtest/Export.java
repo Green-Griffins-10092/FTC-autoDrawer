@@ -356,7 +356,7 @@ public class Export {
                 "    }\n\n";
 
         //defining autoTurn
-        rtn += "    private void autoTurn(double degrees) throws InterruptedException{\n" +
+        rtn += "    private void autoTurn(double degrees) throws InterruptedException{\n" + //TODO: add code to use gyro
                 "        int encoderCounts = (int)(ENCODER_COUNTS_PER_ROTATION/INCHES_PER_ROTATION*degrees*Math.PI/180*" + info.getDistanceBetweenWheels() / 2 + ");\n";
         for (ItemData motor : driveMotors) {
             rtn += "        " + motor.getProgramName() + ".setMode(DcMotorController.RunMode.RESET_ENCODERS);\n";

@@ -17,6 +17,16 @@ public class ProgramInfo {
     private List<ItemData> motors;
     private String programName;
 
+    public ItemData getGyro() {
+        return gyro;
+    }
+
+    public void setGyro(ItemData gyro) {
+        this.gyro = gyro;
+    }
+
+    private ItemData gyro;
+
     public void setProgramName(String programName)
     {
         this.programName = programName;
