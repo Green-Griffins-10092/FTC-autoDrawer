@@ -304,7 +304,7 @@ public class RobotEditorFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         data.distanceBetweenWheels = Double.parseDouble(wheelDistance.getText());
         data.wheelDiameter = Double.parseDouble(wheelDiameter.getText());
-        data.gearRatio = Integer.parseInt(gearRatio1.getText()) / Integer.parseInt(gearRatio2.getText());
+        data.gearRatio = Integer.parseInt(gearRatio1.getText()) / (double) Integer.parseInt(gearRatio2.getText());
         data.clearMotors();
         if (software1.getText().length() > 0 && hardware1.getText().length() > 0) {
             data.getMotors().add(new ProgramInfo.ItemData(software1.getText(), hardware1.getText(), reversed1.isSelected(), true));

@@ -1,10 +1,23 @@
 package animationtest;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Line2D;
 import java.io.File;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.Timer;
 
 public class FTCauto extends JFrame {
 
@@ -50,13 +63,6 @@ public class FTCauto extends JFrame {
             //Getting mouse location when moved
             addMouseMotionListener(new MouseMotionAdapter() {
                 public void mouseMoved(MouseEvent e) {
-                    mouseX = e.getX();
-                    mouseY = e.getY();
-
-                }
-            });
-            addMouseMotionListener(new MouseMotionAdapter() {
-                public void mouseDragged(MouseEvent e) {
                     mouseX = e.getX();
                     mouseY = e.getY();
 

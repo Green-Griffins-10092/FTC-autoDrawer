@@ -237,7 +237,7 @@ public class Export {
                 "\n" +
                 "import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;\n" +
                 "import com.qualcomm.robotcore.hardware.DcMotor;\n" +
-                "import com.qualcomm.robotcore.hardware.DcMotorController;" +
+                "import com.qualcomm.robotcore.hardware.DcMotorController;\n" +
                 "import com.qualcomm.robotcore.hardware.Servo;\n" +
                 "\n" +
                 "/**\n" +
@@ -254,7 +254,7 @@ public class Export {
 
         //defining some named constants
         rtn += "    final int ENCODER_COUNTS_PER_ROTATION = 1440; // 1440 for tetrix motor encoders, 1120 for andymark neverest 40 encoders\n" +
-                "    final double INCHES_PER_ROTATION =  Math.PI * " + info.getWheelDiameter() + " * " + info.getGearRatio() + ";\n" +
+                "    final double INCHES_PER_ROTATION =  Math.PI * " + info.getWheelDiameter() + " * " + info.getGearRatio() + "; // pi times wheel diameter (circumference) times gear ratio\n" +
                 "    double driveSpeed = 1; //must be between 0 and 1, this is the speed the motors will drive at\n\n";
 
         rtn += "    //Create motor variables\n";

@@ -1,6 +1,5 @@
 package animationtest;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
@@ -11,6 +10,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.swing.ImageIcon;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
 
 import static animationtest.MainFrame.auto;
 
@@ -211,47 +217,59 @@ class MenuBars {
         export.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                File save = FileChooser.fileChooser("Save Location", "Save", "Save file to this location", false);
+                try {
+                    File save = FileChooser.fileChooser("Save Location", "Save", "Save file to this location", false);
 
-                //check for proper file type
-                if (save.getName().lastIndexOf('.') == -1) {
-                    save = new File(save.getPath() + ".java");
-                } else if (!save.getName().substring(save.getName().lastIndexOf('.')).equals(".java")) {
-                    JOptionPane.showMessageDialog(menuBar, "Not a .java file type!");
-                    return;
-                }
-
-                //no accidental overwrites
-                if (save.exists()) {
-                    switch (JOptionPane.showConfirmDialog(menuBar, "File specified already exists.  Continue?", "Overwrite Warning", JOptionPane.OK_CANCEL_OPTION)) {
-                        case JOptionPane.OK_OPTION:
-                            break;
-                        default:
-                            return;
+                    //check for proper file type
+                    if (save.getName().lastIndexOf('.') == -1) {
+                        save = new File(save.getPath() + ".java");
+                    } else if (!save.getName().substring(save.getName().lastIndexOf('.')).equals(".java")) {
+                        JOptionPane.showMessageDialog(menuBar, "Not a .java file type!");
+                        return;
                     }
-                }
 
-                MainFrame.info.setPointArray(auto.points);
-                MainFrame.info.setSaveLocation(auto.file);
-                MainFrame.info.setProgramName(save.getName().substring(save.getName().lastIndexOf('.')));
+                    //no accidental overwrites
+                    if (save.exists()) {
+                        switch (JOptionPane.showConfirmDialog(menuBar, "File specified already exists.  Continue?", "Overwrite Warning", JOptionPane.OK_CANCEL_OPTION)) {
+                            case JOptionPane.OK_OPTION:
+                                break;
+                            default:
+                                return;
+                        }
+                    }
 
-                String linearOpMode;
-                try {
-                    linearOpMode = Export.writeLinearOpMode(MainFrame.info);
-                } catch (Exception e1) {
-                    JOptionPane.showMessageDialog(menuBar, "Error generating code.  Make sure you have run the robot editor.\n"
-                            + "If you have run the robot editor, and still get errors, please create an issue at https://github.com/archerD/FTC-autoDrawer.");
+                if (MainFrame.info == null) {
+                    JOptionPane.showMessageDialog(menuBar, "Robot editor has not been run!  Please run the robot editor under the robot menu to continue.", "Export Warning", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
+                    MainFrame.info.setPointArray(auto.points);
+                    MainFrame.info.setSaveLocation(auto.file);
+                    MainFrame.info.setProgramName(save.getName().substring(0, save.getName().lastIndexOf('.')));
 
-                //handle the writing of the file
-                try {
-                    PrintWriter writer = new PrintWriter(save);
-                    writer.print(linearOpMode);
-                    writer.flush();
-                    writer.close();
-                } catch (FileNotFoundException exe) {
-                    exe.printStackTrace();
+                    String linearOpMode;
+                    try {
+                        linearOpMode = Export.writeLinearOpMode(MainFrame.info);
+                    } catch (Exception e1) {
+                        JOptionPane.showMessageDialog(menuBar, "Error generating code: " + e1.getMessage() + ".  Make sure you have run the robot editor.\n"
+                                + "If you have run the robot editor, and still get errors, please create an issue at https://github.com/archerD/FTC-autoDrawer.");
+                        e1.printStackTrace();
+                        return;
+                    }
+
+                    //handle the writing of the file
+                    try {
+                        PrintWriter writer = new PrintWriter(save);
+                        writer.print(linearOpMode);
+                        writer.flush();
+                        writer.close();
+                    } catch (FileNotFoundException exe) {
+                        exe.printStackTrace();
+                    }
+                } catch (Exception e1) {
+                    JOptionPane.showMessageDialog(menuBar, "Error generating code: " + e1.getMessage() + ".  \nMake sure you have run the robot editor.\n"
+                            + "If you have run the robot editor, and still get errors, please create an issue at https://github.com/archerD/FTC-autoDrawer.");
+                    e1.printStackTrace();
+                    return;
                 }
             }
         });

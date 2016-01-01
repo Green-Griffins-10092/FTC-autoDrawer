@@ -55,6 +55,10 @@ public class ProgramInfo {
 
     public ProgramInfo()
     {
+        pointArray = new PointArray();
+        servos = new ArrayList<>();
+        motors = new ArrayList<>();
+        programName = "";
     }
 
     public double getGearRatio() {
