@@ -229,11 +229,11 @@ public class Export {
         return rtn;
     }*/
 
-    public static String writeLinearOpMode(ProgramInfo info) {
-        String rtn = "";
+    public static String writeLinearOpMode(ProgramInfo info) { // TODO: 1/22/2016 make changes, reflecting how the motors work
+        String program = "";
         String user = System.getProperty("user.name");
 
-        rtn += "package com.qualcomm.ftcrobotcontroller.opmodes;\n" +
+        program += "package com.qualcomm.ftcrobotcontroller.opmodes;\n" +
                 "\n" +
                 "import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;\n" +
                 "import com.qualcomm.robotcore.hardware.DcMotor;\n" +
@@ -250,45 +250,51 @@ public class Export {
                 " */\n" +
                 "\n\n";
 
-        rtn += "public class " + info.getProgramName() + " extends LinearOpMode { \n\n";
+        program += "public class " + info.getProgramName() + " extends LinearOpMode { \n\n";
 
         //defining some named constants
-        rtn += "    final int ENCODER_COUNTS_PER_ROTATION = 1440; // 1440 for tetrix motor encoders, 1120 for andymark neverest 40 encoders\n" +
+        program += "    final int ENCODER_COUNTS_PER_ROTATION = 1440; // 1440 for tetrix motor encoders, 1120 for andymark neverest 40 encoders\n" +
                 "    final double INCHES_PER_ROTATION =  Math.PI * " + info.getWheelDiameter() + " * " + info.getGearRatio() + "; // pi times wheel diameter (circumference) times gear ratio\n" +
-                "    double driveSpeed = 1; //must be between 0 and 1, this is the speed the motors will drive at\n\n";
+                "    double driveSpeed = .75; //must be between 0 and 1, this is the speed the motors will drive at\n\n";
 
-        rtn += "    //Create motor variables\n";
+        program += "    //Create motor variables\n";
         for (ItemData data : info.getMotors()) {
-            rtn += "    DcMotor " + data.getProgramName() + ";\n";
+            program += "    DcMotor " + data.getProgramName() + ";\n";
         }
 
-        rtn += "\n" +
-                "    //Create servo variables\n";
-        for (ItemData data : info.getServos()) {
-            rtn += "    Servo " + data.getProgramName() + ";\n";
+        if (!info.getServos().isEmpty()) {
+            program += "\n" +
+                    "    //Create servo variables\n";
+            for (ItemData data : info.getServos()) {
+                program += "    Servo " + data.getProgramName() + ";\n";
+            }
         }
 
-        rtn += "\n";
+        program += "\n";
 
-        rtn += "    @Override\n" +
+        program += "    @Override\n" +
                 "    public void runOpMode() throws InterruptedException {\n" +
                 "        //Initialize motors and servos.\n";
 
         for (ItemData data : info.getMotors()) {
-            rtn += "        " + data.getProgramName() + " = hardwareMap.dcMotor.get(\"" + data.getControllerName() + "\");\n";
+            program += "        " + data.getProgramName() + " = hardwareMap.dcMotor.get(\"" + data.getControllerName() + "\");\n";
             if (data.isReversed())
-                rtn += "        " + data.getProgramName() + ".setDirection(DcMotor.Direction.REVERSE);\n";
+                program += "        " + data.getProgramName() + ".setDirection(DcMotor.Direction.REVERSE);\n";
+            else
+                program += "        " + data.getProgramName() + ".setDirection(DcMotor.Direction.FORWARD);\n";
             if (data.isDriveMotor())
-                rtn += "        " + data.getProgramName() + ".setChannelMode(DcMotorController.RunMode.RUN_TO_POSITION);\n";
+                program += "        " + data.getProgramName() + ".setMode(DcMotorController.RunMode.RUN_TO_POSITION);\n";
         }
 
         for (ItemData data : info.getServos()) {
-            rtn += "        " + data.getProgramName() + " = hardwareMap.servo.get(\"" + data.getControllerName() + "\");\n";
+            program += "        " + data.getProgramName() + " = hardwareMap.servo.get(\"" + data.getControllerName() + "\");\n";
             if (data.isReversed())
-                rtn += "        " + data.getProgramName() + ".setDirection(Servo.Direction.REVERSE);\n";
+                program += "        " + data.getProgramName() + ".setDirection(Servo.Direction.REVERSE);\n";
+            else
+                program += "        " + data.getProgramName() + ".setDirection(Servo.Direction.FORWARD);\n";
         }
 
-        rtn += "\n" +
+        program += "\n" +
                 "        //Wait for the start button to be pressed\n" +
                 "        waitForStart();\n" +
                 "\n" +
@@ -296,104 +302,95 @@ public class Export {
         PointArray points = info.getPointArray();
 
         if (!points.get(0).extraCode.equals("")) {
-            rtn += "        " + points.get(0).extraCode + "\n";
+            program += "        " + points.get(0).extraCode + "\n";
         }
         for (int i = 0; i < points.size() - 2; i++) {
-            rtn += "        autoDrive(" + points.getDistance(i) + ");\n";
+            program += "        autoDrive(" + points.getDistance(i) + ");\n";
             if (!points.get(i + 1).extraCode.equals("")) {
-                rtn += "        " + points.get(i + 1).extraCode + "\n";
+                program += "        " + points.get(i + 1).extraCode + "\n";
             }
-            rtn += "\n" +
+            program += "\n" +
                     "        autoTurn(" + points.getAngle(i + 1) + ");\n";
         }
 
-        rtn += "        autoDrive(" + points.getDistance(points.size() - 2) + ");\n";
+        program += "        autoDrive(" + points.getDistance(points.size() - 2) + ");\n";
         if (!points.get(points.size() - 1).extraCode.equals("")) {
-            rtn += "        " + points.get(points.size() - 1).extraCode + "\n";
+            program += "        " + points.get(points.size() - 1).extraCode + "\n";
         }
-        rtn += "    }\n\n";
+        program += "    }\n\n";
 
 
         ItemData[] driveMotors = info.getDriveMotors();
 
         //defining autoDrive
-        rtn += "    private void autoDrive(double inches) throws InterruptedException{\n" +
+        program += "    private void autoDrive(double inches) throws InterruptedException{\n" +
                 "        int encoderCounts = (int)(inches/INCHES_PER_ROTATION*ENCODER_COUNTS_PER_ROTATION);\n" +
                 "        //reset encoders\n";
 
         for (ItemData motor : driveMotors) {
-            rtn += "        " + motor.getProgramName() + ".setMode(DcMotorController.RunMode.RESET_ENCODERS);\n";
+            program += "        " + motor.getProgramName() + ".setMode(DcMotorController.RunMode.RESET_ENCODERS);\n";
         }
 
-        rtn += "        waitForNextHardwareCycle();\n" +
+        program += "        waitForNextHardwareCycle();\n" +
                 "        \n" +
                 "        //set targets\n";
         for (ItemData motor : driveMotors) {
-            rtn += "        " + motor.getProgramName() + ".setTargetPosition(encoderCounts);\n" +
+            program += "        " + motor.getProgramName() + ".setTargetPosition(encoderCounts);\n" +
                     "        " + motor.getProgramName() + ".setMode(DcMotorController.RunMode.RUN_TO_POSITION);\n";
         }
-        rtn += "        waitForNextHardwareCycle();\n" +
+        program += "        waitForNextHardwareCycle();\n" +
                 "        \n" +
-                "        //start motors with proper direction\n" +
-                "        if (inches > 0) {\n";
+                "        //start motors (the target specifies direction)\n";
         for (ItemData motor : driveMotors) {
-            rtn += "            " + motor.getProgramName() + ".setPower(driveSpeed);\n";
+            program += "        " + motor.getProgramName() + ".setPower(driveSpeed);\n";
         }
-        rtn += "        } else {\n";
-        for (ItemData motor : driveMotors) {
-            rtn += "            " + motor.getProgramName() + ".setPower(-driveSpeed);\n";
-        }
-        rtn += "        }\n" +
-                "        \n" +
+
+        program += "        \n" +
                 "        //wait for motors to reach positions\n" +
                 "        while(";
-        rtn += driveMotors[0].getProgramName() + ".getCurrentPosition() < encoderCounts";
+        program += driveMotors[0].getProgramName() + ".getCurrentPosition() < encoderCounts";
         for (int i = 1; i < driveMotors.length; i++) {
-            rtn += " || " + driveMotors[i].getProgramName() + ".getCurrentPosition() < encoderCounts";
+            program += " || " + driveMotors[i].getProgramName() + ".getCurrentPosition() < encoderCounts";
         }
-        rtn += ")\n" +
+        program += ")\n" +
                 "            waitOneFullHardwareCycle();\n" +
                 "    }\n\n";
 
         //defining autoTurn
-        rtn += "    private void autoTurn(double degrees) throws InterruptedException{\n" + //TODO: add code to use gyro
+        program += "    private void autoTurn(double degrees) throws InterruptedException{\n" + //TODO: add code to use gyro
                 "        int encoderCounts = (int)(ENCODER_COUNTS_PER_ROTATION/INCHES_PER_ROTATION*degrees*Math.PI/180*" + info.getDistanceBetweenWheels() / 2 + ");\n";
         for (ItemData motor : driveMotors) {
-            rtn += "        " + motor.getProgramName() + ".setMode(DcMotorController.RunMode.RESET_ENCODERS);\n";
+            program += "        " + motor.getProgramName() + ".setMode(DcMotorController.RunMode.RESET_ENCODERS);\n";
         }
 
-        rtn += "        waitForNextHardwareCycle();\n" +
+        program += "        waitForNextHardwareCycle();\n" +
                 "        \n" +
-                "        //set targets\n";
+                "        //set targets, ensure that there is a negative sign in front of encoderCounts\n" +
+                "        //when it is being passed to the right motor\n";
         for (ItemData motor : driveMotors) {
-            rtn += "        " + motor.getProgramName() + ".setTargetPosition(encoderCounts);\n" +
+            program += "        " + motor.getProgramName() + ".setTargetPosition(encoderCounts);\n" +
                     "        " + motor.getProgramName() + ".setMode(DcMotorController.RunMode.RUN_TO_POSITION);\n";
         }
-        rtn += "        waitForNextHardwareCycle();\n" +
+        program += "        waitForNextHardwareCycle();\n" +
                 "        \n" +
-                "        //start motors with proper direction\n" +
-                "        if (degrees > 0) { //make sure to negate these as necessary so that the following code turns the robot clockwise\n";
+                "        //start motors (encoder target specifies direction)\n";
         for (ItemData motor : driveMotors) {
-            rtn += "            " + motor.getProgramName() + ".setPower(driveSpeed);\n";
+            program += "        " + motor.getProgramName() + ".setPower(driveSpeed);\n";
         }
-        rtn += "        } else {\n";
-        for (ItemData motor : driveMotors) {
-            rtn += "            " + motor.getProgramName() + ".setPower(-driveSpeed);\n";
-        }
-        rtn += "        }\n" +
-                "        \n" +
+
+        program += "        \n" +
                 "        //wait for motors to reach positions\n" +
                 "        while(";
-        rtn += driveMotors[0].getProgramName() + ".getCurrentPosition() < encoderCounts";
+        program += driveMotors[0].getProgramName() + ".getCurrentPosition() < encoderCounts";
         for (int i = 1; i < driveMotors.length; i++) {
-            rtn += " || " + driveMotors[i].getProgramName() + ".getCurrentPosition() < encoderCounts";
+            program += " || " + driveMotors[i].getProgramName() + ".getCurrentPosition() < encoderCounts";
         }
-        rtn += ")\n" +
+        program += ")\n" +
                 "            waitOneFullHardwareCycle();\n" +
                 "    }\n" +
                 "}";
 
-        return rtn;
+        return program;
     }
 
     public static void main(String[] args) {
