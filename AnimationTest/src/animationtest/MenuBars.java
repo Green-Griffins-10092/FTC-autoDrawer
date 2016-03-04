@@ -1,5 +1,6 @@
 package animationtest;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
@@ -10,13 +11,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import javax.swing.ImageIcon;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.KeyStroke;
 
 import static animationtest.MainFrame.auto;
 
@@ -263,11 +257,12 @@ class MenuBars {
                         writer.flush();
                         writer.close();
                     } catch (FileNotFoundException exe) {
+                        JOptionPane.showMessageDialog(menuBar, "Problem writing to file.");
                         exe.printStackTrace();
                     }
                 } catch (Exception e1) {
                     JOptionPane.showMessageDialog(menuBar, "Error generating code: " + e1.getMessage() + ".  \nMake sure you have run the robot editor.\n"
-                            + "If you have run the robot editor, and still get errors, please create an issue at https://github.com/archerD/FTC-autoDrawer.");
+                            + "If you have run the robot editor, and still get errors, please create an issue at \nhttps://github.com/Green-Griffins-10092/FTC-autoDrawer/issues/new");
                     e1.printStackTrace();
                     return;
                 }

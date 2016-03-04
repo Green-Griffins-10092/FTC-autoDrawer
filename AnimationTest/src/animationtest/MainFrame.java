@@ -1,4 +1,5 @@
 package animationtest;
+
 import javax.swing.*;
 import java.awt.*;
 import java.io.File;
@@ -14,7 +15,6 @@ class MainFrame extends JFrame {
     private static JMenuBar menubar;
 
     public static void main(String[] args) {
-
         for (String s : args) {
             if (s.equals("-d") || s.equalsIgnoreCase("--developing") || s.equalsIgnoreCase("-developing") || s.equals("developing"))
                 developing = true;
@@ -43,9 +43,9 @@ class MainFrame extends JFrame {
 //        }
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
         }
-        
+
         MainFrame frame = new MainFrame();
         infoBar = new InfoBar.MainGraphicsPanel(developing);
         auto = new FTCauto.MainGraphicsPanel(developing);
@@ -57,11 +57,24 @@ class MainFrame extends JFrame {
         frame.setSize(1000, 700);
         frame.setLocationRelativeTo(null);
         menubar = MenuBars.menuBars(developing);
+        if (file != null) {
+            if (file.getPath().substring(file.getPath().lastIndexOf('.') + 1).equals("bAD")) {
+                auto.points = Export.readBinaryFile(file.getPath());
+                auto.tool.history = new History(auto.points);
+                auto.file = new File(file.getPath().substring(0, file.getPath().lastIndexOf(".")));
+            } else if (file.getPath().substring(file.getPath().lastIndexOf('.') + 1).equals("tAD")) {
+                auto.points = Export.readTextFile(file.getPath());
+                auto.tool.history = new History(auto.points);
+                auto.file = new File(file.getPath().substring(0, file.getPath().lastIndexOf(".")));
+            } else {
+                System.out.println("Specified file is not a valid autoDrawer file");
+            }
+        }
         frame.setJMenuBar(menubar);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.setIconImage(icon);
         frame.setVisible(true);
-        
+
         auto.tool.toolType = 1;
     }
 }
