@@ -229,11 +229,11 @@ public class Export {
         return rtn;
     }*/
 
-    public static String writeLinearOpMode(ProgramInfo info) { // TODO: 1/22/2016 make changes, reflecting how the motors work
+    public static String writeLinearOpMode(ProgramInfo info) {
         String program = "";
         String user = System.getProperty("user.name");
 
-        program += "package com.qualcomm.ftcrobotcontroller.opmodes;\n" +
+        program += "package org.firstinspires.ftc.teamcode;\n" +
                 "\n" +
                 "import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;\n" +
                 "import com.qualcomm.robotcore.hardware.DcMotor;\n" +
@@ -249,6 +249,8 @@ public class Export {
                 " * Insert your own documentation here\n" +
                 " */\n" +
                 "\n\n";
+
+        program += "@Autonomous(name = \"" + info.getProgramName() + "\")\n\n";
 
         program += "public class " + info.getProgramName() + " extends LinearOpMode { \n\n";
 
@@ -283,7 +285,7 @@ public class Export {
             else
                 program += "        " + data.getProgramName() + ".setDirection(DcMotor.Direction.FORWARD);\n";
             if (data.isDriveMotor())
-                program += "        " + data.getProgramName() + ".setMode(DcMotorController.RunMode.RUN_TO_POSITION);\n";
+                program += "        " + data.getProgramName() + ".setMode(DcMotor.RunMode.RUN_TO_POSITION);\n";
         }
 
         for (ItemData data : info.getServos()) {
@@ -328,17 +330,17 @@ public class Export {
                 "        //reset encoders\n";
 
         for (ItemData motor : driveMotors) {
-            program += "        " + motor.getProgramName() + ".setMode(DcMotorController.RunMode.RESET_ENCODERS);\n";
+            program += "        " + motor.getProgramName() + ".setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);\n";
         }
 
-        program += "        waitForNextHardwareCycle();\n" +
+        program += "        idle();\n" +
                 "        \n" +
                 "        //set targets\n";
         for (ItemData motor : driveMotors) {
             program += "        " + motor.getProgramName() + ".setTargetPosition(encoderCounts);\n" +
-                    "        " + motor.getProgramName() + ".setMode(DcMotorController.RunMode.RUN_TO_POSITION);\n";
+                    "        " + motor.getProgramName() + ".setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);\n";
         }
-        program += "        waitForNextHardwareCycle();\n" +
+        program += "        idle();\n" +
                 "        \n" +
                 "        //start motors (the target specifies direction)\n";
         for (ItemData motor : driveMotors) {
@@ -353,25 +355,27 @@ public class Export {
             program += " || " + driveMotors[i].getProgramName() + ".getCurrentPosition() < encoderCounts";
         }
         program += ")\n" +
-                "            waitOneFullHardwareCycle();\n" +
+                "            idle();\n" +
+                "        \n" +
+                "        sleep(500);" +
                 "    }\n\n";
 
         //defining autoTurn
-        program += "    private void autoTurn(double degrees) throws InterruptedException{\n" + //TODO: add code to use gyro
+        program += "    private void autoTurn(double degrees) throws InterruptedException{\n" +
                 "        int encoderCounts = (int)(ENCODER_COUNTS_PER_ROTATION/INCHES_PER_ROTATION*degrees*Math.PI/180*" + info.getDistanceBetweenWheels() / 2 + ");\n";
         for (ItemData motor : driveMotors) {
-            program += "        " + motor.getProgramName() + ".setMode(DcMotorController.RunMode.RESET_ENCODERS);\n";
+            program += "        " + motor.getProgramName() + ".setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);\n";
         }
 
-        program += "        waitForNextHardwareCycle();\n" +
+        program += "        idle();\n" +
                 "        \n" +
                 "        //set targets, ensure that there is a negative sign in front of encoderCounts\n" +
                 "        //when it is being passed to the right motor\n";
         for (ItemData motor : driveMotors) {
             program += "        " + motor.getProgramName() + ".setTargetPosition(encoderCounts);\n" +
-                    "        " + motor.getProgramName() + ".setMode(DcMotorController.RunMode.RUN_TO_POSITION);\n";
+                    "        " + motor.getProgramName() + ".setMode(DcMotor.RunMode.RUN_TO_POSITION);\n";
         }
-        program += "        waitForNextHardwareCycle();\n" +
+        program += "        idle();\n" +
                 "        \n" +
                 "        //start motors (encoder target specifies direction)\n";
         for (ItemData motor : driveMotors) {
@@ -386,7 +390,9 @@ public class Export {
             program += " || " + driveMotors[i].getProgramName() + ".getCurrentPosition() < encoderCounts";
         }
         program += ")\n" +
-                "            waitOneFullHardwareCycle();\n" +
+                "            idle();\n" +
+                "    \n" +
+                "    sleep(500);" +
                 "    }\n" +
                 "}";
 
