@@ -354,7 +354,7 @@ public class Export {
         for (int i = 1; i < driveMotors.length; i++) {
             program += " || " + driveMotors[i].getProgramName() + ".getCurrentPosition() < encoderCounts";
         }
-        program += ")\n" +
+        program += " && opModeIsActive() )\n" +
                 "            idle();\n" +
                 "        \n" +
                 "        sleep(500);" +
@@ -389,7 +389,7 @@ public class Export {
         for (int i = 1; i < driveMotors.length; i++) {
             program += " || " + driveMotors[i].getProgramName() + ".getCurrentPosition() < encoderCounts";
         }
-        program += ")\n" +
+        program += " && opModeIsActive() )\n" +
                 "            idle();\n" +
                 "    \n" +
                 "    sleep(500);" +
