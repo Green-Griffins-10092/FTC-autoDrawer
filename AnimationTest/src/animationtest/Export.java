@@ -235,6 +235,7 @@ public class Export {
 
         program += "package org.firstinspires.ftc.teamcode;\n" +
                 "\n" +
+                "import com.qualcomm.robotcore.eventloop.opmode.Autonomous;\n" +
                 "import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;\n" +
                 "import com.qualcomm.robotcore.hardware.DcMotor;\n" +
                 "import com.qualcomm.robotcore.hardware.DcMotorController;\n" +

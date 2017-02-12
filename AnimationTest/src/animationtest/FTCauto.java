@@ -1,23 +1,10 @@
 package animationtest;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 import java.awt.geom.Line2D;
 import java.io.File;
-
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.Timer;
 
 public class FTCauto extends JFrame {
 
@@ -160,7 +147,8 @@ public class FTCauto extends JFrame {
             //draw a robot outline
             if (showRobot) {
                 g.drawRect(mouseX - eighteenInchesInPixels / 2, mouseY - eighteenInchesInPixels / 2, eighteenInchesInPixels, eighteenInchesInPixels);
-
+                double sqrtTwo = Math.sqrt(2);
+                g.drawOval((int) (mouseX - eighteenInchesInPixels*sqrtTwo / 2), (int) (mouseY - eighteenInchesInPixels*sqrtTwo / 2), (int) (eighteenInchesInPixels*sqrtTwo), (int) (eighteenInchesInPixels*sqrtTwo));
             }
 
             //drawing the lines
@@ -285,11 +273,18 @@ public class FTCauto extends JFrame {
                 //Draw the angle
                 if (i != 0 && i != points.size() - 1) {
                     g.setColor(new Color(0, 0, 0, points.get(i).transparency));
-                    String angle = String.valueOf((int) points.getAngle(i));
+                    String angle = String.valueOf((int) (points.getAngle(i)+0.5));
                     g.drawString(angle,
                             (int) (points.get(i).getX(inchesToPixels) + FIELD_X_OFFSET), (int) points.get(i).getY(inchesToPixels) + FIELD_Y_OFFSET);
 
                 }
+
+                //Draw the distance between points
+                g.setColor(new Color(0, 0, 0, points.get(i).transparency));
+                String distance = String.valueOf((int) (points.getDistance(i-1)+0.5));
+                g.drawString(distance,
+                        (int) ((points.get(i).getX(inchesToPixels)+points.get(i-1).getX(inchesToPixels))/2 + FIELD_X_OFFSET),
+                        (int) ((points.get(i).getY(inchesToPixels)+points.get(i-1).getY(inchesToPixels))/2 + FIELD_Y_OFFSET));
 
                 if (!points.get(i).extraCode.equals("")) {
                     g.setColor(new Color(0, 0, 0));
@@ -408,6 +403,13 @@ public class FTCauto extends JFrame {
                 if (points.get(points.size() - 1).transparency < transMax) {
                     points.get(points.size() - 1).transparency += 2;
                 }
+
+                //Draw the distance between points
+                g.setColor(new Color(0, 0, 0, points.get(points.size()-1).transparency));
+                String distance = String.valueOf((int) (points.getDistance(points.size()-2)+0.5));
+                g.drawString(distance,
+                        (int) ((points.get(points.size()-1).getX(inchesToPixels)+points.get(points.size()-2).getX(inchesToPixels))/2 + FIELD_X_OFFSET),
+                        (int) ((points.get(points.size()-1).getY(inchesToPixels)+points.get(points.size()-2).getY(inchesToPixels))/2 + FIELD_Y_OFFSET));
             }
 
             //Changing the tool color

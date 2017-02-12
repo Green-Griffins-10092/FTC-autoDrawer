@@ -3,8 +3,8 @@ package animationtest;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Math.*;
 import static java.lang.Math.cos;
-import static java.lang.Math.sin;
 
 public class PointArray implements Cloneable {
 
@@ -28,7 +28,7 @@ public class PointArray implements Cloneable {
         double x2 = list.get(index + 1).x;
         double y1 = list.get(index).y;
         double y2 = list.get(index + 1).y;
-        return Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
+        return sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
     }
 
     public double getAngle(int i) {
@@ -46,10 +46,10 @@ public class PointArray implements Cloneable {
         double v2 = y3 - y2;
 
         double dotProduct = u1 * v1 + u2 * v2;
-        double uNorm = Math.sqrt(u1 * u1 + u2 * u2);
-        double vNorm = Math.sqrt(v1 * v1 + v2 * v2);
+        double uNorm = sqrt(u1 * u1 + u2 * u2);
+        double vNorm = sqrt(v1 * v1 + v2 * v2);
 
-        double angle = Math.acos(dotProduct / (uNorm * vNorm));
+        double angle = acos(dotProduct / (uNorm * vNorm));
 
         //rotation test
         //1. take vector v and scale it so the norms of u and v are the same.
@@ -62,11 +62,11 @@ public class PointArray implements Cloneable {
         //  if so we rotated clockwise and don't need to change angle,
         //  otherwise we rotated counterclockwise and need to negate angle.
         //(the tests are stated in this manner to avoid round off error)
-        if (Math.abs(vPrime1 - u1) <= .000001 && Math.abs(vPrime2 - u2) <= .000001) {
+        if (abs(vPrime1 - u1) <= .000001 && abs(vPrime2 - u2) <= .000001) {
             angle = -angle;
         }
 
-        return Math.toDegrees(angle);
+        return toDegrees(angle);
 
     }
 
